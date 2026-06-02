@@ -62,7 +62,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .tb-tt-k{position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:var(--or);transition:transform .25s;}
 [data-theme="dark"] .tb-tt-k{transform:translateX(12px);}
 [data-theme="dark"] .tb-tt{background:rgba(249,115,22,0.25);}
-
 .content{padding:18px;flex:1;}
 .page{display:none;}.page.active{display:block;}
 
@@ -81,6 +80,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .mc-val{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:var(--text);line-height:1;}
 .mc-sub{font-size:10px;color:var(--teal);margin-top:3px;}
 
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
 .grid-3{display:grid;grid-template-columns:1.3fr 1fr .85fr;gap:12px;margin-bottom:12px;}
 .cc{background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:16px;transition:background .3s;}
 .ct{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;margin-bottom:1px;}
@@ -89,6 +89,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .li{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text2);}
 .ld{width:7px;height:7px;border-radius:2px;flex-shrink:0;}
 
+/* TOP5 */
 .t5{display:flex;flex-direction:column;gap:6px;}
 .t5i{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--metric);border:1px solid var(--bdr);border-radius:7px;}
 .t5r{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--text3);min-width:18px;}
@@ -98,6 +99,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .t5b{height:100%;border-radius:3px;background:var(--or);}
 .t5v{font-size:11px;color:var(--or);font-weight:600;min-width:28px;text-align:right;font-family:'Rajdhani',sans-serif;}
 
+/* PODIUM */
 .podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;height:170px;margin-bottom:14px;}
 .ps{display:flex;flex-direction:column;align-items:center;gap:6px;}
 .pav{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;border:2px solid;position:relative;}
@@ -119,6 +121,39 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .rrn{flex:1;color:var(--text);}
 .rrc{font-size:10px;color:var(--text2);background:var(--bdr);border-radius:4px;padding:2px 6px;}
 .rrs{color:var(--or);font-weight:600;font-family:'Rajdhani',sans-serif;}
+
+/* HEATMAP */
+.heatmap-wrap{overflow-x:auto;}
+.heatmap{display:flex;gap:4px;align-items:flex-start;}
+.heatmap-labels-left{display:flex;flex-direction:column;gap:2px;margin-right:4px;padding-top:18px;}
+.heatmap-day-label{font-size:9px;color:var(--text3);height:14px;display:flex;align-items:center;line-height:1;}
+.heatmap-col{display:flex;flex-direction:column;gap:2px;}
+.heatmap-week-label{font-size:9px;color:var(--text3);height:14px;text-align:center;margin-bottom:2px;}
+.heatmap-cell{width:14px;height:14px;border-radius:3px;cursor:pointer;transition:transform .15s;}
+.heatmap-cell:hover{transform:scale(1.3);}
+.heatmap-legend{display:flex;align-items:center;gap:6px;margin-top:10px;justify-content:flex-end;}
+.heatmap-legend-label{font-size:10px;color:var(--text3);}
+.heatmap-legend-cells{display:flex;gap:3px;}
+.heatmap-legend-cell{width:12px;height:12px;border-radius:2px;}
+
+/* META vs REALIZADO */
+.meta-list{display:flex;flex-direction:column;gap:10px;}
+.meta-item{display:flex;flex-direction:column;gap:4px;}
+.meta-header{display:flex;justify-content:space-between;align-items:center;}
+.meta-name{font-size:12px;font-weight:500;color:var(--text);}
+.meta-nums{font-size:11px;color:var(--text3);}
+.meta-num-real{color:var(--or);font-weight:600;}
+.meta-bar-wrap{position:relative;height:8px;background:var(--metric);border-radius:4px;overflow:hidden;border:1px solid var(--bdr);}
+.meta-bar-meta{position:absolute;top:0;left:0;height:100%;background:var(--bdr);border-radius:4px;}
+.meta-bar-real{position:absolute;top:0;left:0;height:100%;border-radius:4px;transition:width .6s ease;}
+.meta-pct{font-size:10px;font-weight:600;margin-top:2px;text-align:right;}
+
+/* META FORM */
+.meta-config{background:var(--metric);border:1px solid var(--bdr);border-radius:8px;padding:12px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.meta-config-label{font-size:11px;color:var(--text2);font-weight:500;}
+.meta-input{background:var(--card);border:1px solid var(--bdr);border-radius:6px;padding:6px 10px;font-size:12px;color:var(--text);font-family:'Inter',sans-serif;outline:none;width:90px;}
+.meta-input:focus{border-color:var(--or);}
+.meta-btn{background:var(--or);border:none;border-radius:6px;padding:6px 14px;color:white;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.5px;}
 
 /* FORM */
 .fc{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:24px;margin-bottom:14px;}
@@ -152,13 +187,13 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 
 /* CADASTRO SKU */
 .sku-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
-.sku-card{background:var(--metric);border:1px solid var(--bdr);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;transition:background .2s;}
+.sku-card{background:var(--metric);border:1px solid var(--bdr);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;}
 .sku-card-info{display:flex;flex-direction:column;gap:3px;}
 .sku-card-name{font-size:13px;font-weight:600;color:var(--text);}
 .sku-card-cat{font-size:10px;color:var(--text3);}
 .sku-card-del{width:28px;height:28px;border-radius:6px;border:1px solid var(--bdr);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:14px;transition:all .18s;}
 .sku-card-del:hover{background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.3);color:#DC2626;}
-.sku-form-row{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:flex-end;}
+.sku-form-row{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:flex-end;}
 .btn-add-sku{background:var(--or);border:none;border-radius:8px;padding:9px 20px;color:white;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:opacity .2s;}
 .btn-add-sku:hover{opacity:.88;}
 .btn-add-sku:disabled{opacity:.5;cursor:not-allowed;}
@@ -192,9 +227,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 </head>
 <body>
 
-<div class="loading-overlay" id="loading">
-  <div class="spinner"></div>
-</div>
+<div class="loading-overlay" id="loading"><div class="spinner"></div></div>
 
 <div class="layout">
   <aside class="sidebar">
@@ -204,7 +237,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         <div class="sb-brand-name"><span>G5</span></div>
       </div>
     </div>
-
     <div class="sb-section">Principal</div>
     <button class="sb-nav-item active" onclick="showPage('dashboard',this)">
       <div class="sb-nav-icon">▦</div>
@@ -214,7 +246,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
       <div class="sb-nav-icon">＋</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Registro</span></div>
     </button>
-
     <div class="sb-section">Análise</div>
     <button class="sb-nav-item" onclick="showPage('ranking',this)">
       <div class="sb-nav-icon">★</div>
@@ -224,20 +255,15 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
       <div class="sb-nav-icon">▲</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Top 10 SKUs</span></div>
     </button>
-
     <div class="sb-section">Configuração</div>
     <button class="sb-nav-item" onclick="showPage('cadastro-sku',this)">
       <div class="sb-nav-icon">☰</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Cadastro de SKU</span></div>
     </button>
-
     <div class="sb-footer">
       <div class="sb-user">
         <div class="sb-av">G5</div>
-        <div>
-          <div class="sb-uname">Admin</div>
-          <div class="sb-urole">Gerente Geral</div>
-        </div>
+        <div><div class="sb-uname">Admin</div><div class="sb-urole">Gerente Geral</div></div>
       </div>
     </div>
   </aside>
@@ -261,12 +287,15 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 
       <!-- DASHBOARD -->
       <div class="page active" id="page-dashboard">
+        <!-- MÉTRICAS -->
         <div class="metrics-row">
           <div class="mc"><div class="mc-label">Total Atividades</div><div class="mc-val" id="m-total">—</div><div class="mc-sub">registros no banco</div></div>
           <div class="mc"><div class="mc-label">Produção Total</div><div class="mc-val" id="m-prod">—</div><div class="mc-sub">unidades registradas</div></div>
           <div class="mc"><div class="mc-label">Colaboradores</div><div class="mc-val" id="m-colab">—</div><div class="mc-sub">ativos este mês</div></div>
           <div class="mc"><div class="mc-label">SKU Destaque</div><div class="mc-val" id="m-sku" style="font-size:15px;">—</div><div class="mc-sub">maior volume</div></div>
         </div>
+
+        <!-- SKU + PIZZA + TOP5 -->
         <div class="grid-3">
           <div class="cc">
             <div class="ct">SKU por Mês</div><div class="cs">volume mensal por categoria</div>
@@ -292,19 +321,53 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
             <div class="t5" id="top5-list"><div class="empty-state">Carregando...</div></div>
           </div>
         </div>
+
+        <!-- HEATMAP + LINHA -->
+        <div class="grid-2">
+          <!-- HEATMAP -->
+          <div class="cc">
+            <div class="ct">Heatmap de Produção</div>
+            <div class="cs">intensidade por dia da semana — mês atual (estilo GitHub)</div>
+            <div class="heatmap-wrap">
+              <div class="heatmap" id="heatmap-container"></div>
+            </div>
+            <div class="heatmap-legend">
+              <span class="heatmap-legend-label">Menos</span>
+              <div class="heatmap-legend-cells" id="heatmap-legend"></div>
+              <span class="heatmap-legend-label">Mais</span>
+            </div>
+          </div>
+
+          <!-- LINHA DIÁRIA -->
+          <div class="cc">
+            <div class="ct">Evolução Diária</div>
+            <div class="cs">produção total por dia do mês atual</div>
+            <div style="position:relative;height:200px;"><canvas id="lineChart"></canvas></div>
+          </div>
+        </div>
+
+        <!-- META vs REALIZADO -->
+        <div class="cc" style="margin-bottom:12px;">
+          <div class="ct">Meta vs Realizado</div>
+          <div class="cs">comparativo de produção mensal por colaborador</div>
+          <div class="meta-config">
+            <span class="meta-config-label">Meta mensal por colaborador:</span>
+            <input class="meta-input" type="number" id="meta-valor" value="500" min="1">
+            <span class="meta-config-label">unidades</span>
+            <button class="meta-btn" onclick="renderMetaChart()">Atualizar</button>
+          </div>
+          <div class="meta-list" id="meta-list"><div class="empty-state">Carregando...</div></div>
+        </div>
       </div>
 
       <!-- REGISTRO + ATIVIDADES -->
       <div class="page" id="page-registro">
-        <!-- FORMULÁRIO -->
         <div class="fc">
           <div class="ft">Registrar Atividade</div>
           <div class="fg">
             <div class="fgr"><div class="fl">Colaborador</div><input class="fi" type="text" id="f-colab" placeholder="Nome completo"></div>
             <div class="fgr"><div class="fl">Data</div><input class="fi" type="date" id="f-data"></div>
-
-            <div class="fgr full">
-              <div class="fl">Tipo de Atividade</div>
+            <div class="fgr full"><div class="fl">Tipo de Atividade</div>
               <div class="rg" id="rg-tipo">
                 <div class="rb sel" onclick="toggleRadio('rg-tipo',this)">Reposição</div>
                 <div class="rb" onclick="toggleRadio('rg-tipo',this)">Armazenamento</div>
@@ -312,16 +375,13 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
                 <div class="rb" onclick="toggleRadio('rg-tipo',this)">Legendas</div>
               </div>
             </div>
-
-            <div class="fgr full">
-              <div class="fl">Categoria do Produto</div>
+            <div class="fgr full"><div class="fl">Categoria do Produto</div>
               <div class="rg" id="rg-cat">
                 <div class="rb sel" onclick="toggleRadio('rg-cat',this)">Capas</div>
                 <div class="rb" onclick="toggleRadio('rg-cat',this)">Películas</div>
                 <div class="rb" onclick="toggleRadio('rg-cat',this)">Acessórios</div>
               </div>
             </div>
-
             <div class="fgr full">
               <div class="fl">SKU — Produto Específico</div>
               <div class="sku-search-wrap">
@@ -333,16 +393,12 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
                 <span class="sku-selected-clear" onclick="clearSku()">×</span>
               </div>
             </div>
-
             <div class="fgr"><div class="fl">Quantidade</div><input class="fi" type="number" id="f-qtd" placeholder="Ex: 150" min="1"></div>
             <div class="fgr" style="align-self:flex-end;"><button class="bts" id="btn-registrar" onclick="submitForm()">Registrar</button></div>
           </div>
         </div>
-
-        <!-- ATIVIDADES RECENTES (abaixo do form) -->
         <div class="cc">
-          <div class="ct">Atividades Recentes</div>
-          <div class="cs">histórico de registros do banco</div>
+          <div class="ct">Atividades Recentes</div><div class="cs">histórico de registros do banco</div>
           <table class="rt">
             <thead><tr><th>Colaborador</th><th>Tipo</th><th>Categoria</th><th>SKU</th><th>Qtd</th><th>Data</th></tr></thead>
             <tbody id="recent-tbody"><tr><td colspan="6" class="empty-state">Carregando...</td></tr></tbody>
@@ -376,20 +432,16 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         </div>
       </div>
 
-      <!-- CADASTRO DE SKU -->
+      <!-- CADASTRO SKU -->
       <div class="page" id="page-cadastro-sku">
         <div class="fc">
           <div class="ft">Cadastro de SKU</div>
-          <!-- FORM NOVO SKU -->
           <div style="margin-bottom:20px;">
             <div class="fl" style="margin-bottom:8px;">Adicionar novo SKU</div>
             <div class="sku-form-row">
-              <div class="fgr">
-                <div class="fl">Nome do SKU</div>
-                <input class="fi" type="text" id="sku-nome" placeholder="Ex: Película Fosca 6D">
-              </div>
-              <div class="fgr">
-                <div class="fl">Categoria</div>
+              <div class="fgr"><div class="fl">Nome do SKU</div><input class="fi" type="text" id="sku-nome" placeholder="Ex: Película Fosca 6D"></div>
+              <div class="fgr"><div class="fl">Nomenclatura / Código</div><input class="fi" type="text" id="sku-nomenclatura" placeholder="Ex: PEL-6D-001"></div>
+              <div class="fgr"><div class="fl">Categoria</div>
                 <select class="fi" id="sku-cat">
                   <option value="">Selecione...</option>
                   <option value="Capas">Capas</option>
@@ -400,8 +452,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
               <button class="btn-add-sku" id="btn-add-sku" onclick="addSku()">+ Adicionar</button>
             </div>
           </div>
-
-          <!-- LISTA DE SKUS -->
           <div class="fl" style="margin-bottom:10px;">SKUs Cadastrados (<span id="sku-count">0</span>)</div>
           <div class="sku-grid" id="sku-list"><div class="empty-state" style="grid-column:1/-1">Nenhum SKU cadastrado ainda</div></div>
         </div>
@@ -419,13 +469,8 @@ const SUPA_KEY = 'sb_publishable_E54QZ_jnl9Jc6JLYk9wQVw_YdSMLzww';
 const { createClient } = supabase;
 const db = createClient(SUPA_URL, SUPA_KEY);
 
-let isDark = false;
-let charts = {};
-let allData = [];
-let allSkus = [];
-let selectedSku = null;
+let isDark=false, charts={}, allData=[], allSkus=[], selectedSku=null;
 
-// ── INIT ──
 async function init() {
   showLoading(true);
   await Promise.all([loadAtividades(), loadSkus()]);
@@ -434,166 +479,243 @@ async function init() {
 
 // ── ATIVIDADES ──
 async function loadAtividades() {
-  const { data, error } = await db.from('atividades').select('*').order('created_at', { ascending: false });
-  if (error) { showToast('Erro ao carregar atividades: ' + error.message, 'error'); return; }
-  allData = data || [];
-  renderAtividades();
+  const { data, error } = await db.from('atividades').select('*').order('created_at',{ascending:false});
+  if (error) { showToast('Erro: '+error.message,'error'); return; }
+  allData = data||[];
+  renderAll();
+}
+
+function renderAll() {
   updateMetrics();
   renderTop5();
   renderPodium();
+  renderAtividades();
   rebuildCharts();
+  renderHeatmap();
+  renderMetaChart();
   document.getElementById('badge-total').textContent = allData.length;
 }
 
 function renderAtividades() {
   const tbody = document.getElementById('recent-tbody');
-  if (!allData.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Nenhum registro ainda</td></tr>'; return; }
-  tbody.innerHTML = allData.slice(0, 30).map(r => `
+  if (!allData.length) { tbody.innerHTML='<tr><td colspan="6" class="empty-state">Nenhum registro ainda</td></tr>'; return; }
+  tbody.innerHTML = allData.slice(0,30).map(r=>`
     <tr>
       <td>${r.colaborador}</td>
-      <td><span class="badge ${badgeClass(r.tipo)}">${r.tipo}</span></td>
-      <td><span class="badge ${badgeClass(r.sku)}">${r.sku || '—'}</span></td>
-      <td style="font-weight:500">${r.nome_sku || '—'}</td>
+      <td><span class="badge ${bc(r.tipo)}">${r.tipo}</span></td>
+      <td><span class="badge ${bc(r.sku)}">${r.sku||'—'}</span></td>
+      <td style="font-weight:500">${r.nome_sku||'—'}</td>
       <td>${r.quantidade}</td>
       <td>${r.data}</td>
     </tr>`).join('');
 }
 
 async function submitForm() {
-  const colaborador = document.getElementById('f-colab').value.trim();
-  const data = document.getElementById('f-data').value;
-  const quantidade = parseInt(document.getElementById('f-qtd').value);
-  const tipo = document.querySelector('#rg-tipo .rb.sel')?.textContent || '';
-  const sku = document.querySelector('#rg-cat .rb.sel')?.textContent || '';
-  const nome_sku = selectedSku ? selectedSku.nome : (document.getElementById('f-sku-search').value.trim() || null);
-  if (!colaborador || !data || !quantidade) { showToast('Preencha todos os campos!', 'error'); return; }
-  const btn = document.getElementById('btn-registrar');
-  btn.disabled = true; btn.textContent = 'Salvando...';
-  const { error } = await db.from('atividades').insert([{ colaborador, tipo, sku, nome_sku, quantidade, data }]);
-  btn.disabled = false; btn.textContent = 'Registrar';
-  if (error) { showToast('Erro ao salvar: ' + error.message, 'error'); return; }
-  document.getElementById('f-colab').value = '';
-  document.getElementById('f-qtd').value = '';
+  const colaborador=document.getElementById('f-colab').value.trim();
+  const data=document.getElementById('f-data').value;
+  const quantidade=parseInt(document.getElementById('f-qtd').value);
+  const tipo=document.querySelector('#rg-tipo .rb.sel')?.textContent||'';
+  const sku=document.querySelector('#rg-cat .rb.sel')?.textContent||'';
+  const nome_sku=selectedSku?selectedSku.nome:(document.getElementById('f-sku-search').value.trim()||null);
+  if (!colaborador||!data||!quantidade) { showToast('Preencha todos os campos!','error'); return; }
+  const btn=document.getElementById('btn-registrar');
+  btn.disabled=true; btn.textContent='Salvando...';
+  const {error}=await db.from('atividades').insert([{colaborador,tipo,sku,nome_sku,quantidade,data}]);
+  btn.disabled=false; btn.textContent='Registrar';
+  if (error) { showToast('Erro: '+error.message,'error'); return; }
+  document.getElementById('f-colab').value='';
+  document.getElementById('f-qtd').value='';
   clearSku();
-  showToast('✓ Atividade registrada com sucesso!', 'success');
+  showToast('✓ Atividade registrada!','success');
   await loadAtividades();
 }
 
-// ── SKUs ──
-async function loadSkus() {
-  const { data, error } = await db.from('skus').select('*').order('nome');
-  if (error) {
-    // tabela pode não existir ainda — cria silenciosamente
-    allSkus = [];
-  } else {
-    allSkus = data || [];
-  }
-  renderSkuList();
-  renderSkuDropdown('');
-}
-
-async function addSku() {
-  const nome = document.getElementById('sku-nome').value.trim();
-  const categoria = document.getElementById('sku-cat').value;
-  if (!nome || !categoria) { showToast('Preencha nome e categoria do SKU', 'error'); return; }
-  const btn = document.getElementById('btn-add-sku');
-  btn.disabled = true; btn.textContent = 'Salvando...';
-  const { data, error } = await db.from('skus').insert([{ nome, categoria }]).select();
-  btn.disabled = false; btn.textContent = '+ Adicionar';
-  if (error) { showToast('Erro: ' + error.message, 'error'); return; }
-  document.getElementById('sku-nome').value = '';
-  document.getElementById('sku-cat').value = '';
-  showToast('✓ SKU cadastrado!', 'success');
-  await loadSkus();
-}
-
-async function deleteSku(id) {
-  if (!confirm('Excluir este SKU?')) return;
-  const { error } = await db.from('skus').delete().eq('id', id);
-  if (error) { showToast('Erro ao excluir: ' + error.message, 'error'); return; }
-  showToast('SKU excluído', 'success');
-  await loadSkus();
-}
-
-function renderSkuList() {
-  const el = document.getElementById('sku-list');
-  document.getElementById('sku-count').textContent = allSkus.length;
-  if (!allSkus.length) { el.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Nenhum SKU cadastrado ainda</div>'; return; }
-  el.innerHTML = allSkus.map(s => `
-    <div class="sku-card">
-      <div class="sku-card-info">
-        <div class="sku-card-name">${s.nome}</div>
-        <div class="sku-card-cat">${s.categoria}</div>
-      </div>
-      <button class="sku-card-del" onclick="deleteSku('${s.id}')" title="Excluir">×</button>
-    </div>`).join('');
-}
-
-function renderSkuDropdown(query) {
-  const filtered = query
-    ? allSkus.filter(s => s.nome.toLowerCase().includes(query.toLowerCase()) || s.categoria.toLowerCase().includes(query.toLowerCase()))
-    : allSkus;
-  const el = document.getElementById('sku-dropdown');
-  if (!filtered.length) {
-    el.innerHTML = '<div class="sku-opt" style="color:var(--text3);cursor:default;">Nenhum SKU encontrado</div>';
-  } else {
-    el.innerHTML = filtered.map(s => `
-      <div class="sku-opt" onclick="selectSku('${s.id}','${s.nome}','${s.categoria}')">
-        <span class="sku-opt-name">${s.nome}</span>
-        <span class="sku-opt-cat">${s.categoria}</span>
-      </div>`).join('');
-  }
-}
-
-function filterSkus() {
-  const q = document.getElementById('f-sku-search').value;
-  renderSkuDropdown(q);
-  showSkuDropdown();
-}
-
-function showSkuDropdown() {
-  if (allSkus.length > 0) document.getElementById('sku-dropdown').classList.add('show');
-}
-function hideSkuDropdown() { document.getElementById('sku-dropdown').classList.remove('show'); }
-
-function selectSku(id, nome, categoria) {
-  selectedSku = { id, nome, categoria };
-  document.getElementById('f-sku-search').value = '';
-  document.getElementById('f-sku-search').placeholder = 'SKU selecionado ✓';
-  document.getElementById('sku-selected-name').textContent = `${nome} — ${categoria}`;
-  document.getElementById('sku-selected').style.display = 'flex';
-  hideSkuDropdown();
-}
-
-function clearSku() {
-  selectedSku = null;
-  document.getElementById('f-sku-search').value = '';
-  document.getElementById('f-sku-search').placeholder = 'Digite para buscar SKU cadastrado...';
-  document.getElementById('sku-selected').style.display = 'none';
-}
-
-// ── METRICS ──
+// ── MÉTRICAS ──
 function updateMetrics() {
-  const total = allData.length;
-  const prod = allData.reduce((s,r) => s + (r.quantidade||0), 0);
-  const colabs = [...new Set(allData.map(r => r.colaborador))].length;
-  const skuCount = {};
-  allData.forEach(r => { const k = r.nome_sku || r.sku; skuCount[k] = (skuCount[k]||0) + r.quantidade; });
-  const topSku = Object.entries(skuCount).sort((a,b)=>b[1]-a[1])[0];
-  document.getElementById('m-total').textContent = total;
-  document.getElementById('m-prod').textContent = prod.toLocaleString('pt-BR');
-  document.getElementById('m-colab').textContent = colabs;
-  document.getElementById('m-sku').textContent = topSku ? topSku[0] : '—';
+  const prod=allData.reduce((s,r)=>s+(r.quantidade||0),0);
+  const colabs=[...new Set(allData.map(r=>r.colaborador))].length;
+  const skuC={}; allData.forEach(r=>{const k=r.nome_sku||r.sku; skuC[k]=(skuC[k]||0)+r.quantidade;});
+  const topSku=Object.entries(skuC).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('m-total').textContent=allData.length;
+  document.getElementById('m-prod').textContent=prod.toLocaleString('pt-BR');
+  document.getElementById('m-colab').textContent=colabs;
+  document.getElementById('m-sku').textContent=topSku?topSku[0]:'—';
 }
 
+// ── HEATMAP ──
+function renderHeatmap() {
+  const now=new Date();
+  const year=now.getFullYear(), month=now.getMonth();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const firstDay=new Date(year,month,1).getDay(); // 0=Dom
+
+  // contar produção por dia
+  const prodByDay={};
+  allData.forEach(r=>{
+    if (!r.data) return;
+    const d=new Date(r.data+'T12:00:00');
+    if (d.getFullYear()===year && d.getMonth()===month) {
+      prodByDay[d.getDate()]=(prodByDay[d.getDate()]||0)+r.quantidade;
+    }
+  });
+
+  const maxVal=Math.max(...Object.values(prodByDay),1);
+
+  // montar grade (semanas como colunas, dias da semana como linhas)
+  // ordem: Dom, Seg, Ter, Qua, Qui, Sex, Sab
+  const dayLabels=['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];
+
+  // criar array de 7 linhas x N colunas (semanas)
+  const totalCells=firstDay+daysInMonth;
+  const numWeeks=Math.ceil(totalCells/7);
+
+  // cells[week][dow] = day number or null
+  const grid=[];
+  for (let w=0;w<numWeeks;w++) { grid.push(Array(7).fill(null)); }
+  for (let d=1;d<=daysInMonth;d++) {
+    const idx=firstDay+d-1;
+    const week=Math.floor(idx/7);
+    const dow=idx%7;
+    grid[week][dow]=d;
+  }
+
+  const getColor=(val)=>{
+    if (!val) return isDark?'rgba(255,255,255,0.05)':'#E5E2DC';
+    const pct=val/maxVal;
+    if (pct<0.25) return isDark?'rgba(234,88,12,0.25)':'rgba(234,88,12,0.2)';
+    if (pct<0.5)  return isDark?'rgba(234,88,12,0.5)':'rgba(234,88,12,0.4)';
+    if (pct<0.75) return isDark?'rgba(234,88,12,0.75)':'rgba(234,88,12,0.65)';
+    return isDark?'#F97316':'#EA580C';
+  };
+
+  const container=document.getElementById('heatmap-container');
+  container.innerHTML='';
+
+  // labels dias da semana
+  const labelsCol=document.createElement('div');
+  labelsCol.className='heatmap-labels-left';
+  dayLabels.forEach(l=>{
+    const span=document.createElement('div');
+    span.className='heatmap-day-label';
+    span.textContent=l;
+    labelsCol.appendChild(span);
+  });
+  container.appendChild(labelsCol);
+
+  // colunas por semana
+  grid.forEach((week,wi)=>{
+    const col=document.createElement('div');
+    col.className='heatmap-col';
+    // label semana
+    const wl=document.createElement('div');
+    wl.className='heatmap-week-label';
+    wl.textContent='S'+(wi+1);
+    col.appendChild(wl);
+    week.forEach((day,di)=>{
+      const cell=document.createElement('div');
+      cell.className='heatmap-cell';
+      const val=day?prodByDay[day]||0:0;
+      cell.style.background=day?getColor(val):'transparent';
+      if (day) cell.title=`Dia ${day}: ${val} unidades`;
+      col.appendChild(cell);
+    });
+    container.appendChild(col);
+  });
+
+  // legenda
+  const legendEl=document.getElementById('heatmap-legend');
+  const steps=[0,0.25,0.5,0.75,1];
+  legendEl.innerHTML=steps.map(p=>`<div class="heatmap-legend-cell" style="background:${p===0?(isDark?'rgba(255,255,255,0.05)':'#E5E2DC'):isDark?`rgba(234,88,12,${0.25+p*0.75})`:`rgba(234,88,12,${0.2+p*0.8})`}"></div>`).join('');
+}
+
+// ── LINHA DIÁRIA ──
+function buildLineChart() {
+  const now=new Date();
+  const year=now.getFullYear(), month=now.getMonth();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+
+  const prodByDay=Array(daysInMonth).fill(0);
+  allData.forEach(r=>{
+    if (!r.data) return;
+    const d=new Date(r.data+'T12:00:00');
+    if (d.getFullYear()===year && d.getMonth()===month) {
+      prodByDay[d.getDate()-1]+=r.quantidade;
+    }
+  });
+
+  const labels=Array.from({length:daysInMonth},(_,i)=>i+1);
+  const b=getBase();
+  const orColor=isDark?'#F97316':'#EA580C';
+
+  if (charts.line){charts.line.destroy();charts.line=null;}
+  charts.line=new Chart(document.getElementById('lineChart'),{
+    type:'line',
+    data:{
+      labels,
+      datasets:[{
+        label:'Produção',
+        data:prodByDay,
+        borderColor:orColor,
+        backgroundColor:isDark?'rgba(249,115,22,0.08)':'rgba(234,88,12,0.08)',
+        fill:true,
+        tension:.4,
+        pointRadius:3,
+        pointBackgroundColor:orColor,
+        pointBorderColor:'transparent',
+        borderWidth:2,
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.y+' unidades'}}},
+      scales:{
+        x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},
+        y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false},beginAtZero:true}
+      }
+    }
+  });
+}
+
+// ── META vs REALIZADO ──
+function renderMetaChart() {
+  const meta=parseInt(document.getElementById('meta-valor').value)||500;
+  const scores={};
+  // só mês atual
+  const now=new Date();
+  const ym=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  allData.forEach(r=>{
+    if (r.data&&r.data.startsWith(ym)) {
+      scores[r.colaborador]=(scores[r.colaborador]||0)+r.quantidade;
+    }
+  });
+  const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  const el=document.getElementById('meta-list');
+  if (!sorted.length) { el.innerHTML='<div class="empty-state">Nenhum dado no mês atual</div>'; return; }
+  el.innerHTML=sorted.map(([name,real])=>{
+    const pct=Math.min(Math.round(real/meta*100),100);
+    const over=real>=meta;
+    const barColor=over?(isDark?'#14B8A6':'#0D9488'):(real/meta>0.7?(isDark?'#F97316':'#EA580C'):(isDark?'#3B82F6':'#2563EB'));
+    return `<div class="meta-item">
+      <div class="meta-header">
+        <span class="meta-name">${name}</span>
+        <span class="meta-nums"><span class="meta-num-real" style="color:${barColor}">${real}</span> / ${meta} un. — <b style="color:${barColor}">${pct}%</b></span>
+      </div>
+      <div class="meta-bar-wrap">
+        <div class="meta-bar-real" style="width:${pct}%;background:${barColor}"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── TOP5 ──
 function renderTop5() {
-  const scores = {};
-  allData.forEach(r => { scores[r.colaborador] = (scores[r.colaborador]||0) + r.quantidade; });
-  const sorted = Object.entries(scores).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  const el = document.getElementById('top5-list');
-  if (!sorted.length) { el.innerHTML = '<div class="empty-state">Nenhum dado ainda</div>'; return; }
-  const max = sorted[0][1];
-  el.innerHTML = sorted.map(([name,pts],i) => `
+  const scores={};
+  allData.forEach(r=>{scores[r.colaborador]=(scores[r.colaborador]||0)+r.quantidade;});
+  const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const el=document.getElementById('top5-list');
+  if (!sorted.length){el.innerHTML='<div class="empty-state">Nenhum dado ainda</div>';return;}
+  const max=sorted[0][1];
+  el.innerHTML=sorted.map(([name,pts],i)=>`
     <div class="t5i">
       <div class="t5r ${i<3?'r'+(i+1):''}">${i+1}º</div>
       <div class="t5n">${name}</div>
@@ -602,128 +724,164 @@ function renderTop5() {
     </div>`).join('');
 }
 
+// ── PÓDIO ──
 function renderPodium() {
-  const scores = {};
-  allData.forEach(r => { scores[r.colaborador] = (scores[r.colaborador]||0) + r.quantidade; });
-  const sorted = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
-  const podiumEl = document.getElementById('podium');
-  const restEl = document.getElementById('rank-rest');
-  if (!sorted.length) { podiumEl.innerHTML='<div class="empty-state" style="width:100%">Nenhum dado ainda</div>'; restEl.innerHTML=''; return; }
-  const ini = n => n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
-  const [p1,p2,p3,...rest] = sorted;
-  podiumEl.innerHTML = `
+  const scores={};
+  allData.forEach(r=>{scores[r.colaborador]=(scores[r.colaborador]||0)+r.quantidade;});
+  const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  const podiumEl=document.getElementById('podium');
+  const restEl=document.getElementById('rank-rest');
+  if (!sorted.length){podiumEl.innerHTML='<div class="empty-state" style="width:100%">Nenhum dado ainda</div>';restEl.innerHTML='';return;}
+  const ini=n=>n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+  const [p1,p2,p3,...rest]=sorted;
+  podiumEl.innerHTML=`
     ${p2?`<div class="ps p2"><div class="pav">${ini(p2[0])}</div><div class="pn">${p2[0]}</div><div class="pp">${p2[1]} pts</div><div class="pb"><div class="ppos">2º</div></div></div>`:''}
     <div class="ps p1"><div class="pav"><span class="pcr">👑</span>${ini(p1[0])}</div><div class="pn">${p1[0]}</div><div class="pp">${p1[1]} pts</div><div class="pb"><div class="ppos">1º</div></div></div>
     ${p3?`<div class="ps p3"><div class="pav">${ini(p3[0])}</div><div class="pn">${p3[0]}</div><div class="pp">${p3[1]} pts</div><div class="pb"><div class="ppos">3º</div></div></div>`:''}`;
-  restEl.innerHTML = rest.map(([n,pts],i) => `
+  restEl.innerHTML=rest.map(([n,pts],i)=>`
     <div class="rri"><div class="rrp">${i+4}º</div><div class="rrn">${n}</div><div class="rrs">${pts} pts</div></div>`).join('');
 }
 
+// ── TOP10 ──
 function buildTop10Chart() {
-  const skuTotals = {};
-  const skuCatMap = {};
-  allData.forEach(r => {
-    const k = r.nome_sku || r.sku;
-    skuTotals[k] = (skuTotals[k]||0) + r.quantidade;
-    skuCatMap[k] = r.sku;
-  });
-  const sorted = Object.entries(skuTotals).sort((a,b)=>b[1]-a[1]).slice(0,10);
-  if (charts.top10) { charts.top10.destroy(); charts.top10=null; }
-  const b = getBase();
-  const colorMap = { 'Capas':isDark?'#F97316':'#EA580C','Películas':isDark?'#F472B6':'#DB2777','Acessórios':isDark?'#14B8A6':'#0D9488' };
-  charts.top10 = new Chart(document.getElementById('top10Chart'), {
+  const skuT={},skuC={};
+  allData.forEach(r=>{const k=r.nome_sku||r.sku;skuT[k]=(skuT[k]||0)+r.quantidade;skuC[k]=r.sku;});
+  const sorted=Object.entries(skuT).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  if(charts.top10){charts.top10.destroy();charts.top10=null;}
+  const b=getBase();
+  const cmap={'Capas':isDark?'#F97316':'#EA580C','Películas':isDark?'#F472B6':'#DB2777','Acessórios':isDark?'#14B8A6':'#0D9488'};
+  charts.top10=new Chart(document.getElementById('top10Chart'),{
     type:'bar',
-    data:{ labels:sorted.map(d=>d[0]), datasets:[{ label:'Unidades', data:sorted.map(d=>d[1]), backgroundColor:sorted.map(([k])=>colorMap[skuCatMap[k]]||'#64748B'), borderRadius:5, barPercentage:.72 }] },
-    options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    data:{labels:sorted.map(d=>d[0]),datasets:[{label:'Unidades',data:sorted.map(d=>d[1]),backgroundColor:sorted.map(([k])=>cmap[skuC[k]]||'#64748B'),borderRadius:5,barPercentage:.72}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.x+' unidades'}}},
-      scales:{ x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}}, y:{grid:{display:false},ticks:{color:isDark?'#E2E8F0':'#111111',font:{size:11,weight:'500'}},border:{display:false}} }
+      scales:{x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},y:{grid:{display:false},ticks:{color:isDark?'#E2E8F0':'#111111',font:{size:11,weight:'500'}},border:{display:false}}}
     }
   });
-  document.getElementById('top10-tbody').innerHTML = sorted.map(([sku,vol],i) => `
+  document.getElementById('top10-tbody').innerHTML=sorted.map(([sku,vol],i)=>`
     <tr>
       <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:${i<3?['#D97706','#64748B','#92400E'][i]:'var(--text3)'}">${i+1}º</td>
       <td style="font-weight:500">${sku}</td>
-      <td><span class="badge ${badgeClass(skuCatMap[sku])}">${skuCatMap[sku]||'—'}</span></td>
+      <td><span class="badge ${bc(skuC[sku])}">${skuC[sku]||'—'}</span></td>
       <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--or)">${vol}</td>
     </tr>`).join('');
 }
 
+// ── CHARTS BASE ──
 function rebuildCharts() {
-  const b = getBase();
-  if (charts.sku){charts.sku.destroy();charts.sku=null;}
-  if (charts.pizza){charts.pizza.destroy();charts.pizza=null;}
-  const months = [];
-  for (let i=5;i>=0;i--) { const d=new Date(); d.setMonth(d.getMonth()-i); months.push({label:d.toLocaleString('pt-BR',{month:'short'}),key:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`}); }
-  const skuTypes = ['Capas','Películas','Acessórios'];
-  const skuColors = isDark?['#F97316','#EC4899','#14B8A6']:['#EA580C','#DB2777','#0D9488'];
-  charts.sku = new Chart(document.getElementById('skuChart'), {
+  const b=getBase();
+  ['sku','pizza','line'].forEach(k=>{if(charts[k]){charts[k].destroy();charts[k]=null;}});
+  const months=[];
+  for(let i=5;i>=0;i--){const d=new Date();d.setMonth(d.getMonth()-i);months.push({label:d.toLocaleString('pt-BR',{month:'short'}),key:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`});}
+  const skuTypes=['Capas','Películas','Acessórios'];
+  const skuColors=isDark?['#F97316','#EC4899','#14B8A6']:['#EA580C','#DB2777','#0D9488'];
+  charts.sku=new Chart(document.getElementById('skuChart'),{
     type:'bar',
-    data:{ labels:months.map(m=>m.label), datasets:skuTypes.map((sku,si)=>({ label:sku, data:months.map(m=>allData.filter(r=>r.sku===sku&&r.data&&r.data.startsWith(m.key)).reduce((s,r)=>s+r.quantidade,0)), backgroundColor:skuColors[si], borderRadius:3, barPercentage:.7 })) },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}}, scales:{x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}},y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}}} }
+    data:{labels:months.map(m=>m.label),datasets:skuTypes.map((sku,si)=>({label:sku,data:months.map(m=>allData.filter(r=>r.sku===sku&&r.data&&r.data.startsWith(m.key)).reduce((s,r)=>s+r.quantidade,0)),backgroundColor:skuColors[si],borderRadius:3,barPercentage:.7}))},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},scales:{x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}},y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}}}}
   });
-  const tipoCount = {Reposição:0,Armazenamento:0,Movimentação:0,Legendas:0};
-  allData.forEach(r=>{if(tipoCount[r.tipo]!==undefined)tipoCount[r.tipo]+=r.quantidade;});
-  const pieColors = isDark?['#14B8A6','#3B82F6','#A855F7','#F97316']:['#0D9488','#2563EB','#7C3AED','#EA580C'];
-  charts.pizza = new Chart(document.getElementById('pizzaChart'), {
+  const tipoC={Reposição:0,Armazenamento:0,Movimentação:0,Legendas:0};
+  allData.forEach(r=>{if(tipoC[r.tipo]!==undefined)tipoC[r.tipo]+=r.quantidade;});
+  const pieColors=isDark?['#14B8A6','#3B82F6','#A855F7','#F97316']:['#0D9488','#2563EB','#7C3AED','#EA580C'];
+  charts.pizza=new Chart(document.getElementById('pizzaChart'),{
     type:'doughnut',
-    data:{ labels:Object.keys(tipoCount), datasets:[{data:Object.values(tipoCount),backgroundColor:pieColors,borderWidth:2,borderColor:b.border,hoverOffset:4}] },
-    options:{ responsive:true, maintainAspectRatio:false, cutout:'62%', plugins:{legend:{display:false}} }
+    data:{labels:Object.keys(tipoC),datasets:[{data:Object.values(tipoC),backgroundColor:pieColors,borderWidth:2,borderColor:b.border,hoverOffset:4}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false}}}
   });
-  if (document.getElementById('page-top10').classList.contains('active')) buildTop10Chart();
+  buildLineChart();
+  renderHeatmap();
+  if(document.getElementById('page-top10').classList.contains('active')) buildTop10Chart();
+}
+
+// ── SKUs ──
+async function loadSkus() {
+  const {data,error}=await db.from('skus').select('*').order('nome');
+  allSkus=error?[]:(data||[]);
+  renderSkuList(); renderSkuDropdown('');
+}
+async function addSku() {
+  const nome=document.getElementById('sku-nome').value.trim();
+  const nomenclatura=document.getElementById('sku-nomenclatura').value.trim();
+  const categoria=document.getElementById('sku-cat').value;
+  if(!nome||!categoria){showToast('Preencha nome e categoria','error');return;}
+  const btn=document.getElementById('btn-add-sku');
+  btn.disabled=true;btn.textContent='Salvando...';
+  const {error}=await db.from('skus').insert([{nome,nomenclatura:nomenclatura||null,categoria}]);
+  btn.disabled=false;btn.textContent='+ Adicionar';
+  if(error){showToast('Erro: '+error.message,'error');return;}
+  document.getElementById('sku-nome').value='';
+  document.getElementById('sku-nomenclatura').value='';
+  document.getElementById('sku-cat').value='';
+  showToast('✓ SKU cadastrado!','success');await loadSkus();
+}
+async function deleteSku(id){
+  if(!confirm('Excluir este SKU?'))return;
+  const {error}=await db.from('skus').delete().eq('id',id);
+  if(error){showToast('Erro: '+error.message,'error');return;}
+  showToast('SKU excluído','success');await loadSkus();
+}
+function renderSkuList(){
+  const el=document.getElementById('sku-list');
+  document.getElementById('sku-count').textContent=allSkus.length;
+  if(!allSkus.length){el.innerHTML='<div class="empty-state" style="grid-column:1/-1">Nenhum SKU cadastrado ainda</div>';return;}
+  el.innerHTML=allSkus.map(s=>`<div class="sku-card"><div class="sku-card-info"><div class="sku-card-name">${s.nome}</div><div style="display:flex;gap:6px;align-items:center;margin-top:2px;">${s.nomenclatura?`<span style="font-size:10px;font-weight:600;color:var(--or);background:var(--or-bg);border:1px solid var(--or-bdr);padding:1px 6px;border-radius:4px;">${s.nomenclatura}</span>`:''}<div class="sku-card-cat">${s.categoria}</div></div></div><button class="sku-card-del" onclick="deleteSku('${s.id}')">×</button></div>`).join('');
+}
+function renderSkuDropdown(q){
+  const filtered=q?allSkus.filter(s=>s.nome.toLowerCase().includes(q.toLowerCase())||s.categoria.toLowerCase().includes(q.toLowerCase())):allSkus;
+  const el=document.getElementById('sku-dropdown');
+  el.innerHTML=filtered.length?filtered.map(s=>`<div class="sku-opt" onclick="selectSku('${s.id}','${s.nome.replace(/'/g,"\\'")}','${s.categoria}','${(s.nomenclatura||'').replace(/'/g,"\\'")}')"><span class="sku-opt-name">${s.nome}${s.nomenclatura?` <span style="font-size:9px;color:var(--or);font-weight:600;">${s.nomenclatura}</span>`:''}</span><span class="sku-opt-cat">${s.categoria}</span></div>`).join(''):'<div class="sku-opt" style="color:var(--text3);cursor:default;">Nenhum SKU encontrado</div>';
+}
+function filterSkus(){renderSkuDropdown(document.getElementById('f-sku-search').value);showSkuDropdown();}
+function showSkuDropdown(){if(allSkus.length>0)document.getElementById('sku-dropdown').classList.add('show');}
+function hideSkuDropdown(){document.getElementById('sku-dropdown').classList.remove('show');}
+function selectSku(id,nome,categoria,nomenclatura){
+  selectedSku={id,nome,categoria,nomenclatura};
+  document.getElementById('f-sku-search').value='';
+  document.getElementById('f-sku-search').placeholder='SKU selecionado ✓';
+  document.getElementById('sku-selected-name').textContent=`${nome}${nomenclatura?' ('+nomenclatura+')':''} — ${categoria}`;
+  document.getElementById('sku-selected').style.display='flex';
+  hideSkuDropdown();
+}
+function clearSku(){
+  selectedSku=null;
+  document.getElementById('f-sku-search').value='';
+  document.getElementById('f-sku-search').placeholder='Digite para buscar SKU cadastrado...';
+  document.getElementById('sku-selected').style.display='none';
 }
 
 // ── UI ──
-const PAGES = {
+const PAGES={
   dashboard:{title:'Dashboard',sub:'visão geral do armazém'},
   registro:{title:'Registro de Atividade',sub:'cadastro de produção e histórico'},
   ranking:{title:'Ranking de Eficiência',sub:'classificação dos colaboradores'},
-  'top10':{title:'Top 10 SKUs',sub:'produtos mais saídos'},
+  top10:{title:'Top 10 SKUs',sub:'produtos mais saídos'},
   'cadastro-sku':{title:'Cadastro de SKU',sub:'gerencie os SKUs ativos da empresa'},
 };
-
-function showPage(id, btn) {
+function showPage(id,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-nav-item').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
-  const p = PAGES[id];
-  document.getElementById('tb-title').textContent = p.title;
-  document.getElementById('tb-sub').textContent = p.sub;
-  if (id==='top10') setTimeout(buildTop10Chart,80);
+  const p=PAGES[id];
+  document.getElementById('tb-title').textContent=p.title;
+  document.getElementById('tb-sub').textContent=p.sub;
+  if(id==='top10') setTimeout(buildTop10Chart,80);
 }
-
-function toggleRadio(gid,el) {
-  document.querySelectorAll('#'+gid+' .rb').forEach(b=>b.classList.remove('sel'));
-  el.classList.add('sel');
-}
-
-function toggleTheme() {
-  isDark = !isDark;
+function toggleRadio(gid,el){document.querySelectorAll('#'+gid+' .rb').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');}
+function toggleTheme(){
+  isDark=!isDark;
   document.documentElement.setAttribute('data-theme',isDark?'dark':'');
-  document.getElementById('tlabel').textContent = isDark?'Tema Escuro':'Tema Claro';
+  document.getElementById('tlabel').textContent=isDark?'Tema Escuro':'Tema Claro';
   setTimeout(rebuildCharts,50);
 }
-
-function badgeClass(t) {
-  const m={'Reposição':'b-rep','Armazenamento':'b-arm','Movimentação':'b-mov','Legendas':'b-leg','Capas':'b-cap','Películas':'b-pel','Acessórios':'b-ace'};
-  return m[t]||'';
-}
-
-function getBase() {
-  return isDark?{grid:'rgba(255,255,255,0.05)',tick:'#64748B',border:'#111827'}:{grid:'rgba(0,0,0,0.04)',tick:'#999490',border:'#FFFFFF'};
-}
-
-function showLoading(show) { document.getElementById('loading').classList.toggle('hide',!show); }
-
-function showToast(msg,type='success') {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.className = 'toast '+type+' show';
-  setTimeout(()=>t.classList.remove('show'),3000);
-}
+function bc(t){const m={'Reposição':'b-rep','Armazenamento':'b-arm','Movimentação':'b-mov','Legendas':'b-leg','Capas':'b-cap','Películas':'b-pel','Acessórios':'b-ace'};return m[t]||'';}
+function getBase(){return isDark?{grid:'rgba(255,255,255,0.05)',tick:'#64748B',border:'#111827'}:{grid:'rgba(0,0,0,0.04)',tick:'#999490',border:'#FFFFFF'};}
+function showLoading(show){document.getElementById('loading').classList.toggle('hide',!show);}
+function showToast(msg,type='success'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';setTimeout(()=>t.classList.remove('show'),3000);}
 
 // ── START ──
-document.getElementById('f-data').valueAsDate = new Date();
-document.getElementById('tb-date').textContent = new Date().toLocaleString('pt-BR',{month:'long',year:'numeric'});
+document.getElementById('f-data').valueAsDate=new Date();
+document.getElementById('tb-date').textContent=new Date().toLocaleString('pt-BR',{month:'long',year:'numeric'});
 init();
 </script>
 </body>
