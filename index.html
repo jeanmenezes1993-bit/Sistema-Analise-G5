@@ -1,6 +1,13 @@
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Análise G5</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --or:#EA580C;--or-bg:rgba(234,88,12,0.08);--or-bdr:rgba(234,88,12,0.2);
@@ -15,51 +22,35 @@
   --metric:#1E293B;--teal:#14B8A6;--blue:#3B82F6;--purple:#A855F7;
 }
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;transition:background .3s,color .3s;}
-.layout{display:flex;min-height:960px;}
+.layout{display:flex;min-height:100vh;}
 
-.sidebar{width:210px;flex-shrink:0;background:var(--sb);border-right:1px solid var(--bdr);display:flex;flex-direction:column;transition:background .3s,border-color .3s;}
-.sb-head{padding:20px 16px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
+/* SIDEBAR */
+.sidebar{width:210px;flex-shrink:0;background:var(--sb);border-right:1px solid var(--bdr);display:flex;flex-direction:column;transition:background .3s,border-color .3s;position:fixed;height:100vh;z-index:10;}
+.sb-head{padding:20px 16px 14px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
 .sb-brand{display:flex;flex-direction:column;gap:1px;}
 .sb-brand-sub{font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--text3);}
 .sb-brand-name{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:var(--text);letter-spacing:1px;text-transform:uppercase;line-height:1;}
 .sb-brand-name span{color:var(--or);}
-
 .sb-section{padding:16px 12px 4px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);}
-
-.sb-nav-item{
-  display:flex;align-items:center;gap:0;
-  margin:3px 8px;border-radius:9px;
-  cursor:pointer;overflow:hidden;
-  border:1.5px solid transparent;
-  transition:border-color .18s, background .18s;
-  background:none;width:calc(100% - 16px);
-  text-align:left;font-family:'Inter',sans-serif;
-  box-shadow:none;
-  outline:none;
-}
-.sb-nav-item:hover{background:var(--metric);box-shadow:none;}
+.sb-nav-item{display:flex;align-items:center;gap:0;margin:3px 8px;border-radius:9px;cursor:pointer;overflow:hidden;border:1.5px solid transparent;transition:border-color .18s,background .18s;background:none;width:calc(100% - 16px);text-align:left;font-family:'Inter',sans-serif;box-shadow:none;outline:none;}
+.sb-nav-item:hover{background:var(--metric);}
 .sb-nav-item.active{border-color:var(--or-bdr);background:var(--or-bg);}
-.sb-nav-item:hover:not(.active){background:var(--metric);}
-
 .sb-nav-icon{width:36px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;color:var(--text3);transition:color .18s;}
-.sb-nav-item.active .sb-nav-icon{color:var(--or);}
-.sb-nav-item:hover:not(.active) .sb-nav-icon{color:var(--text);}
-
+.sb-nav-item.active .sb-nav-icon,.sb-nav-item:hover .sb-nav-icon{color:var(--or);}
 .sb-nav-inner{flex:1;padding:0 8px 0 0;height:40px;display:flex;align-items:center;justify-content:space-between;}
-.sb-nav-label{font-size:13px;font-weight:600;color:#111111;transition:color .18s;}
+.sb-nav-label{font-size:13px;font-weight:600;color:#111111;}
 [data-theme="dark"] .sb-nav-label{color:#E2E8F0;}
 .sb-nav-item.active .sb-nav-label{color:var(--or);}
 .sb-badge{font-size:10px;font-weight:700;background:var(--or);color:#fff;padding:1px 7px;border-radius:20px;font-family:'Rajdhani',sans-serif;}
-
 .sb-footer{margin-top:auto;padding:14px 16px;border-top:1px solid var(--bdr);}
 .sb-user{display:flex;align-items:center;gap:10px;}
 .sb-av{width:34px;height:34px;border-radius:50%;background:var(--or-bg);border:2px solid var(--or-bdr);display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;color:var(--or);}
 .sb-uname{font-size:12px;font-weight:600;color:var(--text);}
 .sb-urole{font-size:10px;color:var(--text3);}
 
-.main{flex:1;display:flex;flex-direction:column;min-width:0;}
-.topbar{height:50px;background:var(--card);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 20px;gap:10px;transition:background .3s,border-color .3s;}
-.topbar i{font-size:16px;color:var(--or);}
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;min-width:0;margin-left:210px;}
+.topbar{height:50px;background:var(--card);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 20px;gap:10px;transition:background .3s,border-color .3s;position:sticky;top:0;z-index:9;}
 .tb-title{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;}
 .tb-sub{font-size:11px;color:var(--text3);}
 .tb-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
@@ -67,14 +58,22 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .tb-date{font-size:11px;color:var(--text3);}
 .tb-toggle{display:flex;align-items:center;gap:8px;padding:5px 12px;background:var(--metric);border:1px solid var(--bdr);border-radius:20px;cursor:pointer;}
 .tb-toggle-label{font-size:11px;font-weight:500;color:var(--text2);}
-.tb-tt{width:28px;height:16px;border-radius:8px;background:var(--bdr);border:1px solid var(--bdr);position:relative;transition:background .3s;flex-shrink:0;}
+.tb-tt{width:28px;height:16px;border-radius:8px;background:var(--bdr);position:relative;transition:background .3s;flex-shrink:0;}
 .tb-tt-k{position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:var(--or);transition:transform .25s;}
 [data-theme="dark"] .tb-tt-k{transform:translateX(12px);}
 [data-theme="dark"] .tb-tt{background:rgba(249,115,22,0.25);}
 
-.content{padding:18px;flex:1;position:relative;}
+.content{padding:18px;flex:1;}
 .page{display:none;}.page.active{display:block;}
 
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.8);display:flex;align-items:center;justify-content:center;z-index:999;transition:opacity .3s;}
+[data-theme="dark"] .loading-overlay{background:rgba(10,15,30,0.8);}
+.loading-overlay.hide{opacity:0;pointer-events:none;}
+.spinner{width:32px;height:32px;border:3px solid var(--bdr);border-top-color:var(--or);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* METRICS */
 .metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
 .mc{background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:14px;position:relative;overflow:hidden;transition:background .3s;}
 .mc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--or);}
@@ -90,6 +89,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .li{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text2);}
 .ld{width:7px;height:7px;border-radius:2px;flex-shrink:0;}
 
+/* TOP5 */
 .t5{display:flex;flex-direction:column;gap:6px;}
 .t5i{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--metric);border:1px solid var(--bdr);border-radius:7px;}
 .t5r{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--text3);min-width:18px;}
@@ -99,6 +99,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .t5b{height:100%;border-radius:3px;background:var(--or);}
 .t5v{font-size:11px;color:var(--or);font-weight:600;min-width:28px;text-align:right;font-family:'Rajdhani',sans-serif;}
 
+/* PODIUM */
 .podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;height:170px;margin-bottom:14px;}
 .ps{display:flex;flex-direction:column;align-items:center;gap:6px;}
 .pav{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;border:2px solid;position:relative;}
@@ -121,6 +122,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .rrc{font-size:10px;color:var(--text2);background:var(--bdr);border-radius:4px;padding:2px 6px;}
 .rrs{color:var(--or);font-weight:600;font-family:'Rajdhani',sans-serif;}
 
+/* FORM */
 .fc{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:24px;margin-bottom:14px;}
 .ft{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--bdr);}
 .fg{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
@@ -134,7 +136,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .rb.sel{background:var(--or-bg);border-color:var(--or-bdr);color:var(--or);font-weight:500;}
 .bts{background:var(--or);border:none;border-radius:8px;padding:10px 24px;color:white;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;margin-top:14px;transition:opacity .2s;}
 .bts:hover{opacity:.88;}
+.bts:disabled{opacity:.5;cursor:not-allowed;}
 
+/* TABLE */
 .rt{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed;}
 .rt th{text-align:left;padding:7px 10px;color:var(--text3);font-size:9px;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--bdr);font-weight:500;}
 .rt td{padding:9px 10px;border-bottom:1px solid var(--bdr);color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -154,9 +158,20 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 [data-theme="dark"] .b-pel{background:rgba(236,72,153,.15);color:#F472B6;}
 [data-theme="dark"] .b-ace{background:rgba(34,197,94,.15);color:#4ADE80;}
 
-.toast{position:absolute;bottom:16px;right:16px;background:var(--or);color:white;padding:10px 16px;border-radius:8px;font-size:12px;font-weight:500;opacity:0;transform:translateY(6px);transition:all .3s;pointer-events:none;z-index:99;}
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;border-radius:8px;font-size:12px;font-weight:500;opacity:0;transform:translateY(6px);transition:all .3s;pointer-events:none;z-index:999;color:white;}
 .toast.show{opacity:1;transform:translateY(0);}
+.toast.success{background:#16A34A;}
+.toast.error{background:#DC2626;}
+
+.empty-state{text-align:center;padding:32px;color:var(--text3);font-size:12px;}
 </style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loading">
+  <div class="spinner"></div>
+</div>
 
 <div class="layout">
   <aside class="sidebar">
@@ -166,34 +181,31 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         <div class="sb-brand-name"><span>G5</span></div>
       </div>
     </div>
-
     <div class="sb-section">Principal</div>
     <button class="sb-nav-item active" onclick="showPage('dashboard',this)">
-      <div class="sb-nav-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
-      <div class="sb-nav-inner"><span class="sb-nav-label">Dashboard</span><span class="sb-badge">9</span></div>
+      <div class="sb-nav-icon">&#9641;</div>
+      <div class="sb-nav-inner"><span class="sb-nav-label">Dashboard</span><span class="sb-badge" id="badge-total">0</span></div>
     </button>
     <button class="sb-nav-item" onclick="showPage('registro',this)">
-      <div class="sb-nav-icon"><i class="ti ti-plus" aria-hidden="true"></i></div>
+      <div class="sb-nav-icon">&#43;</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Registro</span></div>
     </button>
-
     <div class="sb-section">Análise</div>
     <button class="sb-nav-item" onclick="showPage('ranking',this)">
-      <div class="sb-nav-icon"><i class="ti ti-trophy" aria-hidden="true"></i></div>
+      <div class="sb-nav-icon">&#9733;</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Ranking</span></div>
     </button>
     <button class="sb-nav-item" onclick="showPage('atividades',this)">
-      <div class="sb-nav-icon"><i class="ti ti-list" aria-hidden="true"></i></div>
+      <div class="sb-nav-icon">&#9776;</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Atividades</span></div>
     </button>
     <button class="sb-nav-item" onclick="showPage('top10',this)">
-      <div class="sb-nav-icon"><i class="ti ti-star" aria-hidden="true"></i></div>
+      <div class="sb-nav-icon">&#9650;</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Top 10 SKUs</span></div>
     </button>
-
     <div class="sb-footer">
       <div class="sb-user">
-        <div class="sb-av">AD</div>
+        <div class="sb-av">G5</div>
         <div>
           <div class="sb-uname">Admin</div>
           <div class="sb-urole">Gerente Geral</div>
@@ -204,12 +216,12 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 
   <div class="main">
     <div class="topbar">
-      <i class="ti ti-chart-bar" aria-hidden="true"></i>
+      <span style="font-size:16px;color:var(--or)">&#9641;</span>
       <span class="tb-title" id="tb-title">Dashboard</span>
       <span class="tb-sub" id="tb-sub">visão geral do armazém</span>
       <div class="tb-right">
         <div class="tb-dot"></div>
-        <span class="tb-date">Junho 2025</span>
+        <span class="tb-date" id="tb-date"></span>
         <div class="tb-toggle" onclick="toggleTheme()">
           <span class="tb-toggle-label" id="tlabel">Tema Claro</span>
           <div class="tb-tt"><div class="tb-tt-k"></div></div>
@@ -219,17 +231,18 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 
     <div class="content">
 
+      <!-- DASHBOARD -->
       <div class="page active" id="page-dashboard">
         <div class="metrics-row">
-          <div class="mc"><div class="mc-label">Total Atividades</div><div class="mc-val">248</div><div class="mc-sub">↑ +12% este mês</div></div>
-          <div class="mc"><div class="mc-label">Produção Total</div><div class="mc-val">1.840</div><div class="mc-sub">unidades registradas</div></div>
-          <div class="mc"><div class="mc-label">Colaboradores</div><div class="mc-val">9</div><div class="mc-sub">ativos este mês</div></div>
-          <div class="mc"><div class="mc-label">SKU Destaque</div><div class="mc-val" style="font-size:18px;">Película</div><div class="mc-sub">↑ 42% do volume</div></div>
+          <div class="mc"><div class="mc-label">Total Atividades</div><div class="mc-val" id="m-total">—</div><div class="mc-sub">registros no banco</div></div>
+          <div class="mc"><div class="mc-label">Produção Total</div><div class="mc-val" id="m-prod">—</div><div class="mc-sub">unidades registradas</div></div>
+          <div class="mc"><div class="mc-label">Colaboradores</div><div class="mc-val" id="m-colab">—</div><div class="mc-sub">ativos este mês</div></div>
+          <div class="mc"><div class="mc-label">SKU Destaque</div><div class="mc-val" id="m-sku" style="font-size:16px;">—</div><div class="mc-sub">maior volume</div></div>
         </div>
         <div class="grid-3">
           <div class="cc">
             <div class="ct">SKU por Mês</div><div class="cs">volume mensal por categoria</div>
-            <div style="position:relative;height:190px;"><canvas id="skuChart" role="img" aria-label="SKU mensal">Gráfico SKU.</canvas></div>
+            <div style="position:relative;height:190px;"><canvas id="skuChart"></canvas></div>
             <div class="leg">
               <div class="li"><div class="ld" style="background:#EA580C"></div>Capas</div>
               <div class="li"><div class="ld" style="background:#DB2777"></div>Películas</div>
@@ -238,45 +251,22 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
           </div>
           <div class="cc">
             <div class="ct">Categorias</div><div class="cs">distribuição por tipo</div>
-            <div style="position:relative;height:155px;"><canvas id="pizzaChart" role="img" aria-label="Categorias">Gráfico pizza.</canvas></div>
+            <div style="position:relative;height:155px;"><canvas id="pizzaChart"></canvas></div>
             <div class="leg" style="margin-top:10px;">
-              <div class="li"><div class="ld" style="background:#0D9488"></div>Reposição 35%</div>
-              <div class="li"><div class="ld" style="background:#2563EB"></div>Armazenamento 28%</div>
-              <div class="li"><div class="ld" style="background:#7C3AED"></div>Movimentação 22%</div>
-              <div class="li"><div class="ld" style="background:#EA580C"></div>Legendas 15%</div>
+              <div class="li"><div class="ld" style="background:#0D9488"></div>Reposição</div>
+              <div class="li"><div class="ld" style="background:#2563EB"></div>Armazenamento</div>
+              <div class="li"><div class="ld" style="background:#7C3AED"></div>Movimentação</div>
+              <div class="li"><div class="ld" style="background:#EA580C"></div>Legendas</div>
             </div>
           </div>
           <div class="cc">
             <div class="ct">Top 5</div><div class="cs">colaboradores por volume</div>
-            <div class="t5" id="top5-list"></div>
+            <div class="t5" id="top5-list"><div class="empty-state">Carregando...</div></div>
           </div>
         </div>
       </div>
 
-      <div class="page" id="page-top10">
-        <div class="cc">
-          <div class="ct">Top 10 SKUs — Mais Saídos no Mês</div>
-          <div class="cs">ranking por volume de saída — junho 2025</div>
-          <div style="position:relative;height:360px;">
-            <canvas id="top10Chart" role="img" aria-label="Top 10 SKUs">Gráfico Top 10 SKUs.</canvas>
-          </div>
-          <div class="leg" style="margin-top:12px;">
-            <div class="li"><div class="ld" style="background:#EA580C"></div>Capas</div>
-            <div class="li"><div class="ld" style="background:#DB2777"></div>Películas</div>
-            <div class="li"><div class="ld" style="background:#0D9488"></div>Acessórios</div>
-          </div>
-        </div>
-        <div style="margin-top:12px;">
-          <div class="cc">
-            <div class="ct">Detalhamento</div><div class="cs">posição, SKU, categoria e volume</div>
-            <table class="rt">
-              <thead><tr><th style="width:36px;">#</th><th>SKU</th><th>Categoria</th><th>Unidades</th><th>Variação</th></tr></thead>
-              <tbody id="top10-tbody"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
+      <!-- REGISTRO -->
       <div class="page" id="page-registro">
         <div class="fc">
           <div class="ft">Registrar Atividade</div>
@@ -299,217 +289,293 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
               </div>
             </div>
             <div class="fgr"><div class="fl">Quantidade</div><input class="fi" type="number" id="f-qtd" placeholder="Ex: 150" min="1"></div>
-            <div class="fgr" style="align-self:flex-end;"><button class="bts" onclick="submitForm()">Registrar</button></div>
+            <div class="fgr" style="align-self:flex-end;"><button class="bts" id="btn-registrar" onclick="submitForm()">Registrar</button></div>
           </div>
         </div>
       </div>
 
+      <!-- RANKING -->
       <div class="page" id="page-ranking">
         <div class="cc">
           <div class="ct">Ranking de Eficiência</div><div class="cs">classificação geral por produtividade</div>
-          <div class="podium" id="podium"></div>
+          <div class="podium" id="podium"><div class="empty-state" style="width:100%">Carregando...</div></div>
           <div class="rr" id="rank-rest"></div>
         </div>
       </div>
 
+      <!-- ATIVIDADES -->
       <div class="page" id="page-atividades">
         <div class="cc">
-          <div class="ct">Atividades Recentes</div><div class="cs">histórico de registros</div>
+          <div class="ct">Atividades Recentes</div><div class="cs">histórico de registros do banco</div>
           <table class="rt">
             <thead><tr><th>Colaborador</th><th>Tipo</th><th>SKU</th><th>Qtd</th><th>Data</th></tr></thead>
-            <tbody id="recent-tbody"></tbody>
+            <tbody id="recent-tbody"><tr><td colspan="5" class="empty-state">Carregando...</td></tr></tbody>
           </table>
         </div>
       </div>
 
-      <div class="toast" id="toast">✓ Atividade registrada!</div>
+      <!-- TOP 10 -->
+      <div class="page" id="page-top10">
+        <div class="cc">
+          <div class="ct">Top 10 SKUs — Mais Saídos</div><div class="cs">ranking por volume total registrado</div>
+          <div style="position:relative;height:360px;"><canvas id="top10Chart"></canvas></div>
+          <div class="leg" style="margin-top:12px;">
+            <div class="li"><div class="ld" style="background:#EA580C"></div>Capas</div>
+            <div class="li"><div class="ld" style="background:#DB2777"></div>Películas</div>
+            <div class="li"><div class="ld" style="background:#0D9488"></div>Acessórios</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;">
+          <div class="cc">
+            <div class="ct">Detalhamento</div><div class="cs">posição, SKU, categoria e volume</div>
+            <table class="rt">
+              <thead><tr><th style="width:36px;">#</th><th>SKU</th><th>Categoria</th><th>Unidades</th></tr></thead>
+              <tbody id="top10-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<div class="toast" id="toast"></div>
+
 <script>
-const TOP10_DATA=[
-  {sku:'Película Fosca 6D',cat:'Películas',vol:540,var:'+18%'},
-  {sku:'Capa Anti-Impacto',cat:'Capas',vol:487,var:'+12%'},
-  {sku:'Película Hydrogel',cat:'Películas',vol:432,var:'+9%'},
-  {sku:'Capa Silicone Slim',cat:'Capas',vol:398,var:'+21%'},
-  {sku:'Película UV 3D',cat:'Películas',vol:361,var:'+7%'},
-  {sku:'Suporte Veicular',cat:'Acessórios',vol:314,var:'+15%'},
-  {sku:'Capa Carteira',cat:'Capas',vol:289,var:'-3%'},
-  {sku:'Cabo USB-C 2m',cat:'Acessórios',vol:256,var:'+5%'},
-  {sku:'Película Privacidade',cat:'Películas',vol:221,var:'+11%'},
-  {sku:'Capa Militar',cat:'Capas',vol:198,var:'+8%'},
-];
-const COLABS=[
-  {name:'Rafael M.',pts:312,sku:'Capas'},{name:'Camila S.',pts:287,sku:'Películas'},
-  {name:'Lucas B.',pts:261,sku:'Acessórios'},{name:'Fernanda A.',pts:234,sku:'Películas'},
-  {name:'Thiago P.',pts:198,sku:'Capas'},{name:'Juliana R.',pts:175,sku:'Películas'},
-  {name:'Diego C.',pts:148,sku:'Acessórios'},{name:'Amanda F.',pts:122,sku:'Capas'},
-  {name:'Bruno L.',pts:103,sku:'Acessórios'},
-];
-const SEED=[
-  {colab:'Rafael M.',tipo:'Reposição',sku:'Capas',qtd:85,data:'2025-06-28'},
-  {colab:'Camila S.',tipo:'Armazenamento',sku:'Películas',qtd:120,data:'2025-06-27'},
-  {colab:'Lucas B.',tipo:'Movimentação',sku:'Acessórios',qtd:60,data:'2025-06-27'},
-  {colab:'Fernanda A.',tipo:'Legendas',sku:'Películas',qtd:40,data:'2025-06-26'},
-  {colab:'Thiago P.',tipo:'Reposição',sku:'Capas',qtd:95,data:'2025-06-25'},
-];
-let recentData=[...SEED];
-let isDark=false;
-let charts={};
+// ── SUPABASE CONFIG ──
+const SUPA_URL = 'https://dsxotthnlhlsblorlvxe.supabase.co';
+const SUPA_KEY = 'sb_publishable_E54QZ_jnl9Jc6JLYk9wQVw_YdSMLzww';
+const { createClient } = supabase;
+const db = createClient(SUPA_URL, SUPA_KEY);
 
-const PAGES={
-  dashboard:{title:'Dashboard',sub:'visão geral do armazém'},
-  registro:{title:'Registro de Atividade',sub:'cadastro de produção'},
-  ranking:{title:'Ranking de Eficiência',sub:'classificação dos colaboradores'},
-  atividades:{title:'Atividades',sub:'histórico de registros'},
-  top10:{title:'Top 10 SKUs',sub:'produtos mais saídos no mês'},
-};
+let isDark = false;
+let charts = {};
+let allData = [];
 
-function toggleTheme(){
-  isDark=!isDark;
-  document.documentElement.setAttribute('data-theme',isDark?'dark':'');
-  document.getElementById('tlabel').textContent=isDark?'Tema Escuro':'Tema Claro';
-  setTimeout(rebuildCharts,50);
+// ── DATA ──
+async function loadAll() {
+  showLoading(true);
+  const { data, error } = await db
+    .from('atividades')
+    .select('*')
+    .order('created_at', { ascending: false });
+  if (error) { showToast('Erro ao carregar dados: ' + error.message, 'error'); }
+  else { allData = data || []; }
+  renderAll();
+  showLoading(false);
 }
 
-function showPage(id,btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.sb-nav-item').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  btn.classList.add('active');
-  const p=PAGES[id];
-  document.getElementById('tb-title').textContent=p.title;
-  document.getElementById('tb-sub').textContent=p.sub;
-  if(id==='top10') setTimeout(buildTop10Chart,80);
+function renderAll() {
+  updateMetrics();
+  renderRecent();
+  renderTop5();
+  renderPodium();
+  rebuildCharts();
+  document.getElementById('badge-total').textContent = allData.length;
 }
 
-function toggleRadio(gid,el){
-  document.querySelectorAll('#'+gid+' .rb').forEach(b=>b.classList.remove('sel'));
-  el.classList.add('sel');
+function updateMetrics() {
+  const total = allData.length;
+  const prod = allData.reduce((s, r) => s + (r.quantidade || 0), 0);
+  const colabs = [...new Set(allData.map(r => r.colaborador))].length;
+  const skuCount = {};
+  allData.forEach(r => { skuCount[r.sku] = (skuCount[r.sku] || 0) + r.quantidade; });
+  const topSku = Object.entries(skuCount).sort((a,b) => b[1]-a[1])[0];
+  document.getElementById('m-total').textContent = total;
+  document.getElementById('m-prod').textContent = prod.toLocaleString('pt-BR');
+  document.getElementById('m-colab').textContent = colabs;
+  document.getElementById('m-sku').textContent = topSku ? topSku[0] : '—';
 }
 
-function badgeClass(t){
-  const m={'Reposição':'b-rep','Armazenamento':'b-arm','Movimentação':'b-mov','Legendas':'b-leg','Capas':'b-cap','Películas':'b-pel','Acessórios':'b-ace'};
-  return m[t]||'';
+function renderRecent() {
+  const tbody = document.getElementById('recent-tbody');
+  if (!allData.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Nenhum registro ainda</td></tr>'; return; }
+  tbody.innerHTML = allData.slice(0, 20).map(r => `
+    <tr>
+      <td>${r.colaborador}</td>
+      <td><span class="badge ${badgeClass(r.tipo)}">${r.tipo}</span></td>
+      <td><span class="badge ${badgeClass(r.sku)}">${r.sku}</span></td>
+      <td>${r.quantidade}</td>
+      <td>${r.data}</td>
+    </tr>`).join('');
 }
 
-function renderRecent(){
-  document.getElementById('recent-tbody').innerHTML=recentData.slice().reverse().map(r=>`
-    <tr><td>${r.colab}</td><td><span class="badge ${badgeClass(r.tipo)}">${r.tipo}</span></td><td><span class="badge ${badgeClass(r.sku)}">${r.sku}</span></td><td>${r.qtd}</td><td>${r.data}</td></tr>`).join('');
+function renderTop5() {
+  const scores = {};
+  allData.forEach(r => { scores[r.colaborador] = (scores[r.colaborador] || 0) + r.quantidade; });
+  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]).slice(0,5);
+  const el = document.getElementById('top5-list');
+  if (!sorted.length) { el.innerHTML = '<div class="empty-state">Nenhum dado ainda</div>'; return; }
+  const max = sorted[0][1];
+  el.innerHTML = sorted.map(([name, pts], i) => `
+    <div class="t5i">
+      <div class="t5r ${i<3?'r'+(i+1):''}">${i+1}º</div>
+      <div class="t5n">${name}</div>
+      <div class="t5bw"><div class="t5b" style="width:${Math.round(pts/max*100)}%"></div></div>
+      <div class="t5v">${pts}</div>
+    </div>`).join('');
 }
 
-function renderTop10Table(){
-  document.getElementById('top10-tbody').innerHTML=TOP10_DATA.map((d,i)=>{
-    const vc=d.var.startsWith('+')?'color:#16A34A':'color:#DC2626';
-    return`<tr>
+function renderPodium() {
+  const scores = {};
+  allData.forEach(r => { scores[r.colaborador] = (scores[r.colaborador] || 0) + r.quantidade; });
+  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+  const podiumEl = document.getElementById('podium');
+  const restEl = document.getElementById('rank-rest');
+  if (sorted.length < 1) { podiumEl.innerHTML = '<div class="empty-state" style="width:100%">Nenhum dado ainda</div>'; restEl.innerHTML=''; return; }
+  const ini = n => n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+  const [p1,p2,p3,...rest] = sorted;
+  podiumEl.innerHTML = `
+    ${p2?`<div class="ps p2"><div class="pav">${ini(p2[0])}</div><div class="pn">${p2[0]}</div><div class="pp">${p2[1]} pts</div><div class="pb"><div class="ppos">2º</div></div></div>`:''}
+    <div class="ps p1"><div class="pav"><span class="pcr">👑</span>${ini(p1[0])}</div><div class="pn">${p1[0]}</div><div class="pp">${p1[1]} pts</div><div class="pb"><div class="ppos">1º</div></div></div>
+    ${p3?`<div class="ps p3"><div class="pav">${ini(p3[0])}</div><div class="pn">${p3[0]}</div><div class="pp">${p3[1]} pts</div><div class="pb"><div class="ppos">3º</div></div></div>`:''}`;
+  restEl.innerHTML = rest.map(([n,pts],i) => `
+    <div class="rri"><div class="rrp">${i+4}º</div><div class="rrn">${n}</div><div class="rrs">${pts} pts</div></div>`).join('');
+}
+
+function buildTop10Chart() {
+  const skuTotals = {};
+  const skuCat = {};
+  allData.forEach(r => {
+    skuTotals[r.sku] = (skuTotals[r.sku] || 0) + r.quantidade;
+    skuCat[r.sku] = r.sku;
+  });
+  const sorted = Object.entries(skuTotals).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  if (charts.top10) { charts.top10.destroy(); charts.top10=null; }
+  const b = getBase();
+  const colorMap = { 'Capas': isDark?'#F97316':'#EA580C', 'Películas': isDark?'#F472B6':'#DB2777', 'Acessórios': isDark?'#14B8A6':'#0D9488' };
+  const colors = sorted.map(([sku]) => colorMap[sku] || '#64748B');
+  charts.top10 = new Chart(document.getElementById('top10Chart'), {
+    type:'bar',
+    data:{ labels: sorted.map(d=>d[0]), datasets:[{ label:'Unidades', data: sorted.map(d=>d[1]), backgroundColor: colors, borderRadius:5, barPercentage:.72 }] },
+    options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.x+' unidades'}} },
+      scales:{ x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}}, y:{grid:{display:false},ticks:{color:isDark?'#E2E8F0':'#111111',font:{size:11,weight:'500'}},border:{display:false}} }
+    }
+  });
+  // table
+  document.getElementById('top10-tbody').innerHTML = sorted.map(([sku,vol],i) => {
+    const catCls = badgeClass(sku);
+    return `<tr>
       <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:${i<3?['#D97706','#64748B','#92400E'][i]:'var(--text3)'}">${i+1}º</td>
-      <td style="font-weight:500">${d.sku}</td>
-      <td><span class="badge ${badgeClass(d.cat)}">${d.cat}</span></td>
-      <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--or)">${d.vol}</td>
-      <td style="font-weight:600;${vc}">${d.var}</td>
+      <td style="font-weight:500">${sku}</td>
+      <td><span class="badge ${catCls}">${sku}</span></td>
+      <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--or)">${vol}</td>
     </tr>`;
   }).join('');
 }
 
-function submitForm(){
-  const colab=document.getElementById('f-colab').value.trim();
-  const data=document.getElementById('f-data').value;
-  const qtd=parseInt(document.getElementById('f-qtd').value);
-  const tipo=document.querySelector('#rg-tipo .rb.sel')?.textContent||'';
-  const sku=document.querySelector('#rg-sku .rb.sel')?.textContent||'';
-  if(!colab||!data||!qtd){alert('Preencha todos os campos!');return;}
-  recentData.push({colab,tipo,sku,qtd,data});
-  renderRecent();
-  document.getElementById('f-colab').value='';
-  document.getElementById('f-data').value='';
-  document.getElementById('f-qtd').value='';
-  const t=document.getElementById('toast');
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2200);
-}
+function rebuildCharts() {
+  const b = getBase();
+  if (charts.sku) { charts.sku.destroy(); charts.sku=null; }
+  if (charts.pizza) { charts.pizza.destroy(); charts.pizza=null; }
 
-function renderTop5(){
-  const top5=COLABS.slice(0,5),max=top5[0].pts;
-  document.getElementById('top5-list').innerHTML=top5.map((c,i)=>`
-    <div class="t5i">
-      <div class="t5r ${i<3?'r'+(i+1):''}">${i+1}º</div>
-      <div class="t5n">${c.name}</div>
-      <div class="t5bw"><div class="t5b" style="width:${Math.round(c.pts/max*100)}%"></div></div>
-      <div class="t5v">${c.pts}</div>
-    </div>`).join('');
-}
-
-function renderPodium(){
-  const [p1,p2,p3,...rest]=COLABS;
-  const ini=n=>n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
-  document.getElementById('podium').innerHTML=`
-    <div class="ps p2"><div class="pav">${ini(p2.name)}</div><div class="pn">${p2.name}</div><div class="pp">${p2.pts} pts</div><div class="pb"><div class="ppos">2º</div></div></div>
-    <div class="ps p1"><div class="pav"><span class="pcr">👑</span>${ini(p1.name)}</div><div class="pn">${p1.name}</div><div class="pp">${p1.pts} pts</div><div class="pb"><div class="ppos">1º</div></div></div>
-    <div class="ps p3"><div class="pav">${ini(p3.name)}</div><div class="pn">${p3.name}</div><div class="pp">${p3.pts} pts</div><div class="pb"><div class="ppos">3º</div></div></div>`;
-  document.getElementById('rank-rest').innerHTML=rest.map((c,i)=>`
-    <div class="rri"><div class="rrp">${i+4}º</div><div class="rrn">${c.name}</div><div class="rrc">${c.sku}</div><div class="rrs">${c.pts} pts</div></div>`).join('');
-}
-
-function getCatColor(cat){
-  const l={'Películas':'#DB2777','Capas':'#EA580C','Acessórios':'#0D9488'};
-  const d={'Películas':'#F472B6','Capas':'#F97316','Acessórios':'#14B8A6'};
-  return isDark?(d[cat]||'#64748B'):(l[cat]||'#64748B');
-}
-
-function getBase(){
-  return isDark
-    ?{grid:'rgba(255,255,255,0.05)',tick:'#64748B',border:'#111827'}
-    :{grid:'rgba(0,0,0,0.04)',tick:'#999490',border:'#FFFFFF'};
-}
-
-function destroyChart(k){if(charts[k]){charts[k].destroy();charts[k]=null;}}
-
-function buildTop10Chart(){
-  destroyChart('top10');
-  const b=getBase();
-  charts.top10=new Chart(document.getElementById('top10Chart'),{
-    type:'bar',
-    data:{
-      labels:TOP10_DATA.map(d=>d.sku),
-      datasets:[{label:'Unidades',data:TOP10_DATA.map(d=>d.vol),backgroundColor:TOP10_DATA.map(d=>getCatColor(d.cat)),borderRadius:5,barPercentage:.72}]
-    },
-    options:{
-      indexAxis:'y',responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.x+' unidades'}}},
-      scales:{
-        x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},
-        y:{grid:{display:false},ticks:{color:isDark?'#E2E8F0':'#111111',font:{size:11,weight:'500'}},border:{display:false}}
-      }
+  // SKU por mês (últimos 6 meses)
+  const months = [];
+  for (let i=5;i>=0;i--) {
+    const d = new Date(); d.setMonth(d.getMonth()-i);
+    months.push({ label: d.toLocaleString('pt-BR',{month:'short'}), key: `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}` });
+  }
+  const skuTypes = ['Capas','Películas','Acessórios'];
+  const skuColors = isDark?['#F97316','#EC4899','#14B8A6']:['#EA580C','#DB2777','#0D9488'];
+  const datasets = skuTypes.map((sku,si) => ({
+    label: sku,
+    data: months.map(m => allData.filter(r => r.sku===sku && r.data && r.data.startsWith(m.key)).reduce((s,r)=>s+r.quantidade,0)),
+    backgroundColor: skuColors[si], borderRadius:3, barPercentage:.7
+  }));
+  charts.sku = new Chart(document.getElementById('skuChart'), {
+    type:'bar', data:{ labels: months.map(m=>m.label), datasets },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+      scales:{ x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}}, y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}} }
     }
   });
-}
 
-function rebuildCharts(){
-  const b=getBase();
-  destroyChart('sku');destroyChart('pizza');
-  const sc=isDark?['#F97316','#EC4899','#14B8A6']:['#EA580C','#DB2777','#0D9488'];
-  const pc=isDark?['#14B8A6','#3B82F6','#A855F7','#F97316']:['#0D9488','#2563EB','#7C3AED','#EA580C'];
-  charts.sku=new Chart(document.getElementById('skuChart'),{
-    type:'bar',
-    data:{labels:['Jan','Fev','Mar','Abr','Mai','Jun'],datasets:[
-      {label:'Capas',data:[120,145,132,178,195,210],backgroundColor:sc[0],borderRadius:3,barPercentage:.7},
-      {label:'Películas',data:[190,220,205,250,280,310],backgroundColor:sc[1],borderRadius:3,barPercentage:.7},
-      {label:'Acessórios',data:[80,95,88,102,115,128],backgroundColor:sc[2],borderRadius:3,barPercentage:.7}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
-      scales:{x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}},y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}}}}
-  });
-  charts.pizza=new Chart(document.getElementById('pizzaChart'),{
+  // Pizza por tipo
+  const tipoCount = { Reposição:0, Armazenamento:0, Movimentação:0, Legendas:0 };
+  allData.forEach(r => { if(tipoCount[r.tipo]!==undefined) tipoCount[r.tipo]+=r.quantidade; });
+  const pieColors = isDark?['#14B8A6','#3B82F6','#A855F7','#F97316']:['#0D9488','#2563EB','#7C3AED','#EA580C'];
+  charts.pizza = new Chart(document.getElementById('pizzaChart'), {
     type:'doughnut',
-    data:{labels:['Reposição','Armazenamento','Movimentação','Legendas'],datasets:[{data:[35,28,22,15],backgroundColor:pc,borderWidth:2,borderColor:b.border,hoverOffset:4}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false}}}
+    data:{ labels: Object.keys(tipoCount), datasets:[{ data: Object.values(tipoCount), backgroundColor: pieColors, borderWidth:2, borderColor:b.border, hoverOffset:4 }] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'62%', plugins:{legend:{display:false}} }
   });
-  if(document.getElementById('page-top10').classList.contains('active')) buildTop10Chart();
+
+  if (document.getElementById('page-top10').classList.contains('active')) buildTop10Chart();
 }
 
-renderTop5();renderPodium();renderRecent();renderTop10Table();
-document.getElementById('f-data').valueAsDate=new Date();
-setTimeout(rebuildCharts,120);
+// ── FORM ──
+async function submitForm() {
+  const colaborador = document.getElementById('f-colab').value.trim();
+  const data = document.getElementById('f-data').value;
+  const quantidade = parseInt(document.getElementById('f-qtd').value);
+  const tipo = document.querySelector('#rg-tipo .rb.sel')?.textContent || '';
+  const sku = document.querySelector('#rg-sku .rb.sel')?.textContent || '';
+  if (!colaborador || !data || !quantidade) { showToast('Preencha todos os campos!', 'error'); return; }
+  const btn = document.getElementById('btn-registrar');
+  btn.disabled = true; btn.textContent = 'Salvando...';
+  const { error } = await db.from('atividades').insert([{ colaborador, tipo, sku, quantidade, data }]);
+  btn.disabled = false; btn.textContent = 'Registrar';
+  if (error) { showToast('Erro ao salvar: ' + error.message, 'error'); return; }
+  document.getElementById('f-colab').value = '';
+  document.getElementById('f-qtd').value = '';
+  showToast('✓ Atividade registrada com sucesso!', 'success');
+  await loadAll();
+}
+
+// ── UI HELPERS ──
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  btn.classList.add('active');
+  const pages = { dashboard:{title:'Dashboard',sub:'visão geral do armazém'}, registro:{title:'Registro de Atividade',sub:'cadastro de produção'}, ranking:{title:'Ranking de Eficiência',sub:'classificação dos colaboradores'}, atividades:{title:'Atividades',sub:'histórico de registros'}, top10:{title:'Top 10 SKUs',sub:'produtos mais saídos'} };
+  const p = pages[id];
+  document.getElementById('tb-title').textContent = p.title;
+  document.getElementById('tb-sub').textContent = p.sub;
+  if (id === 'top10') setTimeout(buildTop10Chart, 80);
+}
+
+function toggleRadio(gid, el) {
+  document.querySelectorAll('#'+gid+' .rb').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function toggleTheme() {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark?'dark':'');
+  document.getElementById('tlabel').textContent = isDark?'Tema Escuro':'Tema Claro';
+  setTimeout(rebuildCharts, 50);
+}
+
+function badgeClass(t) {
+  const m = { 'Reposição':'b-rep','Armazenamento':'b-arm','Movimentação':'b-mov','Legendas':'b-leg','Capas':'b-cap','Películas':'b-pel','Acessórios':'b-ace' };
+  return m[t] || '';
+}
+
+function getBase() {
+  return isDark
+    ? {grid:'rgba(255,255,255,0.05)',tick:'#64748B',border:'#111827'}
+    : {grid:'rgba(0,0,0,0.04)',tick:'#999490',border:'#FFFFFF'};
+}
+
+function showLoading(show) {
+  document.getElementById('loading').classList.toggle('hide', !show);
+}
+
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type + ' show';
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── INIT ──
+document.getElementById('f-data').valueAsDate = new Date();
+const now = new Date();
+document.getElementById('tb-date').textContent = now.toLocaleString('pt-BR',{month:'long',year:'numeric'});
+loadAll();
 </script>
+</body>
+</html>
