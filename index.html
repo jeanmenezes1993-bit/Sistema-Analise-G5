@@ -385,7 +385,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
             <div class="fgr full">
               <div class="fl">SKU — Produto Específico</div>
               <div class="sku-search-wrap">
-                <input class="fi" type="text" id="f-sku-search" placeholder="Digite para buscar SKU cadastrado..." autocomplete="off" oninput="filterSkus()" onfocus="showSkuDropdown()" onblur="setTimeout(hideSkuDropdown,200)">
+                <input class="fi" type="text" id="f-sku-search" placeholder="Digite o código do produto (ex: 29030)..." autocomplete="off" oninput="filterSkus()" onfocus="showSkuDropdown()" onblur="setTimeout(hideSkuDropdown,200)">
                 <div class="sku-dropdown" id="sku-dropdown"></div>
               </div>
               <div class="sku-selected" id="sku-selected" style="display:none;">
@@ -827,9 +827,18 @@ function renderSkuList(){
   el.innerHTML=allSkus.map(s=>`<div class="sku-card"><div class="sku-card-info"><div class="sku-card-name">${s.nome}</div><div style="display:flex;gap:6px;align-items:center;margin-top:2px;">${s.nomenclatura?`<span style="font-size:10px;font-weight:600;color:var(--or);background:var(--or-bg);border:1px solid var(--or-bdr);padding:1px 6px;border-radius:4px;">${s.nomenclatura}</span>`:''}<div class="sku-card-cat">${s.categoria}</div></div></div><button class="sku-card-del" onclick="deleteSku('${s.id}')">×</button></div>`).join('');
 }
 function renderSkuDropdown(q){
-  const filtered=q?allSkus.filter(s=>s.nome.toLowerCase().includes(q.toLowerCase())||s.categoria.toLowerCase().includes(q.toLowerCase())):allSkus;
+  let filtered=q
+    ?allSkus.filter(s=>(s.nomenclatura||'').toLowerCase().includes(q.toLowerCase())||s.nome.toLowerCase().includes(q.toLowerCase()))
+    :allSkus.slice(0,50);
+  if(q){
+    filtered.sort((a,b)=>{
+      const aq=(a.nomenclatura||'').toLowerCase().startsWith(q.toLowerCase())?0:1;
+      const bq=(b.nomenclatura||'').toLowerCase().startsWith(q.toLowerCase())?0:1;
+      return aq-bq;
+    });
+  }
   const el=document.getElementById('sku-dropdown');
-  el.innerHTML=filtered.length?filtered.map(s=>`<div class="sku-opt" onclick="selectSku('${s.id}','${s.nome.replace(/'/g,"\\'")}','${s.categoria}','${(s.nomenclatura||'').replace(/'/g,"\\'")}')"><span class="sku-opt-name">${s.nome}${s.nomenclatura?` <span style="font-size:9px;color:var(--or);font-weight:600;">${s.nomenclatura}</span>`:''}</span><span class="sku-opt-cat">${s.categoria}</span></div>`).join(''):'<div class="sku-opt" style="color:var(--text3);cursor:default;">Nenhum SKU encontrado</div>';
+  el.innerHTML=filtered.length?filtered.map(s=>`<div class="sku-opt" onclick="selectSku('${s.id}','${s.nome.replace(/'/g,"\\'")}','${s.categoria}','${(s.nomenclatura||'').replace(/'/g,"\\'")}')"><span class="sku-opt-name"><span style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--or);margin-right:6px;">${s.nomenclatura||''}</span><span style="font-size:11px;color:var(--text2)">${s.nome}</span></span><span class="sku-opt-cat">${s.categoria}</span></div>`).join(''):'<div class="sku-opt" style="color:var(--text3);cursor:default;">Nenhum SKU encontrado</div>';
 }
 function filterSkus(){renderSkuDropdown(document.getElementById('f-sku-search').value);showSkuDropdown();}
 function showSkuDropdown(){if(allSkus.length>0)document.getElementById('sku-dropdown').classList.add('show');}
@@ -845,7 +854,7 @@ function selectSku(id,nome,categoria,nomenclatura){
 function clearSku(){
   selectedSku=null;
   document.getElementById('f-sku-search').value='';
-  document.getElementById('f-sku-search').placeholder='Digite para buscar SKU cadastrado...';
+  document.getElementById('f-sku-search').placeholder='Digite o código do produto (ex: 29030)...';
   document.getElementById('sku-selected').style.display='none';
 }
 
