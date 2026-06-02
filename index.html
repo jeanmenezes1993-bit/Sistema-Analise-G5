@@ -227,6 +227,121 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 </head>
 <body>
 
+<style>
+/* LOGIN */
+.login-screen{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,#F8F7F4 0%,#EDE9E0 100%);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .4s,transform .4s;
+}
+[data-theme="dark"] .login-screen{background:linear-gradient(135deg,#0A0F1E 0%,#0F172A 100%);}
+.login-screen.hide{opacity:0;pointer-events:none;transform:scale(1.04);}
+
+.login-card{
+  background:var(--card,#fff);
+  border:1px solid var(--bdr,#E2DED7);
+  border-radius:16px;
+  padding:40px 36px;
+  width:100%;max-width:380px;
+  box-shadow:0 8px 40px rgba(0,0,0,0.08);
+  position:relative;overflow:hidden;
+}
+.login-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#EA580C,#F97316,#FBBF24);
+}
+.login-brand{text-align:center;margin-bottom:32px;}
+.login-brand-sub{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text3,#999);margin-bottom:4px;}
+.login-brand-name{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--text,#111);text-transform:uppercase;letter-spacing:1px;}
+.login-brand-name span{color:#EA580C;}
+.login-brand-desc{font-size:11px;color:var(--text3,#999);margin-top:4px;}
+
+.login-field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
+.login-label{font-size:10px;color:var(--text3,#999);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
+.login-input{
+  background:var(--metric,#F7F5F1);
+  border:1.5px solid var(--bdr,#E2DED7);
+  border-radius:8px;padding:11px 13px;
+  font-size:13px;color:var(--text,#111);
+  font-family:'Inter',sans-serif;
+  outline:none;width:100%;transition:border-color .2s;
+}
+.login-input:focus{border-color:#EA580C;}
+
+.login-btn{
+  width:100%;background:#EA580C;border:none;border-radius:9px;
+  padding:13px;color:white;
+  font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+  margin-top:8px;transition:opacity .2s,transform .1s;
+}
+.login-btn:hover{opacity:.9;}
+.login-btn:active{transform:scale(.98);}
+.login-btn:disabled{opacity:.5;cursor:not-allowed;}
+
+.login-error{
+  background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);
+  border-radius:7px;padding:10px 13px;
+  font-size:12px;color:#DC2626;margin-top:10px;
+  display:none;text-align:center;
+}
+.login-error.show{display:block;}
+.login-footer{text-align:center;margin-top:20px;font-size:10px;color:var(--text3,#bbb);letter-spacing:.5px;}
+
+.login-divider{display:flex;align-items:center;gap:10px;margin:18px 0;}
+.login-divider-line{flex:1;height:1px;background:var(--bdr,#E2DED7);}
+.login-divider-text{font-size:10px;color:var(--text3,#bbb);text-transform:uppercase;letter-spacing:1px;}
+
+.login-avatar-wrap{display:flex;justify-content:center;margin-bottom:24px;}
+.login-avatar{
+  width:64px;height:64px;border-radius:50%;
+  background:rgba(234,88,12,0.1);border:2px solid rgba(234,88,12,0.25);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:#EA580C;
+}
+
+/* show/hide password */
+.login-input-wrap{position:relative;}
+.login-input-wrap .login-input{padding-right:40px;}
+.login-eye{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  cursor:pointer;color:var(--text3,#bbb);font-size:14px;user-select:none;
+}
+</style>
+
+<div class="login-screen" id="login-screen">
+  <div class="login-card">
+    <div class="login-avatar-wrap">
+      <div class="login-avatar">G5</div>
+    </div>
+    <div class="login-brand">
+      <div class="login-brand-sub">Sistema Análise</div>
+      <div class="login-brand-name"><span>G5</span></div>
+      <div class="login-brand-desc">Controle de Armazenamento e Produção</div>
+    </div>
+
+    <div class="login-field">
+      <div class="login-label">Usuário</div>
+      <input class="login-input" type="text" id="login-user" placeholder="Digite seu usuário" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('login-pass').focus()">
+    </div>
+
+    <div class="login-field">
+      <div class="login-label">Senha</div>
+      <div class="login-input-wrap">
+        <input class="login-input" type="password" id="login-pass" placeholder="Digite sua senha" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+        <span class="login-eye" onclick="togglePass()" id="login-eye">👁</span>
+      </div>
+    </div>
+
+    <button class="login-btn" id="login-btn" onclick="doLogin()">Entrar</button>
+    <div class="login-error" id="login-error">Usuário ou senha incorretos. Tente novamente.</div>
+
+    <div class="login-footer">Sistema Análise G5 · Acesso Restrito</div>
+  </div>
+</div>
+
+
 <div class="loading-overlay" id="loading"><div class="spinner"></div></div>
 
 <div class="layout">
@@ -887,6 +1002,55 @@ function bc(t){const m={'Reposição':'b-rep','Armazenamento':'b-arm','Movimenta
 function getBase(){return isDark?{grid:'rgba(255,255,255,0.05)',tick:'#64748B',border:'#111827'}:{grid:'rgba(0,0,0,0.04)',tick:'#999490',border:'#FFFFFF'};}
 function showLoading(show){document.getElementById('loading').classList.toggle('hide',!show);}
 function showToast(msg,type='success'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';setTimeout(()=>t.classList.remove('show'),3000);}
+
+
+// ── AUTH ──
+const USERS = [
+  { user: 'admin',    pass: 'g5admin',   nome: 'Admin',    role: 'Gerente Geral' },
+  { user: 'jean',     pass: 'g5jean',    nome: 'Jean',     role: 'Operador' },
+  { user: 'colaborador', pass: 'g5colab', nome: 'Colaborador', role: 'Operador' },
+];
+
+function doLogin(){
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value;
+  const btn = document.getElementById('login-btn');
+  const err = document.getElementById('login-error');
+
+  if(!u||!p){ err.textContent='Preencha usuário e senha.'; err.classList.add('show'); return; }
+
+  btn.disabled=true; btn.textContent='Entrando...';
+  setTimeout(()=>{
+    const found = USERS.find(x=>x.user===u && x.pass===p);
+    if(found){
+      err.classList.remove('show');
+      // Update user info in sidebar
+      document.querySelector('.sb-uname').textContent = found.nome;
+      document.querySelector('.sb-urole').textContent = found.role;
+      document.querySelector('.sb-av').textContent = found.nome.substring(0,2).toUpperCase();
+      // Hide login screen
+      document.getElementById('login-screen').classList.add('hide');
+      setTimeout(()=>document.getElementById('login-screen').style.display='none',420);
+    } else {
+      err.textContent='Usuário ou senha incorretos. Tente novamente.';
+      err.classList.add('show');
+      document.getElementById('login-pass').value='';
+      btn.disabled=false; btn.textContent='Entrar';
+    }
+  },600);
+}
+
+function togglePass(){
+  const inp = document.getElementById('login-pass');
+  const eye = document.getElementById('login-eye');
+  if(inp.type==='password'){ inp.type='text'; eye.textContent='🙈'; }
+  else { inp.type='password'; eye.textContent='👁'; }
+}
+
+// Focus on load
+window.addEventListener('DOMContentLoaded',()=>{
+  setTimeout(()=>document.getElementById('login-user').focus(),100);
+});
 
 // ── START ──
 document.getElementById('f-data').valueAsDate=new Date();
