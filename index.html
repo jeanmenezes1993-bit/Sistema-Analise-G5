@@ -552,7 +552,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         <div class="cc">
           <div class="ct">Atividades Recentes</div><div class="cs">histórico de registros do banco</div>
           <table class="rt">
-            <thead><tr><th>Colaborador</th><th>Tipo</th><th>Categoria</th><th>SKU</th><th>Qtd</th><th>Data</th></tr></thead>
+            <thead><tr><th>Colaborador</th><th>Tipo</th><th>Categoria</th><th>Nomenclatura</th><th>Código de Produto</th><th>Qtd</th><th>Data</th><th style="width:40px;"></th></tr></thead>
             <tbody id="recent-tbody"><tr><td colspan="6" class="empty-state">Carregando...</td></tr></tbody>
           </table>
         </div>
@@ -650,15 +650,17 @@ function renderAll() {
 
 function renderAtividades() {
   const tbody = document.getElementById('recent-tbody');
-  if (!allData.length) { tbody.innerHTML='<tr><td colspan="6" class="empty-state">Nenhum registro ainda</td></tr>'; return; }
+  if (!allData.length) { tbody.innerHTML='<tr><td colspan="8" class="empty-state">Nenhum registro ainda</td></tr>'; return; }
   tbody.innerHTML = allData.slice(0,30).map(r=>`
     <tr>
       <td>${r.colaborador}</td>
       <td><span class="badge ${bc(r.tipo)}">${r.tipo}</span></td>
       <td><span class="badge ${bc(r.sku)}">${r.sku||'—'}</span></td>
-      <td style="font-weight:500">${r.nome_sku||'—'}</td>
+      <td style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--or)">${r.sku||'—'}</td>
+      <td style="font-size:11px;color:var(--text2);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${r.nome_sku||''}">${r.nome_sku ? r.nome_sku.substring(0,45)+(r.nome_sku.length>45?'...':'') : '—'}</td>
       <td>${r.quantidade}</td>
       <td>${r.data}</td>
+      <td><button onclick="deleteAtividade('${r.id}')" style="background:none;border:1px solid var(--bdr);border-radius:5px;width:26px;height:26px;cursor:pointer;color:var(--text3);font-size:13px;transition:all .18s;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.background='rgba(220,38,38,.1)';this.style.borderColor='rgba(220,38,38,.3)';this.style.color='#DC2626'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">×</button></td>
     </tr>`).join('');
 }
 
@@ -1140,6 +1142,15 @@ function hideColabDrop(){
 function selectColab(nome){
   document.getElementById('f-colab').value = nome;
   hideColabDrop();
+}
+
+
+async function deleteAtividade(id){
+  if(!confirm('Excluir este registro?')) return;
+  const {error} = await db.from('atividades').delete().eq('id', id);
+  if(error){ showToast('Erro ao excluir: '+error.message,'error'); return; }
+  showToast('Registro excluído!','success');
+  await loadAtividades();
 }
 
 // ── START ──
