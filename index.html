@@ -25,17 +25,17 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .layout{display:flex;min-height:100vh;}
 
 /* SIDEBAR */
-.sidebar{width:210px;flex-shrink:0;background:var(--sb);border-right:1px solid var(--bdr);display:flex;flex-direction:column;transition:background .3s,border-color .3s;position:fixed;height:100vh;z-index:10;}
+.sidebar{width:210px;flex-shrink:0;background:var(--sb);border-right:1px solid var(--bdr);display:flex;flex-direction:column;transition:background .3s;position:fixed;height:100vh;z-index:10;overflow-y:auto;}
 .sb-head{padding:20px 16px 14px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
 .sb-brand{display:flex;flex-direction:column;gap:1px;}
 .sb-brand-sub{font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--text3);}
 .sb-brand-name{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:var(--text);letter-spacing:1px;text-transform:uppercase;line-height:1;}
 .sb-brand-name span{color:var(--or);}
 .sb-section{padding:16px 12px 4px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);}
-.sb-nav-item{display:flex;align-items:center;gap:0;margin:3px 8px;border-radius:9px;cursor:pointer;overflow:hidden;border:1.5px solid transparent;transition:border-color .18s,background .18s;background:none;width:calc(100% - 16px);text-align:left;font-family:'Inter',sans-serif;box-shadow:none;outline:none;}
+.sb-nav-item{display:flex;align-items:center;margin:3px 8px;border-radius:9px;cursor:pointer;overflow:hidden;border:1.5px solid transparent;transition:border-color .18s,background .18s;background:none;width:calc(100% - 16px);text-align:left;font-family:'Inter',sans-serif;box-shadow:none;outline:none;}
 .sb-nav-item:hover{background:var(--metric);}
 .sb-nav-item.active{border-color:var(--or-bdr);background:var(--or-bg);}
-.sb-nav-icon{width:36px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;color:var(--text3);transition:color .18s;}
+.sb-nav-icon{width:36px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;color:var(--text3);transition:color .18s;}
 .sb-nav-item.active .sb-nav-icon,.sb-nav-item:hover .sb-nav-icon{color:var(--or);}
 .sb-nav-inner{flex:1;padding:0 8px 0 0;height:40px;display:flex;align-items:center;justify-content:space-between;}
 .sb-nav-label{font-size:13px;font-weight:600;color:#111111;}
@@ -50,7 +50,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 
 /* MAIN */
 .main{flex:1;display:flex;flex-direction:column;min-width:0;margin-left:210px;}
-.topbar{height:50px;background:var(--card);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 20px;gap:10px;transition:background .3s,border-color .3s;position:sticky;top:0;z-index:9;}
+.topbar{height:50px;background:var(--card);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 20px;gap:10px;transition:background .3s;position:sticky;top:0;z-index:9;}
 .tb-title{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;}
 .tb-sub{font-size:11px;color:var(--text3);}
 .tb-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
@@ -67,8 +67,8 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .page{display:none;}.page.active{display:block;}
 
 /* LOADING */
-.loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.8);display:flex;align-items:center;justify-content:center;z-index:999;transition:opacity .3s;}
-[data-theme="dark"] .loading-overlay{background:rgba(10,15,30,0.8);}
+.loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.85);display:flex;align-items:center;justify-content:center;z-index:999;transition:opacity .3s;}
+[data-theme="dark"] .loading-overlay{background:rgba(10,15,30,0.85);}
 .loading-overlay.hide{opacity:0;pointer-events:none;}
 .spinner{width:32px;height:32px;border:3px solid var(--bdr);border-top-color:var(--or);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
@@ -89,7 +89,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .li{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text2);}
 .ld{width:7px;height:7px;border-radius:2px;flex-shrink:0;}
 
-/* TOP5 */
 .t5{display:flex;flex-direction:column;gap:6px;}
 .t5i{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--metric);border:1px solid var(--bdr);border-radius:7px;}
 .t5r{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--text3);min-width:18px;}
@@ -99,7 +98,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .t5b{height:100%;border-radius:3px;background:var(--or);}
 .t5v{font-size:11px;color:var(--or);font-weight:600;min-width:28px;text-align:right;font-family:'Rajdhani',sans-serif;}
 
-/* PODIUM */
 .podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;height:170px;margin-bottom:14px;}
 .ps{display:flex;flex-direction:column;align-items:center;gap:6px;}
 .pav{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;border:2px solid;position:relative;}
@@ -128,7 +126,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .fg{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .fgr{display:flex;flex-direction:column;gap:5px;}
 .fgr.full{grid-column:1/-1;}
-.fl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-weight:500;}
+.fl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-weight:500;margin-bottom:2px;}
 .fi{background:var(--metric);border:1px solid var(--bdr);border-radius:8px;padding:9px 11px;font-size:12px;color:var(--text);font-family:'Inter',sans-serif;transition:border-color .2s;outline:none;width:100%;-webkit-appearance:none;}
 .fi:focus{border-color:var(--or);}
 .rg{display:flex;gap:6px;flex-wrap:wrap;}
@@ -137,6 +135,33 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .bts{background:var(--or);border:none;border-radius:8px;padding:10px 24px;color:white;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;margin-top:14px;transition:opacity .2s;}
 .bts:hover{opacity:.88;}
 .bts:disabled{opacity:.5;cursor:not-allowed;}
+
+/* SKU SEARCH */
+.sku-search-wrap{position:relative;}
+.sku-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--card);border:1px solid var(--or-bdr);border-radius:8px;margin-top:4px;z-index:50;max-height:180px;overflow-y:auto;display:none;box-shadow:0 4px 16px rgba(0,0,0,0.1);}
+.sku-dropdown.show{display:block;}
+.sku-opt{padding:9px 12px;font-size:12px;cursor:pointer;color:var(--text);border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;transition:background .15s;}
+.sku-opt:last-child{border-bottom:none;}
+.sku-opt:hover{background:var(--or-bg);}
+.sku-opt-name{font-weight:500;}
+.sku-opt-cat{font-size:10px;color:var(--text3);background:var(--metric);padding:1px 6px;border-radius:4px;}
+.sku-selected{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--or-bg);border:1px solid var(--or-bdr);border-radius:8px;margin-top:6px;}
+.sku-selected-name{flex:1;font-size:12px;font-weight:600;color:var(--or);}
+.sku-selected-clear{font-size:16px;cursor:pointer;color:var(--text3);line-height:1;}
+.sku-selected-clear:hover{color:var(--or);}
+
+/* CADASTRO SKU */
+.sku-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.sku-card{background:var(--metric);border:1px solid var(--bdr);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;transition:background .2s;}
+.sku-card-info{display:flex;flex-direction:column;gap:3px;}
+.sku-card-name{font-size:13px;font-weight:600;color:var(--text);}
+.sku-card-cat{font-size:10px;color:var(--text3);}
+.sku-card-del{width:28px;height:28px;border-radius:6px;border:1px solid var(--bdr);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:14px;transition:all .18s;}
+.sku-card-del:hover{background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.3);color:#DC2626;}
+.sku-form-row{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:flex-end;}
+.btn-add-sku{background:var(--or);border:none;border-radius:8px;padding:9px 20px;color:white;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:opacity .2s;}
+.btn-add-sku:hover{opacity:.88;}
+.btn-add-sku:disabled{opacity:.5;cursor:not-allowed;}
 
 /* TABLE */
 .rt{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed;}
@@ -158,12 +183,10 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 [data-theme="dark"] .b-pel{background:rgba(236,72,153,.15);color:#F472B6;}
 [data-theme="dark"] .b-ace{background:rgba(34,197,94,.15);color:#4ADE80;}
 
-/* TOAST */
-.toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;border-radius:8px;font-size:12px;font-weight:500;opacity:0;transform:translateY(6px);transition:all .3s;pointer-events:none;z-index:999;color:white;}
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;border-radius:8px;font-size:12px;font-weight:500;opacity:0;transform:translateY(6px);transition:all .3s;pointer-events:none;z-index:9999;color:white;}
 .toast.show{opacity:1;transform:translateY(0);}
 .toast.success{background:#16A34A;}
 .toast.error{background:#DC2626;}
-
 .empty-state{text-align:center;padding:32px;color:var(--text3);font-size:12px;}
 </style>
 </head>
@@ -181,28 +204,33 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         <div class="sb-brand-name"><span>G5</span></div>
       </div>
     </div>
+
     <div class="sb-section">Principal</div>
     <button class="sb-nav-item active" onclick="showPage('dashboard',this)">
-      <div class="sb-nav-icon">&#9641;</div>
+      <div class="sb-nav-icon">▦</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Dashboard</span><span class="sb-badge" id="badge-total">0</span></div>
     </button>
     <button class="sb-nav-item" onclick="showPage('registro',this)">
-      <div class="sb-nav-icon">&#43;</div>
+      <div class="sb-nav-icon">＋</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Registro</span></div>
     </button>
+
     <div class="sb-section">Análise</div>
     <button class="sb-nav-item" onclick="showPage('ranking',this)">
-      <div class="sb-nav-icon">&#9733;</div>
+      <div class="sb-nav-icon">★</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Ranking</span></div>
     </button>
-    <button class="sb-nav-item" onclick="showPage('atividades',this)">
-      <div class="sb-nav-icon">&#9776;</div>
-      <div class="sb-nav-inner"><span class="sb-nav-label">Atividades</span></div>
-    </button>
     <button class="sb-nav-item" onclick="showPage('top10',this)">
-      <div class="sb-nav-icon">&#9650;</div>
+      <div class="sb-nav-icon">▲</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Top 10 SKUs</span></div>
     </button>
+
+    <div class="sb-section">Configuração</div>
+    <button class="sb-nav-item" onclick="showPage('cadastro-sku',this)">
+      <div class="sb-nav-icon">☰</div>
+      <div class="sb-nav-inner"><span class="sb-nav-label">Cadastro de SKU</span></div>
+    </button>
+
     <div class="sb-footer">
       <div class="sb-user">
         <div class="sb-av">G5</div>
@@ -216,7 +244,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 
   <div class="main">
     <div class="topbar">
-      <span style="font-size:16px;color:var(--or)">&#9641;</span>
+      <span style="font-size:15px;color:var(--or)">▦</span>
       <span class="tb-title" id="tb-title">Dashboard</span>
       <span class="tb-sub" id="tb-sub">visão geral do armazém</span>
       <div class="tb-right">
@@ -237,7 +265,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
           <div class="mc"><div class="mc-label">Total Atividades</div><div class="mc-val" id="m-total">—</div><div class="mc-sub">registros no banco</div></div>
           <div class="mc"><div class="mc-label">Produção Total</div><div class="mc-val" id="m-prod">—</div><div class="mc-sub">unidades registradas</div></div>
           <div class="mc"><div class="mc-label">Colaboradores</div><div class="mc-val" id="m-colab">—</div><div class="mc-sub">ativos este mês</div></div>
-          <div class="mc"><div class="mc-label">SKU Destaque</div><div class="mc-val" id="m-sku" style="font-size:16px;">—</div><div class="mc-sub">maior volume</div></div>
+          <div class="mc"><div class="mc-label">SKU Destaque</div><div class="mc-val" id="m-sku" style="font-size:15px;">—</div><div class="mc-sub">maior volume</div></div>
         </div>
         <div class="grid-3">
           <div class="cc">
@@ -266,14 +294,17 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         </div>
       </div>
 
-      <!-- REGISTRO -->
+      <!-- REGISTRO + ATIVIDADES -->
       <div class="page" id="page-registro">
+        <!-- FORMULÁRIO -->
         <div class="fc">
           <div class="ft">Registrar Atividade</div>
           <div class="fg">
             <div class="fgr"><div class="fl">Colaborador</div><input class="fi" type="text" id="f-colab" placeholder="Nome completo"></div>
             <div class="fgr"><div class="fl">Data</div><input class="fi" type="date" id="f-data"></div>
-            <div class="fgr full"><div class="fl">Tipo de Atividade</div>
+
+            <div class="fgr full">
+              <div class="fl">Tipo de Atividade</div>
               <div class="rg" id="rg-tipo">
                 <div class="rb sel" onclick="toggleRadio('rg-tipo',this)">Reposição</div>
                 <div class="rb" onclick="toggleRadio('rg-tipo',this)">Armazenamento</div>
@@ -281,16 +312,41 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
                 <div class="rb" onclick="toggleRadio('rg-tipo',this)">Legendas</div>
               </div>
             </div>
-            <div class="fgr full"><div class="fl">SKU — Produto</div>
-              <div class="rg" id="rg-sku">
-                <div class="rb sel" onclick="toggleRadio('rg-sku',this)">Capas</div>
-                <div class="rb" onclick="toggleRadio('rg-sku',this)">Películas</div>
-                <div class="rb" onclick="toggleRadio('rg-sku',this)">Acessórios</div>
+
+            <div class="fgr full">
+              <div class="fl">Categoria do Produto</div>
+              <div class="rg" id="rg-cat">
+                <div class="rb sel" onclick="toggleRadio('rg-cat',this)">Capas</div>
+                <div class="rb" onclick="toggleRadio('rg-cat',this)">Películas</div>
+                <div class="rb" onclick="toggleRadio('rg-cat',this)">Acessórios</div>
               </div>
             </div>
+
+            <div class="fgr full">
+              <div class="fl">SKU — Produto Específico</div>
+              <div class="sku-search-wrap">
+                <input class="fi" type="text" id="f-sku-search" placeholder="Digite para buscar SKU cadastrado..." autocomplete="off" oninput="filterSkus()" onfocus="showSkuDropdown()" onblur="setTimeout(hideSkuDropdown,200)">
+                <div class="sku-dropdown" id="sku-dropdown"></div>
+              </div>
+              <div class="sku-selected" id="sku-selected" style="display:none;">
+                <span class="sku-selected-name" id="sku-selected-name"></span>
+                <span class="sku-selected-clear" onclick="clearSku()">×</span>
+              </div>
+            </div>
+
             <div class="fgr"><div class="fl">Quantidade</div><input class="fi" type="number" id="f-qtd" placeholder="Ex: 150" min="1"></div>
             <div class="fgr" style="align-self:flex-end;"><button class="bts" id="btn-registrar" onclick="submitForm()">Registrar</button></div>
           </div>
+        </div>
+
+        <!-- ATIVIDADES RECENTES (abaixo do form) -->
+        <div class="cc">
+          <div class="ct">Atividades Recentes</div>
+          <div class="cs">histórico de registros do banco</div>
+          <table class="rt">
+            <thead><tr><th>Colaborador</th><th>Tipo</th><th>Categoria</th><th>SKU</th><th>Qtd</th><th>Data</th></tr></thead>
+            <tbody id="recent-tbody"><tr><td colspan="6" class="empty-state">Carregando...</td></tr></tbody>
+          </table>
         </div>
       </div>
 
@@ -303,27 +359,11 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         </div>
       </div>
 
-      <!-- ATIVIDADES -->
-      <div class="page" id="page-atividades">
-        <div class="cc">
-          <div class="ct">Atividades Recentes</div><div class="cs">histórico de registros do banco</div>
-          <table class="rt">
-            <thead><tr><th>Colaborador</th><th>Tipo</th><th>SKU</th><th>Qtd</th><th>Data</th></tr></thead>
-            <tbody id="recent-tbody"><tr><td colspan="5" class="empty-state">Carregando...</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-
       <!-- TOP 10 -->
       <div class="page" id="page-top10">
         <div class="cc">
           <div class="ct">Top 10 SKUs — Mais Saídos</div><div class="cs">ranking por volume total registrado</div>
           <div style="position:relative;height:360px;"><canvas id="top10Chart"></canvas></div>
-          <div class="leg" style="margin-top:12px;">
-            <div class="li"><div class="ld" style="background:#EA580C"></div>Capas</div>
-            <div class="li"><div class="ld" style="background:#DB2777"></div>Películas</div>
-            <div class="li"><div class="ld" style="background:#0D9488"></div>Acessórios</div>
-          </div>
         </div>
         <div style="margin-top:12px;">
           <div class="cc">
@@ -336,6 +376,37 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         </div>
       </div>
 
+      <!-- CADASTRO DE SKU -->
+      <div class="page" id="page-cadastro-sku">
+        <div class="fc">
+          <div class="ft">Cadastro de SKU</div>
+          <!-- FORM NOVO SKU -->
+          <div style="margin-bottom:20px;">
+            <div class="fl" style="margin-bottom:8px;">Adicionar novo SKU</div>
+            <div class="sku-form-row">
+              <div class="fgr">
+                <div class="fl">Nome do SKU</div>
+                <input class="fi" type="text" id="sku-nome" placeholder="Ex: Película Fosca 6D">
+              </div>
+              <div class="fgr">
+                <div class="fl">Categoria</div>
+                <select class="fi" id="sku-cat">
+                  <option value="">Selecione...</option>
+                  <option value="Capas">Capas</option>
+                  <option value="Películas">Películas</option>
+                  <option value="Acessórios">Acessórios</option>
+                </select>
+              </div>
+              <button class="btn-add-sku" id="btn-add-sku" onclick="addSku()">+ Adicionar</button>
+            </div>
+          </div>
+
+          <!-- LISTA DE SKUS -->
+          <div class="fl" style="margin-bottom:10px;">SKUs Cadastrados (<span id="sku-count">0</span>)</div>
+          <div class="sku-grid" id="sku-list"><div class="empty-state" style="grid-column:1/-1">Nenhum SKU cadastrado ainda</div></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -343,7 +414,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 <div class="toast" id="toast"></div>
 
 <script>
-// ── SUPABASE CONFIG ──
 const SUPA_URL = 'https://dsxotthnlhlsblorlvxe.supabase.co';
 const SUPA_KEY = 'sb_publishable_E54QZ_jnl9Jc6JLYk9wQVw_YdSMLzww';
 const { createClient } = supabase;
@@ -352,63 +422,178 @@ const db = createClient(SUPA_URL, SUPA_KEY);
 let isDark = false;
 let charts = {};
 let allData = [];
+let allSkus = [];
+let selectedSku = null;
 
-// ── DATA ──
-async function loadAll() {
+// ── INIT ──
+async function init() {
   showLoading(true);
-  const { data, error } = await db
-    .from('atividades')
-    .select('*')
-    .order('created_at', { ascending: false });
-  if (error) { showToast('Erro ao carregar dados: ' + error.message, 'error'); }
-  else { allData = data || []; }
-  renderAll();
+  await Promise.all([loadAtividades(), loadSkus()]);
   showLoading(false);
 }
 
-function renderAll() {
+// ── ATIVIDADES ──
+async function loadAtividades() {
+  const { data, error } = await db.from('atividades').select('*').order('created_at', { ascending: false });
+  if (error) { showToast('Erro ao carregar atividades: ' + error.message, 'error'); return; }
+  allData = data || [];
+  renderAtividades();
   updateMetrics();
-  renderRecent();
   renderTop5();
   renderPodium();
   rebuildCharts();
   document.getElementById('badge-total').textContent = allData.length;
 }
 
+function renderAtividades() {
+  const tbody = document.getElementById('recent-tbody');
+  if (!allData.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Nenhum registro ainda</td></tr>'; return; }
+  tbody.innerHTML = allData.slice(0, 30).map(r => `
+    <tr>
+      <td>${r.colaborador}</td>
+      <td><span class="badge ${badgeClass(r.tipo)}">${r.tipo}</span></td>
+      <td><span class="badge ${badgeClass(r.sku)}">${r.sku || '—'}</span></td>
+      <td style="font-weight:500">${r.nome_sku || '—'}</td>
+      <td>${r.quantidade}</td>
+      <td>${r.data}</td>
+    </tr>`).join('');
+}
+
+async function submitForm() {
+  const colaborador = document.getElementById('f-colab').value.trim();
+  const data = document.getElementById('f-data').value;
+  const quantidade = parseInt(document.getElementById('f-qtd').value);
+  const tipo = document.querySelector('#rg-tipo .rb.sel')?.textContent || '';
+  const sku = document.querySelector('#rg-cat .rb.sel')?.textContent || '';
+  const nome_sku = selectedSku ? selectedSku.nome : (document.getElementById('f-sku-search').value.trim() || null);
+  if (!colaborador || !data || !quantidade) { showToast('Preencha todos os campos!', 'error'); return; }
+  const btn = document.getElementById('btn-registrar');
+  btn.disabled = true; btn.textContent = 'Salvando...';
+  const { error } = await db.from('atividades').insert([{ colaborador, tipo, sku, nome_sku, quantidade, data }]);
+  btn.disabled = false; btn.textContent = 'Registrar';
+  if (error) { showToast('Erro ao salvar: ' + error.message, 'error'); return; }
+  document.getElementById('f-colab').value = '';
+  document.getElementById('f-qtd').value = '';
+  clearSku();
+  showToast('✓ Atividade registrada com sucesso!', 'success');
+  await loadAtividades();
+}
+
+// ── SKUs ──
+async function loadSkus() {
+  const { data, error } = await db.from('skus').select('*').order('nome');
+  if (error) {
+    // tabela pode não existir ainda — cria silenciosamente
+    allSkus = [];
+  } else {
+    allSkus = data || [];
+  }
+  renderSkuList();
+  renderSkuDropdown('');
+}
+
+async function addSku() {
+  const nome = document.getElementById('sku-nome').value.trim();
+  const categoria = document.getElementById('sku-cat').value;
+  if (!nome || !categoria) { showToast('Preencha nome e categoria do SKU', 'error'); return; }
+  const btn = document.getElementById('btn-add-sku');
+  btn.disabled = true; btn.textContent = 'Salvando...';
+  const { data, error } = await db.from('skus').insert([{ nome, categoria }]).select();
+  btn.disabled = false; btn.textContent = '+ Adicionar';
+  if (error) { showToast('Erro: ' + error.message, 'error'); return; }
+  document.getElementById('sku-nome').value = '';
+  document.getElementById('sku-cat').value = '';
+  showToast('✓ SKU cadastrado!', 'success');
+  await loadSkus();
+}
+
+async function deleteSku(id) {
+  if (!confirm('Excluir este SKU?')) return;
+  const { error } = await db.from('skus').delete().eq('id', id);
+  if (error) { showToast('Erro ao excluir: ' + error.message, 'error'); return; }
+  showToast('SKU excluído', 'success');
+  await loadSkus();
+}
+
+function renderSkuList() {
+  const el = document.getElementById('sku-list');
+  document.getElementById('sku-count').textContent = allSkus.length;
+  if (!allSkus.length) { el.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Nenhum SKU cadastrado ainda</div>'; return; }
+  el.innerHTML = allSkus.map(s => `
+    <div class="sku-card">
+      <div class="sku-card-info">
+        <div class="sku-card-name">${s.nome}</div>
+        <div class="sku-card-cat">${s.categoria}</div>
+      </div>
+      <button class="sku-card-del" onclick="deleteSku('${s.id}')" title="Excluir">×</button>
+    </div>`).join('');
+}
+
+function renderSkuDropdown(query) {
+  const filtered = query
+    ? allSkus.filter(s => s.nome.toLowerCase().includes(query.toLowerCase()) || s.categoria.toLowerCase().includes(query.toLowerCase()))
+    : allSkus;
+  const el = document.getElementById('sku-dropdown');
+  if (!filtered.length) {
+    el.innerHTML = '<div class="sku-opt" style="color:var(--text3);cursor:default;">Nenhum SKU encontrado</div>';
+  } else {
+    el.innerHTML = filtered.map(s => `
+      <div class="sku-opt" onclick="selectSku('${s.id}','${s.nome}','${s.categoria}')">
+        <span class="sku-opt-name">${s.nome}</span>
+        <span class="sku-opt-cat">${s.categoria}</span>
+      </div>`).join('');
+  }
+}
+
+function filterSkus() {
+  const q = document.getElementById('f-sku-search').value;
+  renderSkuDropdown(q);
+  showSkuDropdown();
+}
+
+function showSkuDropdown() {
+  if (allSkus.length > 0) document.getElementById('sku-dropdown').classList.add('show');
+}
+function hideSkuDropdown() { document.getElementById('sku-dropdown').classList.remove('show'); }
+
+function selectSku(id, nome, categoria) {
+  selectedSku = { id, nome, categoria };
+  document.getElementById('f-sku-search').value = '';
+  document.getElementById('f-sku-search').placeholder = 'SKU selecionado ✓';
+  document.getElementById('sku-selected-name').textContent = `${nome} — ${categoria}`;
+  document.getElementById('sku-selected').style.display = 'flex';
+  hideSkuDropdown();
+}
+
+function clearSku() {
+  selectedSku = null;
+  document.getElementById('f-sku-search').value = '';
+  document.getElementById('f-sku-search').placeholder = 'Digite para buscar SKU cadastrado...';
+  document.getElementById('sku-selected').style.display = 'none';
+}
+
+// ── METRICS ──
 function updateMetrics() {
   const total = allData.length;
-  const prod = allData.reduce((s, r) => s + (r.quantidade || 0), 0);
+  const prod = allData.reduce((s,r) => s + (r.quantidade||0), 0);
   const colabs = [...new Set(allData.map(r => r.colaborador))].length;
   const skuCount = {};
-  allData.forEach(r => { skuCount[r.sku] = (skuCount[r.sku] || 0) + r.quantidade; });
-  const topSku = Object.entries(skuCount).sort((a,b) => b[1]-a[1])[0];
+  allData.forEach(r => { const k = r.nome_sku || r.sku; skuCount[k] = (skuCount[k]||0) + r.quantidade; });
+  const topSku = Object.entries(skuCount).sort((a,b)=>b[1]-a[1])[0];
   document.getElementById('m-total').textContent = total;
   document.getElementById('m-prod').textContent = prod.toLocaleString('pt-BR');
   document.getElementById('m-colab').textContent = colabs;
   document.getElementById('m-sku').textContent = topSku ? topSku[0] : '—';
 }
 
-function renderRecent() {
-  const tbody = document.getElementById('recent-tbody');
-  if (!allData.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Nenhum registro ainda</td></tr>'; return; }
-  tbody.innerHTML = allData.slice(0, 20).map(r => `
-    <tr>
-      <td>${r.colaborador}</td>
-      <td><span class="badge ${badgeClass(r.tipo)}">${r.tipo}</span></td>
-      <td><span class="badge ${badgeClass(r.sku)}">${r.sku}</span></td>
-      <td>${r.quantidade}</td>
-      <td>${r.data}</td>
-    </tr>`).join('');
-}
-
 function renderTop5() {
   const scores = {};
-  allData.forEach(r => { scores[r.colaborador] = (scores[r.colaborador] || 0) + r.quantidade; });
-  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]).slice(0,5);
+  allData.forEach(r => { scores[r.colaborador] = (scores[r.colaborador]||0) + r.quantidade; });
+  const sorted = Object.entries(scores).sort((a,b)=>b[1]-a[1]).slice(0,5);
   const el = document.getElementById('top5-list');
   if (!sorted.length) { el.innerHTML = '<div class="empty-state">Nenhum dado ainda</div>'; return; }
   const max = sorted[0][1];
-  el.innerHTML = sorted.map(([name, pts], i) => `
+  el.innerHTML = sorted.map(([name,pts],i) => `
     <div class="t5i">
       <div class="t5r ${i<3?'r'+(i+1):''}">${i+1}º</div>
       <div class="t5n">${name}</div>
@@ -419,11 +604,11 @@ function renderTop5() {
 
 function renderPodium() {
   const scores = {};
-  allData.forEach(r => { scores[r.colaborador] = (scores[r.colaborador] || 0) + r.quantidade; });
-  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+  allData.forEach(r => { scores[r.colaborador] = (scores[r.colaborador]||0) + r.quantidade; });
+  const sorted = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
   const podiumEl = document.getElementById('podium');
   const restEl = document.getElementById('rank-rest');
-  if (sorted.length < 1) { podiumEl.innerHTML = '<div class="empty-state" style="width:100%">Nenhum dado ainda</div>'; restEl.innerHTML=''; return; }
+  if (!sorted.length) { podiumEl.innerHTML='<div class="empty-state" style="width:100%">Nenhum dado ainda</div>'; restEl.innerHTML=''; return; }
   const ini = n => n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
   const [p1,p2,p3,...rest] = sorted;
   podiumEl.innerHTML = `
@@ -436,146 +621,110 @@ function renderPodium() {
 
 function buildTop10Chart() {
   const skuTotals = {};
-  const skuCat = {};
+  const skuCatMap = {};
   allData.forEach(r => {
-    skuTotals[r.sku] = (skuTotals[r.sku] || 0) + r.quantidade;
-    skuCat[r.sku] = r.sku;
+    const k = r.nome_sku || r.sku;
+    skuTotals[k] = (skuTotals[k]||0) + r.quantidade;
+    skuCatMap[k] = r.sku;
   });
   const sorted = Object.entries(skuTotals).sort((a,b)=>b[1]-a[1]).slice(0,10);
   if (charts.top10) { charts.top10.destroy(); charts.top10=null; }
   const b = getBase();
-  const colorMap = { 'Capas': isDark?'#F97316':'#EA580C', 'Películas': isDark?'#F472B6':'#DB2777', 'Acessórios': isDark?'#14B8A6':'#0D9488' };
-  const colors = sorted.map(([sku]) => colorMap[sku] || '#64748B');
+  const colorMap = { 'Capas':isDark?'#F97316':'#EA580C','Películas':isDark?'#F472B6':'#DB2777','Acessórios':isDark?'#14B8A6':'#0D9488' };
   charts.top10 = new Chart(document.getElementById('top10Chart'), {
     type:'bar',
-    data:{ labels: sorted.map(d=>d[0]), datasets:[{ label:'Unidades', data: sorted.map(d=>d[1]), backgroundColor: colors, borderRadius:5, barPercentage:.72 }] },
+    data:{ labels:sorted.map(d=>d[0]), datasets:[{ label:'Unidades', data:sorted.map(d=>d[1]), backgroundColor:sorted.map(([k])=>colorMap[skuCatMap[k]]||'#64748B'), borderRadius:5, barPercentage:.72 }] },
     options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.x+' unidades'}} },
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.x+' unidades'}}},
       scales:{ x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}}, y:{grid:{display:false},ticks:{color:isDark?'#E2E8F0':'#111111',font:{size:11,weight:'500'}},border:{display:false}} }
     }
   });
-  // table
-  document.getElementById('top10-tbody').innerHTML = sorted.map(([sku,vol],i) => {
-    const catCls = badgeClass(sku);
-    return `<tr>
+  document.getElementById('top10-tbody').innerHTML = sorted.map(([sku,vol],i) => `
+    <tr>
       <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:${i<3?['#D97706','#64748B','#92400E'][i]:'var(--text3)'}">${i+1}º</td>
       <td style="font-weight:500">${sku}</td>
-      <td><span class="badge ${catCls}">${sku}</span></td>
+      <td><span class="badge ${badgeClass(skuCatMap[sku])}">${skuCatMap[sku]||'—'}</span></td>
       <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--or)">${vol}</td>
-    </tr>`;
-  }).join('');
+    </tr>`).join('');
 }
 
 function rebuildCharts() {
   const b = getBase();
-  if (charts.sku) { charts.sku.destroy(); charts.sku=null; }
-  if (charts.pizza) { charts.pizza.destroy(); charts.pizza=null; }
-
-  // SKU por mês (últimos 6 meses)
+  if (charts.sku){charts.sku.destroy();charts.sku=null;}
+  if (charts.pizza){charts.pizza.destroy();charts.pizza=null;}
   const months = [];
-  for (let i=5;i>=0;i--) {
-    const d = new Date(); d.setMonth(d.getMonth()-i);
-    months.push({ label: d.toLocaleString('pt-BR',{month:'short'}), key: `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}` });
-  }
+  for (let i=5;i>=0;i--) { const d=new Date(); d.setMonth(d.getMonth()-i); months.push({label:d.toLocaleString('pt-BR',{month:'short'}),key:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`}); }
   const skuTypes = ['Capas','Películas','Acessórios'];
   const skuColors = isDark?['#F97316','#EC4899','#14B8A6']:['#EA580C','#DB2777','#0D9488'];
-  const datasets = skuTypes.map((sku,si) => ({
-    label: sku,
-    data: months.map(m => allData.filter(r => r.sku===sku && r.data && r.data.startsWith(m.key)).reduce((s,r)=>s+r.quantidade,0)),
-    backgroundColor: skuColors[si], borderRadius:3, barPercentage:.7
-  }));
   charts.sku = new Chart(document.getElementById('skuChart'), {
-    type:'bar', data:{ labels: months.map(m=>m.label), datasets },
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
-      scales:{ x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}}, y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}} }
-    }
+    type:'bar',
+    data:{ labels:months.map(m=>m.label), datasets:skuTypes.map((sku,si)=>({ label:sku, data:months.map(m=>allData.filter(r=>r.sku===sku&&r.data&&r.data.startsWith(m.key)).reduce((s,r)=>s+r.quantidade,0)), backgroundColor:skuColors[si], borderRadius:3, barPercentage:.7 })) },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}}, scales:{x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}},y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}}} }
   });
-
-  // Pizza por tipo
-  const tipoCount = { Reposição:0, Armazenamento:0, Movimentação:0, Legendas:0 };
-  allData.forEach(r => { if(tipoCount[r.tipo]!==undefined) tipoCount[r.tipo]+=r.quantidade; });
+  const tipoCount = {Reposição:0,Armazenamento:0,Movimentação:0,Legendas:0};
+  allData.forEach(r=>{if(tipoCount[r.tipo]!==undefined)tipoCount[r.tipo]+=r.quantidade;});
   const pieColors = isDark?['#14B8A6','#3B82F6','#A855F7','#F97316']:['#0D9488','#2563EB','#7C3AED','#EA580C'];
   charts.pizza = new Chart(document.getElementById('pizzaChart'), {
     type:'doughnut',
-    data:{ labels: Object.keys(tipoCount), datasets:[{ data: Object.values(tipoCount), backgroundColor: pieColors, borderWidth:2, borderColor:b.border, hoverOffset:4 }] },
+    data:{ labels:Object.keys(tipoCount), datasets:[{data:Object.values(tipoCount),backgroundColor:pieColors,borderWidth:2,borderColor:b.border,hoverOffset:4}] },
     options:{ responsive:true, maintainAspectRatio:false, cutout:'62%', plugins:{legend:{display:false}} }
   });
-
   if (document.getElementById('page-top10').classList.contains('active')) buildTop10Chart();
 }
 
-// ── FORM ──
-async function submitForm() {
-  const colaborador = document.getElementById('f-colab').value.trim();
-  const data = document.getElementById('f-data').value;
-  const quantidade = parseInt(document.getElementById('f-qtd').value);
-  const tipo = document.querySelector('#rg-tipo .rb.sel')?.textContent || '';
-  const sku = document.querySelector('#rg-sku .rb.sel')?.textContent || '';
-  if (!colaborador || !data || !quantidade) { showToast('Preencha todos os campos!', 'error'); return; }
-  const btn = document.getElementById('btn-registrar');
-  btn.disabled = true; btn.textContent = 'Salvando...';
-  const { error } = await db.from('atividades').insert([{ colaborador, tipo, sku, quantidade, data }]);
-  btn.disabled = false; btn.textContent = 'Registrar';
-  if (error) { showToast('Erro ao salvar: ' + error.message, 'error'); return; }
-  document.getElementById('f-colab').value = '';
-  document.getElementById('f-qtd').value = '';
-  showToast('✓ Atividade registrada com sucesso!', 'success');
-  await loadAll();
-}
+// ── UI ──
+const PAGES = {
+  dashboard:{title:'Dashboard',sub:'visão geral do armazém'},
+  registro:{title:'Registro de Atividade',sub:'cadastro de produção e histórico'},
+  ranking:{title:'Ranking de Eficiência',sub:'classificação dos colaboradores'},
+  'top10':{title:'Top 10 SKUs',sub:'produtos mais saídos'},
+  'cadastro-sku':{title:'Cadastro de SKU',sub:'gerencie os SKUs ativos da empresa'},
+};
 
-// ── UI HELPERS ──
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-nav-item').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
-  const pages = { dashboard:{title:'Dashboard',sub:'visão geral do armazém'}, registro:{title:'Registro de Atividade',sub:'cadastro de produção'}, ranking:{title:'Ranking de Eficiência',sub:'classificação dos colaboradores'}, atividades:{title:'Atividades',sub:'histórico de registros'}, top10:{title:'Top 10 SKUs',sub:'produtos mais saídos'} };
-  const p = pages[id];
+  const p = PAGES[id];
   document.getElementById('tb-title').textContent = p.title;
   document.getElementById('tb-sub').textContent = p.sub;
-  if (id === 'top10') setTimeout(buildTop10Chart, 80);
+  if (id==='top10') setTimeout(buildTop10Chart,80);
 }
 
-function toggleRadio(gid, el) {
+function toggleRadio(gid,el) {
   document.querySelectorAll('#'+gid+' .rb').forEach(b=>b.classList.remove('sel'));
   el.classList.add('sel');
 }
 
 function toggleTheme() {
   isDark = !isDark;
-  document.documentElement.setAttribute('data-theme', isDark?'dark':'');
+  document.documentElement.setAttribute('data-theme',isDark?'dark':'');
   document.getElementById('tlabel').textContent = isDark?'Tema Escuro':'Tema Claro';
-  setTimeout(rebuildCharts, 50);
+  setTimeout(rebuildCharts,50);
 }
 
 function badgeClass(t) {
-  const m = { 'Reposição':'b-rep','Armazenamento':'b-arm','Movimentação':'b-mov','Legendas':'b-leg','Capas':'b-cap','Películas':'b-pel','Acessórios':'b-ace' };
-  return m[t] || '';
+  const m={'Reposição':'b-rep','Armazenamento':'b-arm','Movimentação':'b-mov','Legendas':'b-leg','Capas':'b-cap','Películas':'b-pel','Acessórios':'b-ace'};
+  return m[t]||'';
 }
 
 function getBase() {
-  return isDark
-    ? {grid:'rgba(255,255,255,0.05)',tick:'#64748B',border:'#111827'}
-    : {grid:'rgba(0,0,0,0.04)',tick:'#999490',border:'#FFFFFF'};
+  return isDark?{grid:'rgba(255,255,255,0.05)',tick:'#64748B',border:'#111827'}:{grid:'rgba(0,0,0,0.04)',tick:'#999490',border:'#FFFFFF'};
 }
 
-function showLoading(show) {
-  document.getElementById('loading').classList.toggle('hide', !show);
-}
+function showLoading(show) { document.getElementById('loading').classList.toggle('hide',!show); }
 
-function showToast(msg, type='success') {
+function showToast(msg,type='success') {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast ' + type + ' show';
-  setTimeout(() => t.classList.remove('show'), 3000);
+  t.textContent = msg; t.className = 'toast '+type+' show';
+  setTimeout(()=>t.classList.remove('show'),3000);
 }
 
-// ── INIT ──
+// ── START ──
 document.getElementById('f-data').valueAsDate = new Date();
-const now = new Date();
-document.getElementById('tb-date').textContent = now.toLocaleString('pt-BR',{month:'long',year:'numeric'});
-loadAll();
+document.getElementById('tb-date').textContent = new Date().toLocaleString('pt-BR',{month:'long',year:'numeric'});
+init();
 </script>
 </body>
 </html>
