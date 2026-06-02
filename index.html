@@ -450,7 +450,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
           <div class="mc"><div class="mc-label">Total Atividades</div><div class="mc-val" id="m-total">—</div><div class="mc-sub">registros no banco</div></div>
           <div class="mc"><div class="mc-label">Produção Total</div><div class="mc-val" id="m-prod">—</div><div class="mc-sub">unidades registradas</div></div>
           <div class="mc"><div class="mc-label">Colaboradores</div><div class="mc-val" id="m-colab">—</div><div class="mc-sub">ativos este mês</div></div>
-          <div class="mc"><div class="mc-label">SKU Destaque</div><div class="mc-val" id="m-sku" style="font-size:18px;font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--or)">—</div><div class="mc-sub" id="m-sku-desc" style="font-size:10px;color:var(--text3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">maior volume</div></div>
+          <div class="mc"><div class="mc-label">SKU Destaque</div>
+<div id="m-sku" style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--or);line-height:1.2;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">—</div>
+<div id="m-sku-desc" style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:600;color:var(--text);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">—</div></div>
         </div>
 
         <!-- SKU + PIZZA + TOP5 -->
@@ -544,7 +546,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
                 <div class="rb" onclick="toggleRadio('rg-tipo',this)">Legendas</div>
               </div>
             </div>
-            <div class="fgr full"><div class="fl">Categoria do Produto</div>
+            <div class="fgr full"><div class="fl">Nomenclatura</div>
               <div class="rg" id="rg-cat">
                 <div class="rb sel" onclick="toggleRadio('rg-cat',this)">Capas</div>
                 <div class="rb" onclick="toggleRadio('rg-cat',this)">Películas</div>
@@ -552,7 +554,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
               </div>
             </div>
             <div class="fgr full">
-              <div class="fl">SKU — Produto Específico</div>
+              <div class="fl">Código de Produto</div>
               <div class="sku-search-wrap">
                 <input class="fi" type="text" id="f-sku-search" placeholder="Digite o código do produto (ex: 29030)..." autocomplete="off" oninput="filterSkus()" onfocus="showSkuDropdown()" onblur="setTimeout(hideSkuDropdown,200)">
                 <div class="sku-dropdown" id="sku-dropdown"></div>
@@ -673,10 +675,8 @@ function renderAtividades() {
       <td>${r.colaborador}</td>
       <td><span class="badge ${bc(r.tipo)}">${r.tipo}</span></td>
       <td><span class="badge ${bc(r.sku)}">${r.sku||'—'}</span></td>
-      <td style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--or)">${r.sku||'—'}</td>
-      <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-        <span style="font-size:11px;color:var(--text2);" title="${r.nome_sku||''}">${r.nome_sku ? r.nome_sku.substring(0,45)+(r.nome_sku.length>45?'...':'') : '—'}</span>
-      </td>
+      <td style="font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;color:var(--or);white-space:nowrap;">${r.sku||'—'}</td>
+      <td style="font-size:12px;color:var(--text);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${r.nome_sku||''}">${r.nome_sku ? r.nome_sku.substring(0,45)+(r.nome_sku.length>45?'...':'') : '—'}</td>
       <td>${r.quantidade}</td>
       <td>${r.data}</td>
       <td><button onclick="deleteAtividade('${r.id}')" title="Excluir registro" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:14px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(220,38,38,.1)';this.style.borderColor='rgba(220,38,38,.3)';this.style.color='#DC2626'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">🗑</button></td>
