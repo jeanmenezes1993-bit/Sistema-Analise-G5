@@ -451,8 +451,8 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
           <div class="mc"><div class="mc-label">Produção Total</div><div class="mc-val" id="m-prod">—</div><div class="mc-sub">unidades registradas</div></div>
           <div class="mc"><div class="mc-label">Colaboradores</div><div class="mc-val" id="m-colab">—</div><div class="mc-sub">ativos este mês</div></div>
           <div class="mc"><div class="mc-label">SKU Destaque</div>
-<div id="m-sku" style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--or);line-height:1.2;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">—</div>
-<div id="m-sku-desc" style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:600;color:var(--text);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">—</div></div>
+<div id="m-sku" style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--or);line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;word-break:break-word;">—</div>
+<div id="m-sku-desc" style="display:none;"></div></div>
         </div>
 
         <!-- SKU + PIZZA + TOP5 -->
@@ -713,11 +713,12 @@ function updateMetrics() {
   document.getElementById('m-prod').textContent=prod.toLocaleString('pt-BR');
   document.getElementById('m-colab').textContent=colabs;
   const skuObj = allSkus.find(s=>s.nome===topSku[0]||s.nomenclatura===topSku[0]);
-  const skuDisplay = skuObj ? (skuObj.nomenclatura||skuObj.nome) : topSku[0];
+  const skuCod  = skuObj ? (skuObj.nomenclatura||'') : '';
   const skuNome = skuObj ? skuObj.nome : topSku[0];
-  document.getElementById('m-sku').textContent = skuDisplay;
-  document.getElementById('m-sku').title = skuNome;
-  document.getElementById('m-sku-desc').textContent = skuNome.length > 40 ? skuNome.substring(0,40)+'...' : skuNome;
+  const fullLine = skuCod ? skuCod + ' - ' + skuNome : skuNome;
+  document.getElementById('m-sku').textContent = fullLine;
+  document.getElementById('m-sku').title = fullLine;
+  document.getElementById('m-sku-desc').textContent = '';
 }
 
 // ── HEATMAP ──
