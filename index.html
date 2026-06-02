@@ -223,6 +223,32 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .toast.success{background:#16A34A;}
 .toast.error{background:#DC2626;}
 .empty-state{text-align:center;padding:32px;color:var(--text3);font-size:12px;}
+
+/* COLABORADOR DROPDOWN */
+.colab-wrap{position:relative;}
+.colab-dropdown{
+  position:absolute;top:100%;left:0;right:0;
+  background:var(--card);border:1.5px solid var(--or-bdr);
+  border-radius:8px;margin-top:4px;z-index:50;
+  box-shadow:0 4px 16px rgba(0,0,0,0.1);
+  display:none;overflow:hidden;
+}
+.colab-dropdown.show{display:block;}
+.colab-opt{
+  padding:10px 14px;font-size:12px;cursor:pointer;
+  color:var(--text);border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;gap:10px;
+  transition:background .15s;
+}
+.colab-opt:last-child{border-bottom:none;}
+.colab-opt:hover{background:var(--or-bg);}
+.colab-opt-avatar{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  background:var(--or-bg);border:1.5px solid var(--or-bdr);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;color:var(--or);
+}
+.colab-opt-name{font-weight:500;color:var(--text);}
 </style>
 </head>
 <body>
@@ -480,7 +506,18 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         <div class="fc">
           <div class="ft">Registrar Atividade</div>
           <div class="fg">
-            <div class="fgr"><div class="fl">Colaborador</div><input class="fi" type="text" id="f-colab" placeholder="Nome completo"></div>
+            <div class="fgr">
+              <div class="fl">Colaborador</div>
+              <div class="colab-wrap">
+                <input class="fi" type="text" id="f-colab" placeholder="Selecione ou digite o nome..."
+                  autocomplete="off"
+                  oninput="filterColabs()"
+                  onfocus="showColabDrop()"
+                  onblur="setTimeout(hideColabDrop,200)"
+                  onkeydown="if(event.key===\'Escape\')hideColabDrop()">
+                <div class="colab-dropdown" id="colab-dropdown"></div>
+              </div>
+            </div>
             <div class="fgr"><div class="fl">Data</div><input class="fi" type="date" id="f-data"></div>
             <div class="fgr full"><div class="fl">Tipo de Atividade</div>
               <div class="rg" id="rg-tipo">
@@ -554,8 +591,8 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
           <div style="margin-bottom:20px;">
             <div class="fl" style="margin-bottom:8px;">Adicionar novo SKU</div>
             <div class="sku-form-row">
-              <div class="fgr"><div class="fl">Nome do SKU</div><input class="fi" type="text" id="sku-nome" placeholder="Ex: Película Fosca 6D"></div>
-              <div class="fgr"><div class="fl">Nomenclatura / Código</div><input class="fi" type="text" id="sku-nomenclatura" placeholder="Ex: PEL-6D-001"></div>
+              <div class="fgr"><div class="fl">Código do Produto</div><input class="fi" type="text" id="sku-nomenclatura" placeholder="Ex: 29030"></div>
+              <div class="fgr"><div class="fl">Nomenclatura / Nome</div><input class="fi" type="text" id="sku-nome" placeholder="Ex: Capa TPU Anti Shock iPhone 16"></div>
               <div class="fgr"><div class="fl">Categoria</div>
                 <select class="fi" id="sku-cat">
                   <option value="">Selecione...</option>
@@ -939,7 +976,7 @@ function renderSkuList(){
   const el=document.getElementById('sku-list');
   document.getElementById('sku-count').textContent=allSkus.length;
   if(!allSkus.length){el.innerHTML='<div class="empty-state" style="grid-column:1/-1">Nenhum SKU cadastrado ainda</div>';return;}
-  el.innerHTML=allSkus.map(s=>`<div class="sku-card"><div class="sku-card-info"><div class="sku-card-name">${s.nome}</div><div style="display:flex;gap:6px;align-items:center;margin-top:2px;">${s.nomenclatura?`<span style="font-size:10px;font-weight:600;color:var(--or);background:var(--or-bg);border:1px solid var(--or-bdr);padding:1px 6px;border-radius:4px;">${s.nomenclatura}</span>`:''}<div class="sku-card-cat">${s.categoria}</div></div></div><button class="sku-card-del" onclick="deleteSku('${s.id}')">×</button></div>`).join('');
+  el.innerHTML=allSkus.map(s=>`<div class="sku-card"><div class="sku-card-info">${s.nomenclatura?`<div style="font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--or);line-height:1;margin-bottom:3px;">${s.nomenclatura}</div>`:''}<div class="sku-card-name" style="font-size:11px;font-weight:500;color:var(--text);line-height:1.3;">${s.nome}</div><div class="sku-card-cat" style="margin-top:4px;">${s.categoria}</div></div><button class="sku-card-del" onclick="deleteSku('${s.id}')">×</button></div>`).join('');
 }
 function renderSkuDropdown(q){
   let filtered=q
@@ -1052,8 +1089,59 @@ window.addEventListener('DOMContentLoaded',()=>{
   setTimeout(()=>document.getElementById('login-user').focus(),100);
 });
 
+
+// ── COLABORADORES ──
+const COLABORADORES = [
+  'Kauan Vinicius Lobato Rocha',
+  'Felipe Lemes Galvão',
+  'Luis Carlos Passos Conceição',
+];
+
+function initColabDrop(){
+  renderColabDrop('');
+}
+
+function renderColabDrop(q){
+  const filtered = q
+    ? COLABORADORES.filter(n=>n.toLowerCase().includes(q.toLowerCase()))
+    : COLABORADORES;
+  const el = document.getElementById('colab-dropdown');
+  if(!filtered.length){
+    el.innerHTML='<div class="colab-opt" style="color:var(--text3);cursor:default;">Nenhum colaborador encontrado</div>';
+    return;
+  }
+  el.innerHTML = filtered.map(n=>{
+    const ini = n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    return `<div class="colab-opt" onclick="selectColab('${n}')">
+      <div class="colab-opt-avatar">${ini}</div>
+      <span class="colab-opt-name">${n}</span>
+    </div>`;
+  }).join('');
+}
+
+function filterColabs(){
+  const q = document.getElementById('f-colab').value;
+  renderColabDrop(q);
+  showColabDrop();
+}
+
+function showColabDrop(){
+  renderColabDrop(document.getElementById('f-colab').value);
+  document.getElementById('colab-dropdown').classList.add('show');
+}
+
+function hideColabDrop(){
+  document.getElementById('colab-dropdown').classList.remove('show');
+}
+
+function selectColab(nome){
+  document.getElementById('f-colab').value = nome;
+  hideColabDrop();
+}
+
 // ── START ──
 document.getElementById('f-data').valueAsDate=new Date();
+initColabDrop();
 document.getElementById('tb-date').textContent=new Date().toLocaleString('pt-BR',{month:'long',year:'numeric'});
 init();
 </script>
