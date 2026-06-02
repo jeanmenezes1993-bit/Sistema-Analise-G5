@@ -952,19 +952,22 @@ async function loadSkus() {
   renderSkuList(); renderSkuDropdown('');
 }
 async function addSku() {
+  const codigo=document.getElementById('sku-nomenclatura').value.trim();
   const nome=document.getElementById('sku-nome').value.trim();
-  const nomenclatura=document.getElementById('sku-nomenclatura').value.trim();
   const categoria=document.getElementById('sku-cat').value;
-  if(!nome||!categoria){showToast('Preencha nome e categoria','error');return;}
+  if(!codigo){showToast('Preencha o código do produto!','error');document.getElementById('sku-nomenclatura').focus();return;}
+  if(!nome){showToast('Preencha a nomenclatura/nome!','error');document.getElementById('sku-nome').focus();return;}
+  if(!categoria){showToast('Selecione a categoria!','error');document.getElementById('sku-cat').focus();return;}
   const btn=document.getElementById('btn-add-sku');
   btn.disabled=true;btn.textContent='Salvando...';
-  const {error}=await db.from('skus').insert([{nome,nomenclatura:nomenclatura||null,categoria}]);
+  const {error}=await db.from('skus').insert([{nome:nome, nomenclatura:codigo, categoria:categoria}]);
   btn.disabled=false;btn.textContent='+ Adicionar';
   if(error){showToast('Erro: '+error.message,'error');return;}
-  document.getElementById('sku-nome').value='';
   document.getElementById('sku-nomenclatura').value='';
+  document.getElementById('sku-nome').value='';
   document.getElementById('sku-cat').value='';
-  showToast('✓ SKU cadastrado!','success');await loadSkus();
+  showToast('✓ SKU cadastrado!','success');
+  await loadSkus();
 }
 async function deleteSku(id){
   if(!confirm('Excluir este SKU?'))return;
