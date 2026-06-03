@@ -610,8 +610,8 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
           <div style="margin-bottom:20px;">
             <div class="fl" style="margin-bottom:8px;">Adicionar novo SKU</div>
             <div class="sku-form-row">
-              <div class="fgr"><div class="fl">Nomenclatura</div><input class="fi" type="text" id="sku-nomenclatura" placeholder="Ex: 29030"></div>
-              <div class="fgr"><div class="fl">Código de Produto</div><input class="fi" type="text" id="sku-nome" placeholder="Ex: Capa TPU Anti Shock iPhone 16"></div>
+              <div class="fgr"><div class="fl">Código de Produto</div><input class="fi" type="text" id="sku-nomenclatura" placeholder="Ex: 29030" onkeydown="if(event.key==='Enter')document.getElementById('sku-nome').focus()"></div>
+              <div class="fgr"><div class="fl">Nome do Produto</div><input class="fi" type="text" id="sku-nome" placeholder="Ex: Capa TPU Anti Shock iPhone 16" onkeydown="if(event.key==='Enter')document.getElementById('sku-cat').focus()"></div>
               <div class="fgr"><div class="fl">Categoria</div>
                 <select class="fi" id="sku-cat">
                   <option value="">Selecione...</option>
@@ -979,21 +979,21 @@ async function loadSkus() {
   renderSkuList(); renderSkuDropdown('');
 }
 async function addSku() {
-  const codigo=document.getElementById('sku-nomenclatura').value.trim();
-  const nome=document.getElementById('sku-nome').value.trim();
-  const categoria=document.getElementById('sku-cat').value;
-  if(!codigo){showToast('Preencha o código do produto!','error');document.getElementById('sku-nomenclatura').focus();return;}
-  if(!nome){showToast('Preencha a nomenclatura/nome!','error');document.getElementById('sku-nome').focus();return;}
-  if(!categoria){showToast('Selecione a categoria!','error');document.getElementById('sku-cat').focus();return;}
+  const nomenclatura = document.getElementById('sku-nomenclatura').value.trim(); // código ex: 29030
+  const nome        = document.getElementById('sku-nome').value.trim();          // nome do produto
+  const categoria   = document.getElementById('sku-cat').value;
+  if(!nomenclatura){ showToast('Preencha a Nomenclatura (código)!','error'); document.getElementById('sku-nomenclatura').focus(); return; }
+  if(!nome){         showToast('Preencha o Código de Produto (nome)!','error'); document.getElementById('sku-nome').focus(); return; }
+  if(!categoria){    showToast('Selecione a categoria!','error'); document.getElementById('sku-cat').focus(); return; }
   const btn=document.getElementById('btn-add-sku');
-  btn.disabled=true;btn.textContent='Salvando...';
-  const {error}=await db.from('skus').insert([{nome:nome, nomenclatura:codigo, categoria:categoria}]);
-  btn.disabled=false;btn.textContent='+ Adicionar';
-  if(error){showToast('Erro: '+error.message,'error');return;}
+  btn.disabled=true; btn.textContent='Salvando...';
+  const {data, error}=await db.from('skus').insert([{ nomenclatura: nomenclatura, nome: nome, categoria: categoria }]).select();
+  btn.disabled=false; btn.textContent='+ Adicionar';
+  if(error){ showToast('Erro: '+error.message,'error'); return; }
   document.getElementById('sku-nomenclatura').value='';
   document.getElementById('sku-nome').value='';
   document.getElementById('sku-cat').value='';
-  showToast('✓ SKU cadastrado!','success');
+  showToast('✓ SKU cadastrado com sucesso!','success');
   await loadSkus();
 }
 async function deleteSku(id){
