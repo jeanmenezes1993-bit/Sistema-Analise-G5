@@ -383,7 +383,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 </div>
 
 
-<div class="loading-overlay" id="loading"><div class="spinner"></div></div>
+<div class="loading-overlay hide" id="loading"><div class="spinner"></div></div>
 
 <div class="layout">
   <aside class="sidebar">
@@ -1095,9 +1095,11 @@ function doLogin(){
       document.querySelector('.sb-uname').textContent = found.nome;
       document.querySelector('.sb-urole').textContent = found.role;
       document.querySelector('.sb-av').textContent = found.nome.substring(0,2).toUpperCase();
-      // Hide login screen
+      // Hide login screen and load data
       document.getElementById('login-screen').classList.add('hide');
-      setTimeout(()=>document.getElementById('login-screen').style.display='none',420);
+      setTimeout(()=>{ document.getElementById('login-screen').style.display='none'; }, 420);
+      // Load system data after login
+      init();
     } else {
       err.textContent='Usuário ou senha incorretos. Tente novamente.';
       err.classList.add('show');
@@ -1181,8 +1183,7 @@ async function deleteAtividade(id){
 // ── START ──
 document.getElementById('f-data').valueAsDate=new Date();
 initColabDrop();
-
-init();
+// init() is called after successful login
 </script>
 </body>
 </html>
