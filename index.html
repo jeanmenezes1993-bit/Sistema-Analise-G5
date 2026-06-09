@@ -636,7 +636,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 
 <script>
 const SUPA_URL = 'https://dsxotthnlhlsblorlvxe.supabase.co';
-const SUPA_KEY = 'sb_publishable_E54QZ_jnl9Jc6JLYk9wQVw_YdSMLzww';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRzeG90dGhubGhsc2Jsb3JsdnhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNjg5ODYsImV4cCI6MjA5NTk0NDk4Nn0.cd1k_ueejID3oXq8hr8J5j7uUuUpKE7N10LH-laKZEQ';
 const { createClient } = supabase;
 const db = createClient(SUPA_URL, SUPA_KEY);
 
@@ -644,16 +644,26 @@ let isDark=false, charts={}, allData=[], allSkus=[], selectedSku=null;
 
 async function init() {
   showLoading(true);
-  await Promise.all([loadAtividades(), loadSkus()]);
-  showLoading(false);
+  try {
+    await Promise.all([loadAtividades(), loadSkus()]);
+  } catch(e) {
+    showToast('Erro ao carregar dados: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
 }
 
 // ── ATIVIDADES ──
 async function loadAtividades() {
-  const { data, error } = await db.from('atividades').select('*').order('created_at',{ascending:false});
-  if (error) { showToast('Erro: '+error.message,'error'); return; }
-  allData = data||[];
-  renderAll();
+  try {
+    const { data, error } = await db.from('atividades').select('*').order('created_at',{ascending:false});
+    if (error) { showToast('Erro ao carregar atividades: '+error.message,'error'); allData=[]; renderAll(); return; }
+    allData = data||[];
+    renderAll();
+  } catch(e) {
+    showToast('Falha de conexão: '+e.message,'error');
+    allData=[]; renderAll();
+  }
 }
 
 function renderAll() {
@@ -974,8 +984,12 @@ function rebuildCharts() {
 
 // ── SKUs ──
 async function loadSkus() {
-  const {data,error}=await db.from('skus').select('*').order('nome');
-  allSkus=error?[]:(data||[]);
+  try {
+    const {data,error}=await db.from('skus').select('*').order('nome');
+    allSkus=error?[]:(data||[]);
+  } catch(e) {
+    allSkus=[];
+  }
   renderSkuList(); renderSkuDropdown('');
 }
 async function addSku() {
@@ -1099,6 +1113,7 @@ function doLogin(){
       document.getElementById('login-screen').classList.add('hide');
       setTimeout(()=>{ document.getElementById('login-screen').style.display='none'; }, 420);
       // Load system data after login
+      setTimeout(() => { showLoading(false); }, 10000); // safety timeout
       init();
     } else {
       err.textContent='Usuário ou senha incorretos. Tente novamente.';
