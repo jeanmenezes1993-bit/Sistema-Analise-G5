@@ -992,36 +992,43 @@ function renderPodium() {
 
 // ── TOP10 ──
 function buildTop10Chart() {
-  // Build aggregation: key = "codigo|nome" to keep both pieces
+  // Aggregate by unique key = codigo_sku or nome_sku
   const skuT={}, skuC={}, skuLabel={};
+
   allData.forEach(r=>{
-    // Find the SKU object to get both codigo (nomenclatura) and nome
-    const skuObj = allSkus.find(s=>s.nome===r.nome_sku || s.nomenclatura===r.sku || s.nome===r.sku);
-    const codigo = skuObj ? (skuObj.nomenclatura||'') : r.sku||'';
-    const nome   = skuObj ? skuObj.nome : (r.nome_sku||r.sku||'');
-    const key    = codigo || nome; // use codigo as unique key
-    skuT[key]    = (skuT[key]||0) + r.quantidade;
-    skuC[key]    = r.sku; // categoria
-    // Label: "codigo - nome" sempre
-    if(codigo && nome && codigo !== nome){
-      skuLabel[key] = codigo + ' - ' + nome;
-    } else {
-      skuLabel[key] = nome || codigo;
+    // Use codigo_sku (novo campo) se disponível
+    const codigo = r.codigo_sku || '';
+    const nome   = r.nome_sku   || '';
+
+    // Se não tiver codigo_sku, busca na tabela skus pelo nome
+    let cod = codigo;
+    let nom = nome;
+    if(!cod && nom){
+      const obj = allSkus.find(s=>s.nome===nom);
+      if(obj) cod = obj.nomenclatura||'';
     }
+
+    const key = cod || nom || '—';
+    skuT[key]  = (skuT[key]||0) + r.quantidade;
+    skuC[key]  = r.sku; // categoria
+
+    // Label sempre: codigo - nome
+    if(cod && nom) skuLabel[key] = cod + ' - ' + nom;
+    else if(cod)   skuLabel[key] = cod;
+    else           skuLabel[key] = nom || '—';
   });
 
-  const sorted=Object.entries(skuT).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const sorted = Object.entries(skuT).sort((a,b)=>b[1]-a[1]).slice(0,10);
   if(charts.top10){charts.top10.destroy();charts.top10=null;}
-  const b=getBase();
-  const cmap={'Capas':isDark?'#F97316':'#EA580C','Películas':isDark?'#F472B6':'#DB2777','Acessórios':isDark?'#14B8A6':'#0D9488'};
+  const b = getBase();
+  const cmap = {'Capas':isDark?'#F97316':'#EA580C','Películas':isDark?'#F472B6':'#DB2777','Acessórios':isDark?'#14B8A6':'#0D9488'};
 
-  // Use full label for chart Y axis
   const chartLabels = sorted.map(([k])=>{
     const lbl = skuLabel[k]||k;
-    return lbl.length > 45 ? lbl.substring(0,45)+'...' : lbl;
+    return lbl.length > 50 ? lbl.substring(0,50)+'...' : lbl;
   });
 
-  charts.top10=new Chart(document.getElementById('top10Chart'),{
+  charts.top10 = new Chart(document.getElementById('top10Chart'),{
     type:'bar',
     data:{
       labels: chartLabels,
@@ -1030,14 +1037,16 @@ function buildTop10Chart() {
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{
         title: ctx => skuLabel[sorted[ctx[0].dataIndex][0]] || ctx[0].label,
-        label: ctx=>' '+ctx.parsed.x+' unidades'
+        label: ctx => ' '+ctx.parsed.x+' unidades'
       }}},
-      scales:{x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},y:{grid:{display:false},ticks:{color:isDark?'#E2E8F0':'#111111',font:{size:10,weight:'500'},maxTicksLimit:10},border:{display:false}}}
+      scales:{
+        x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},
+        y:{grid:{display:false},ticks:{color:isDark?'#E2E8F0':'#111111',font:{size:10,weight:'500'},maxTicksLimit:10},border:{display:false}}
+      }
     }
   });
 
-  // Table with full label
-  document.getElementById('top10-tbody').innerHTML=sorted.map(([key,vol],i)=>{
+  document.getElementById('top10-tbody').innerHTML = sorted.map(([key,vol],i)=>{
     const lbl = skuLabel[key]||key;
     const cat = skuC[key]||'—';
     return `<tr>
