@@ -264,6 +264,17 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
   100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
 }
 .online-label{font-size:11px;font-weight:500;color:#22C55E;}
+
+/* DUPLA */
+.dupla-toggle{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.dupla-switch{width:36px;height:20px;border-radius:10px;background:var(--bdr);border:1.5px solid var(--bdr2);cursor:pointer;position:relative;transition:background .25s;flex-shrink:0;}
+.dupla-switch.on{background:var(--or);border-color:var(--or);}
+.dupla-switch-k{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:white;transition:transform .25s;box-shadow:0 1px 3px rgba(0,0,0,0.2);}
+.dupla-switch.on .dupla-switch-k{transform:translateX(16px);}
+.dupla-label{font-size:12px;font-weight:500;color:var(--text2);}
+.dupla-badge{font-size:10px;font-weight:600;background:var(--or-bg);color:var(--or);border:1px solid var(--or-bdr);padding:2px 8px;border-radius:20px;}
+.dupla-info{font-size:10px;color:var(--text3);margin-top:4px;padding:6px 10px;background:var(--metric);border-radius:6px;border:1px solid var(--bdr);}
+.dupla-info span{color:var(--or);font-weight:600;}
 </style>
 </head>
 <body>
@@ -525,16 +536,41 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         <div class="fc">
           <div class="ft">Registrar Atividade</div>
           <div class="fg">
-            <div class="fgr">
-              <div class="fl">Colaborador</div>
-              <div class="colab-wrap">
-                <input class="fi" type="text" id="f-colab" placeholder="Selecione ou digite o nome..."
-                  autocomplete="off"
-                  oninput="filterColabs()"
-                  onfocus="showColabDrop()"
-                  onblur="setTimeout(hideColabDrop,200)"
-                  onkeydown="if(event.key===\'Escape\')hideColabDrop()">
-                <div class="colab-dropdown" id="colab-dropdown"></div>
+            <div class="fgr full">
+              <!-- TOGGLE DUPLA -->
+              <div class="dupla-toggle">
+                <div class="dupla-switch" id="dupla-switch" onclick="toggleDupla()">
+                  <div class="dupla-switch-k"></div>
+                </div>
+                <span class="dupla-label">Atividade em dupla</span>
+                <span class="dupla-badge" id="dupla-badge" style="display:none;">÷ 2</span>
+              </div>
+
+              <!-- COLABORADORES -->
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div>
+                  <div class="fl" style="margin-bottom:5px;">Colaborador 1</div>
+                  <div class="colab-wrap">
+                    <input class="fi" type="text" id="f-colab" placeholder="Selecione ou digite o nome..."
+                      autocomplete="off" oninput="filterColabs(1)" onfocus="showColabDrop(1)"
+                      onblur="setTimeout(()=>hideColabDrop(1),200)"
+                      onkeydown="if(event.key===\'Escape\')hideColabDrop(1)">
+                    <div class="colab-dropdown" id="colab-dropdown-1"></div>
+                  </div>
+                </div>
+                <div id="colab2-wrap" style="display:none;">
+                  <div class="fl" style="margin-bottom:5px;">Colaborador 2</div>
+                  <div class="colab-wrap">
+                    <input class="fi" type="text" id="f-colab2" placeholder="Selecione o 2º colaborador..."
+                      autocomplete="off" oninput="filterColabs(2)" onfocus="showColabDrop(2)"
+                      onblur="setTimeout(()=>hideColabDrop(2),200)"
+                      onkeydown="if(event.key===\'Escape\')hideColabDrop(2)">
+                    <div class="colab-dropdown" id="colab-dropdown-2"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="dupla-info" id="dupla-info" style="display:none;">
+                A quantidade será dividida igualmente: <span id="dupla-qtd-preview">—</span> unidades para cada colaborador.
               </div>
             </div>
             <div class="fgr"><div class="fl">Data</div><input class="fi" type="date" id="f-data"></div>
@@ -564,7 +600,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
                 <span class="sku-selected-clear" onclick="clearSku()">×</span>
               </div>
             </div>
-            <div class="fgr"><div class="fl">Quantidade</div><input class="fi" type="number" id="f-qtd" placeholder="Ex: 150" min="1"></div>
+            <div class="fgr"><div class="fl">Quantidade</div><input class="fi" type="number" id="f-qtd" placeholder="Ex: 150" min="1" oninput="updateDuplaPreview()"></div>
             <div class="fgr" style="align-self:flex-end;"><button class="bts" id="btn-registrar" onclick="submitForm()">Registrar</button></div>
           </div>
         </div>
@@ -694,22 +730,42 @@ function renderAtividades() {
 }
 
 async function submitForm() {
-  const colaborador=document.getElementById('f-colab').value.trim();
-  const data=document.getElementById('f-data').value;
-  const quantidade=parseInt(document.getElementById('f-qtd').value);
-  const tipo=document.querySelector('#rg-tipo .rb.sel')?.textContent||'';
-  const sku=document.querySelector('#rg-cat .rb.sel')?.textContent||'';
-  const nome_sku=selectedSku?selectedSku.nome:(document.getElementById('f-sku-search').value.trim()||null);
+  const colaborador  = document.getElementById('f-colab').value.trim();
+  const colaborador2 = isDupla ? document.getElementById('f-colab2').value.trim() : '';
+  const data         = document.getElementById('f-data').value;
+  const quantidade   = parseInt(document.getElementById('f-qtd').value);
+  const tipo         = document.querySelector('#rg-tipo .rb.sel')?.textContent||'';
+  const sku          = document.querySelector('#rg-cat .rb.sel')?.textContent||'';
+  const nome_sku     = selectedSku ? selectedSku.nome : (document.getElementById('f-sku-search').value.trim()||null);
+
   if (!colaborador||!data||!quantidade) { showToast('Preencha todos os campos!','error'); return; }
+  if (isDupla && !colaborador2) { showToast('Selecione o 2º colaborador!','error'); return; }
+  if (isDupla && colaborador===colaborador2) { showToast('Os colaboradores devem ser diferentes!','error'); return; }
+
   const btn=document.getElementById('btn-registrar');
   btn.disabled=true; btn.textContent='Salvando...';
-  const {error}=await db.from('atividades').insert([{colaborador,tipo,sku,nome_sku,quantidade,data}]);
-  btn.disabled=false; btn.textContent='Registrar';
-  if (error) { showToast('Erro: '+error.message,'error'); return; }
+
+  if (isDupla) {
+    const metade = Math.floor(quantidade/2);
+    const resto  = quantidade-(metade*2);
+    const {error} = await db.from('atividades').insert([
+      {colaborador: colaborador,  tipo, sku, nome_sku, quantidade: metade+resto, data},
+      {colaborador: colaborador2, tipo, sku, nome_sku, quantidade: metade,       data},
+    ]);
+    btn.disabled=false; btn.textContent='Registrar';
+    if (error) { showToast('Erro: '+error.message,'error'); return; }
+    showToast(`✓ Dupla registrada! ${metade} un. para cada colaborador.`,'success');
+  } else {
+    const {error} = await db.from('atividades').insert([{colaborador,tipo,sku,nome_sku,quantidade,data}]);
+    btn.disabled=false; btn.textContent='Registrar';
+    if (error) { showToast('Erro: '+error.message,'error'); return; }
+    showToast('✓ Atividade registrada!','success');
+  }
+
   document.getElementById('f-colab').value='';
+  document.getElementById('f-colab2').value='';
   document.getElementById('f-qtd').value='';
   clearSku();
-  showToast('✓ Atividade registrada!','success');
   await loadAtividades();
 }
 
@@ -1144,46 +1200,72 @@ const COLABORADORES = [
   'Luis Carlos Passos Conceição',
 ];
 
+let isDupla = false;
+
 function initColabDrop(){
-  renderColabDrop('');
+  renderColabDrop('', 1);
 }
 
-function renderColabDrop(q){
+function toggleDupla(){
+  isDupla = !isDupla;
+  const sw = document.getElementById('dupla-switch');
+  const badge = document.getElementById('dupla-badge');
+  const wrap2 = document.getElementById('colab2-wrap');
+  const info = document.getElementById('dupla-info');
+  sw.classList.toggle('on', isDupla);
+  badge.style.display = isDupla ? 'inline-block' : 'none';
+  wrap2.style.display = isDupla ? 'block' : 'none';
+  info.style.display = isDupla ? 'block' : 'none';
+  if(isDupla){ updateDuplaPreview(); document.getElementById('f-colab2').focus(); }
+}
+
+function updateDuplaPreview(){
+  const qtd = parseInt(document.getElementById('f-qtd').value) || 0;
+  const metade = Math.floor(qtd / 2);
+  document.getElementById('dupla-qtd-preview').textContent = metade;
+}
+
+function renderColabDrop(q, slot){
   const filtered = q
     ? COLABORADORES.filter(n=>n.toLowerCase().includes(q.toLowerCase()))
     : COLABORADORES;
-  const el = document.getElementById('colab-dropdown');
+  const el = document.getElementById('colab-dropdown-'+slot);
+  if(!el) return;
   if(!filtered.length){
-    el.innerHTML='<div class="colab-opt" style="color:var(--text3);cursor:default;">Nenhum colaborador encontrado</div>';
+    el.innerHTML='<div class="colab-opt" style="color:var(--text3);cursor:default;">Nenhum encontrado</div>';
     return;
   }
   el.innerHTML = filtered.map(n=>{
     const ini = n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
-    return `<div class="colab-opt" onclick="selectColab('${n}')">
+    return `<div class="colab-opt" onclick="selectColab('${n}', ${slot})">
       <div class="colab-opt-avatar">${ini}</div>
       <span class="colab-opt-name">${n}</span>
     </div>`;
   }).join('');
 }
 
-function filterColabs(){
-  const q = document.getElementById('f-colab').value;
-  renderColabDrop(q);
-  showColabDrop();
+function filterColabs(slot){
+  const id = slot===1 ? 'f-colab' : 'f-colab2';
+  const q = document.getElementById(id).value;
+  renderColabDrop(q, slot);
+  showColabDrop(slot);
 }
 
-function showColabDrop(){
-  renderColabDrop(document.getElementById('f-colab').value);
-  document.getElementById('colab-dropdown').classList.add('show');
+function showColabDrop(slot){
+  const id = slot===1 ? 'f-colab' : 'f-colab2';
+  renderColabDrop(document.getElementById(id).value, slot);
+  document.getElementById('colab-dropdown-'+slot).classList.add('show');
 }
 
-function hideColabDrop(){
-  document.getElementById('colab-dropdown').classList.remove('show');
+function hideColabDrop(slot){
+  const el = document.getElementById('colab-dropdown-'+slot);
+  if(el) el.classList.remove('show');
 }
 
-function selectColab(nome){
-  document.getElementById('f-colab').value = nome;
-  hideColabDrop();
+function selectColab(nome, slot){
+  const id = slot===1 ? 'f-colab' : 'f-colab2';
+  document.getElementById(id).value = nome;
+  hideColabDrop(slot);
 }
 
 
