@@ -989,27 +989,61 @@ function renderPodium() {
 
 // ── TOP10 ──
 function buildTop10Chart() {
-  const skuT={},skuC={};
-  allData.forEach(r=>{const k=r.nome_sku||r.sku;skuT[k]=(skuT[k]||0)+r.quantidade;skuC[k]=r.sku;});
+  // Build aggregation: key = "codigo|nome" to keep both pieces
+  const skuT={}, skuC={}, skuLabel={};
+  allData.forEach(r=>{
+    // Find the SKU object to get both codigo (nomenclatura) and nome
+    const skuObj = allSkus.find(s=>s.nome===r.nome_sku || s.nomenclatura===r.sku || s.nome===r.sku);
+    const codigo = skuObj ? (skuObj.nomenclatura||'') : r.sku||'';
+    const nome   = skuObj ? skuObj.nome : (r.nome_sku||r.sku||'');
+    const key    = codigo || nome; // use codigo as unique key
+    skuT[key]    = (skuT[key]||0) + r.quantidade;
+    skuC[key]    = r.sku; // categoria
+    // Label: "codigo - nome" sempre
+    if(codigo && nome && codigo !== nome){
+      skuLabel[key] = codigo + ' - ' + nome;
+    } else {
+      skuLabel[key] = nome || codigo;
+    }
+  });
+
   const sorted=Object.entries(skuT).sort((a,b)=>b[1]-a[1]).slice(0,10);
   if(charts.top10){charts.top10.destroy();charts.top10=null;}
   const b=getBase();
   const cmap={'Capas':isDark?'#F97316':'#EA580C','Películas':isDark?'#F472B6':'#DB2777','Acessórios':isDark?'#14B8A6':'#0D9488'};
+
+  // Use full label for chart Y axis
+  const chartLabels = sorted.map(([k])=>{
+    const lbl = skuLabel[k]||k;
+    return lbl.length > 45 ? lbl.substring(0,45)+'...' : lbl;
+  });
+
   charts.top10=new Chart(document.getElementById('top10Chart'),{
     type:'bar',
-    data:{labels:sorted.map(d=>d[0]),datasets:[{label:'Unidades',data:sorted.map(d=>d[1]),backgroundColor:sorted.map(([k])=>cmap[skuC[k]]||'#64748B'),borderRadius:5,barPercentage:.72}]},
+    data:{
+      labels: chartLabels,
+      datasets:[{label:'Unidades',data:sorted.map(d=>d[1]),backgroundColor:sorted.map(([k])=>cmap[skuC[k]]||'#64748B'),borderRadius:5,barPercentage:.72}]
+    },
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.x+' unidades'}}},
-      scales:{x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},y:{grid:{display:false},ticks:{color:isDark?'#E2E8F0':'#111111',font:{size:11,weight:'500'}},border:{display:false}}}
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        title: ctx => skuLabel[sorted[ctx[0].dataIndex][0]] || ctx[0].label,
+        label: ctx=>' '+ctx.parsed.x+' unidades'
+      }}},
+      scales:{x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},y:{grid:{display:false},ticks:{color:isDark?'#E2E8F0':'#111111',font:{size:10,weight:'500'},maxTicksLimit:10},border:{display:false}}}
     }
   });
-  document.getElementById('top10-tbody').innerHTML=sorted.map(([sku,vol],i)=>`
-    <tr>
+
+  // Table with full label
+  document.getElementById('top10-tbody').innerHTML=sorted.map(([key,vol],i)=>{
+    const lbl = skuLabel[key]||key;
+    const cat = skuC[key]||'—';
+    return `<tr>
       <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:${i<3?['#D97706','#64748B','#92400E'][i]:'var(--text3)'}">${i+1}º</td>
-      <td style="font-weight:500">${sku}</td>
-      <td><span class="badge ${bc(skuC[sku])}">${skuC[sku]||'—'}</span></td>
+      <td style="font-weight:500;font-size:11px;" title="${lbl}">${lbl}</td>
+      <td><span class="badge ${bc(cat)}">${cat}</span></td>
       <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--or)">${vol}</td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 }
 
 // ── CHARTS BASE ──
