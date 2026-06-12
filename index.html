@@ -776,15 +776,22 @@ async function submitForm() {
 function updateMetrics() {
   const prod=allData.reduce((s,r)=>s+(r.quantidade||0),0);
   const colabs=[...new Set(allData.map(r=>r.colaborador))].length;
-  const skuC={}; allData.forEach(r=>{const k=r.nome_sku||r.sku; skuC[k]=(skuC[k]||0)+r.quantidade;});
+  // Aggregate by codigo_sku + nome_sku para garantir padrão código - nome
+  const skuC={}, skuLabels={};
+  allData.forEach(r=>{
+    const codigo = r.codigo_sku || '';
+    const nome   = r.nome_sku   || '';
+    let cod=codigo, nom=nome;
+    if(!cod && nom){ const obj=allSkus.find(s=>s.nome===nom); if(obj) cod=obj.nomenclatura||''; }
+    const k = cod||nom||'—';
+    skuC[k]=(skuC[k]||0)+r.quantidade;
+    skuLabels[k] = (cod&&nom) ? cod+' - '+nom : (nom||cod||'—');
+  });
   const topSku=Object.entries(skuC).sort((a,b)=>b[1]-a[1])[0];
   document.getElementById('m-total').textContent=allData.length;
   document.getElementById('m-prod').textContent=prod.toLocaleString('pt-BR');
   document.getElementById('m-colab').textContent=colabs;
-  const skuObj = allSkus.find(s=>s.nome===topSku[0]||s.nomenclatura===topSku[0]);
-  const skuCod  = skuObj ? (skuObj.nomenclatura||'') : '';
-  const skuNome = skuObj ? skuObj.nome : topSku[0];
-  const fullLine = (skuCod && skuNome) ? skuCod+' - '+skuNome : (skuNome||skuCod||'—');
+  const fullLine = topSku ? (skuLabels[topSku[0]]||topSku[0]) : '—';
   document.getElementById('m-sku').textContent = fullLine;
   document.getElementById('m-sku').title = fullLine;
   document.getElementById('m-sku-desc').textContent = '';
