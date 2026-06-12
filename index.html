@@ -749,15 +749,17 @@ async function submitForm() {
   if (isDupla) {
     const metade = Math.floor(quantidade/2);
     const resto  = quantidade-(metade*2);
+    const codigo_sku = selectedSku ? selectedSku.nomenclatura : null;
     const {error} = await db.from('atividades').insert([
-      {colaborador: colaborador,  tipo, sku, nome_sku, quantidade: metade+resto, data},
-      {colaborador: colaborador2, tipo, sku, nome_sku, quantidade: metade,       data},
+      {colaborador: colaborador,  tipo, sku, nome_sku, codigo_sku, quantidade: metade+resto, data},
+      {colaborador: colaborador2, tipo, sku, nome_sku, codigo_sku, quantidade: metade,       data},
     ]);
     btn.disabled=false; btn.textContent='Registrar';
     if (error) { showToast('Erro: '+error.message,'error'); return; }
     showToast(`✓ Dupla registrada! ${metade} un. para cada colaborador.`,'success');
   } else {
-    const {error} = await db.from('atividades').insert([{colaborador,tipo,sku,nome_sku,quantidade,data}]);
+    const codigo_sku = selectedSku ? selectedSku.nomenclatura : null;
+    const {error} = await db.from('atividades').insert([{colaborador,tipo,sku,nome_sku,codigo_sku,quantidade,data}]);
     btn.disabled=false; btn.textContent='Registrar';
     if (error) { showToast('Erro: '+error.message,'error'); return; }
     showToast('✓ Atividade registrada!','success');
@@ -1328,18 +1330,16 @@ async function deleteAtividade(id){
 
 // ── SKU LABEL HELPER ──
 function getSkuLabel(r){
-  // r = atividade record with .sku (categoria), .nome_sku (nome), etc.
-  // Find matching SKU object
+  // Priority 1: use codigo_sku + nome_sku from atividades record (new field)
+  if(r.codigo_sku && r.nome_sku) return r.codigo_sku+' - '+r.nome_sku;
+  // Priority 2: look up in allSkus by nome_sku
   const skuObj = allSkus.find(s=>
     (r.nome_sku && s.nome===r.nome_sku) ||
-    (r.sku && s.nomenclatura===r.sku) ||
     (r.nome_sku && s.nomenclatura===r.nome_sku)
   );
-  const codigo = skuObj ? (skuObj.nomenclatura||'') : '';
-  const nome   = skuObj ? skuObj.nome : (r.nome_sku||'');
-  if(codigo && nome) return codigo+' - '+nome;
-  if(codigo) return codigo;
-  if(nome) return nome;
+  if(skuObj) return (skuObj.nomenclatura||'')+' - '+skuObj.nome;
+  // Priority 3: fallback
+  if(r.nome_sku) return r.nome_sku;
   return '—';
 }
 
