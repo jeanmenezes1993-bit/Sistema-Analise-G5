@@ -607,7 +607,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         <div class="cc">
           <div class="ct">Atividades Recentes</div><div class="cs">histórico de registros do banco</div>
           <table class="rt">
-            <thead><tr><th>Colaborador</th><th>Tipo</th><th>Categoria</th><th>Nomenclatura</th><th>Código de Produto</th><th>Qtd</th><th>Data</th><th style="width:40px;"></th></tr></thead>
+            <thead><tr><th>Colaborador</th><th>Tipo</th><th>Categoria</th><th colspan="2">SKU — Código e Produto</th><th>Qtd</th><th>Data</th><th style="width:40px;"></th></tr></thead>
             <tbody id="recent-tbody"><tr><td colspan="6" class="empty-state">Carregando...</td></tr></tbody>
           </table>
         </div>
@@ -716,17 +716,18 @@ function renderAll() {
 function renderAtividades() {
   const tbody = document.getElementById('recent-tbody');
   if (!allData.length) { tbody.innerHTML='<tr><td colspan="8" class="empty-state">Nenhum registro ainda</td></tr>'; return; }
-  tbody.innerHTML = allData.slice(0,30).map(r=>`
-    <tr>
+  tbody.innerHTML = allData.slice(0,30).map(r=>{
+    const skuLabel = getSkuLabel(r);
+    return `<tr>
       <td>${r.colaborador}</td>
       <td><span class="badge ${bc(r.tipo)}">${r.tipo}</span></td>
       <td><span class="badge ${bc(r.sku)}">${r.sku||'—'}</span></td>
-      <td style="font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;color:var(--or);white-space:nowrap;">${r.sku||'—'}</td>
-      <td style="font-size:12px;color:var(--text);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${r.nome_sku||''}">${r.nome_sku ? r.nome_sku.substring(0,45)+(r.nome_sku.length>45?'...':'') : '—'}</td>
+      <td colspan="2" style="font-size:11px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${skuLabel}">${skuLabel}</td>
       <td>${r.quantidade}</td>
       <td>${r.data}</td>
       <td><button onclick="deleteAtividade('${r.id}')" title="Excluir registro" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:14px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(220,38,38,.1)';this.style.borderColor='rgba(220,38,38,.3)';this.style.color='#DC2626'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">🗑</button></td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 }
 
 async function submitForm() {
@@ -781,7 +782,7 @@ function updateMetrics() {
   const skuObj = allSkus.find(s=>s.nome===topSku[0]||s.nomenclatura===topSku[0]);
   const skuCod  = skuObj ? (skuObj.nomenclatura||'') : '';
   const skuNome = skuObj ? skuObj.nome : topSku[0];
-  const fullLine = skuCod ? skuCod + ' - ' + skuNome : skuNome;
+  const fullLine = (skuCod && skuNome) ? skuCod+' - '+skuNome : (skuNome||skuCod||'—');
   document.getElementById('m-sku').textContent = fullLine;
   document.getElementById('m-sku').title = fullLine;
   document.getElementById('m-sku-desc').textContent = '';
@@ -1110,7 +1111,13 @@ function renderSkuList(){
   const el=document.getElementById('sku-list');
   document.getElementById('sku-count').textContent=allSkus.length;
   if(!allSkus.length){el.innerHTML='<div class="empty-state" style="grid-column:1/-1">Nenhum SKU cadastrado ainda</div>';return;}
-  el.innerHTML=allSkus.map(s=>`<div class="sku-card"><div class="sku-card-info">${s.nomenclatura?`<div style="font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--or);line-height:1;margin-bottom:3px;">${s.nomenclatura}</div>`:''}<div class="sku-card-name" style="font-size:11px;font-weight:500;color:var(--text);line-height:1.3;">${s.nome}</div><div class="sku-card-cat" style="margin-top:4px;">${s.categoria}</div></div><button class="sku-card-del" onclick="deleteSku('${s.id}')">×</button></div>`).join('');
+  el.innerHTML=allSkus.map(s=>{
+    const lbl = s.nomenclatura ? s.nomenclatura+' - '+s.nome : s.nome;
+    return `<div class="sku-card"><div class="sku-card-info">
+      <div class="sku-card-name" style="font-size:12px;font-weight:600;color:var(--text);line-height:1.4;">${lbl}</div>
+      <div class="sku-card-cat" style="margin-top:4px;">${s.categoria}</div>
+    </div><button class="sku-card-del" onclick="deleteSku('${s.id}')">×</button></div>`;
+  }).join('');
 }
 function renderSkuDropdown(q){
   let filtered=q
@@ -1124,7 +1131,13 @@ function renderSkuDropdown(q){
     });
   }
   const el=document.getElementById('sku-dropdown');
-  el.innerHTML=filtered.length?filtered.map(s=>`<div class="sku-opt" onclick="selectSku('${s.id}','${s.nome.replace(/'/g,"\\'")}','${s.categoria}','${(s.nomenclatura||'').replace(/'/g,"\\'")}')"><span class="sku-opt-name"><span style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--or);margin-right:6px;">${s.nomenclatura||''}</span><span style="font-size:11px;color:var(--text2)">${s.nome}</span></span><span class="sku-opt-cat">${s.categoria}</span></div>`).join(''):'<div class="sku-opt" style="color:var(--text3);cursor:default;">Nenhum SKU encontrado</div>';
+  el.innerHTML=filtered.length?filtered.map(s=>{
+    const lbl = s.nomenclatura ? s.nomenclatura+' - '+s.nome : s.nome;
+    return `<div class="sku-opt" onclick="selectSku('${s.id}','${s.nome.replace(/'/g,"\\'")}','${s.categoria}','${(s.nomenclatura||'').replace(/'/g,"\\'")}')">
+      <span class="sku-opt-name" style="font-size:12px;font-weight:600;color:var(--text)">${lbl}</span>
+      <span class="sku-opt-cat">${s.categoria}</span>
+    </div>`;
+  }).join(''):'<div class="sku-opt" style="color:var(--text3);cursor:default;">Nenhum SKU encontrado</div>';
 }
 function filterSkus(){renderSkuDropdown(document.getElementById('f-sku-search').value);showSkuDropdown();}
 function showSkuDropdown(){if(allSkus.length>0)document.getElementById('sku-dropdown').classList.add('show');}
@@ -1133,7 +1146,8 @@ function selectSku(id,nome,categoria,nomenclatura){
   selectedSku={id,nome,categoria,nomenclatura};
   document.getElementById('f-sku-search').value='';
   document.getElementById('f-sku-search').placeholder='SKU selecionado ✓';
-  document.getElementById('sku-selected-name').textContent=`${nome}${nomenclatura?' ('+nomenclatura+')':''} — ${categoria}`;
+  const lbl = nomenclatura ? nomenclatura+' - '+nome : nome;
+  document.getElementById('sku-selected-name').textContent=lbl+' — '+categoria;
   document.getElementById('sku-selected').style.display='flex';
   hideSkuDropdown();
 }
@@ -1309,6 +1323,24 @@ async function deleteAtividade(id){
   if(error){ showToast('Erro ao excluir: '+error.message,'error'); return; }
   showToast('Registro excluído!','success');
   await loadAtividades();
+}
+
+
+// ── SKU LABEL HELPER ──
+function getSkuLabel(r){
+  // r = atividade record with .sku (categoria), .nome_sku (nome), etc.
+  // Find matching SKU object
+  const skuObj = allSkus.find(s=>
+    (r.nome_sku && s.nome===r.nome_sku) ||
+    (r.sku && s.nomenclatura===r.sku) ||
+    (r.nome_sku && s.nomenclatura===r.nome_sku)
+  );
+  const codigo = skuObj ? (skuObj.nomenclatura||'') : '';
+  const nome   = skuObj ? skuObj.nome : (r.nome_sku||'');
+  if(codigo && nome) return codigo+' - '+nome;
+  if(codigo) return codigo;
+  if(nome) return nome;
+  return '—';
 }
 
 // ── START ──
