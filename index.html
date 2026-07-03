@@ -898,7 +898,8 @@ function renderHeatmap() {
 
   // contar produção por dia
   const prodByDay={};
-  allData.forEach(r=>{
+  const heatData = filteredData.length>0 ? filteredData : allData;
+  heatData.forEach(r=>{
     if (!r.data) return;
     const d=new Date(r.data+'T12:00:00');
     if (d.getFullYear()===year && d.getMonth()===month) {
@@ -980,12 +981,13 @@ function buildLineChart() {
   const now=new Date();
   const year=now.getFullYear(), month=now.getMonth();
   const daysInMonth=new Date(year,month+1,0).getDate();
+  const data = filteredData.length>0 ? filteredData : allData;
 
   const prodByDay=Array(daysInMonth).fill(0);
-  allData.forEach(r=>{
-    if (!r.data) return;
+  data.forEach(r=>{
+    if(!r.data) return;
     const d=new Date(r.data+'T12:00:00');
-    if (d.getFullYear()===year && d.getMonth()===month) {
+    if(d.getFullYear()===year && d.getMonth()===month){
       prodByDay[d.getDate()-1]+=r.quantidade;
     }
   });
@@ -994,26 +996,19 @@ function buildLineChart() {
   const b=getBase();
   const orColor=isDark?'#F97316':'#EA580C';
 
-  if (charts.line){charts.line.destroy();charts.line=null;}
+  if(charts.line){charts.line.destroy();charts.line=null;}
   charts.line=new Chart(document.getElementById('lineChart'),{
     type:'line',
     data:{
       labels,
       datasets:[{
-        label:'Produção',
-        data:prodByDay,
-        borderColor:orColor,
-        backgroundColor:isDark?'rgba(249,115,22,0.08)':'rgba(234,88,12,0.08)',
-        fill:true,
-        tension:.4,
-        pointRadius:3,
-        pointBackgroundColor:orColor,
-        pointBorderColor:'transparent',
-        borderWidth:2,
+        label:'Produção',data:prodByDay,
+        borderColor:orColor,backgroundColor:isDark?'rgba(249,115,22,0.08)':'rgba(234,88,12,0.08)',
+        fill:true,tension:.4,pointRadius:3,pointBackgroundColor:orColor,
+        pointBorderColor:'transparent',borderWidth:2,
       }]
     },
-    options:{
-      responsive:true,maintainAspectRatio:false,
+    options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.y+' unidades'}}},
       scales:{
         x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},
@@ -1027,13 +1022,9 @@ function buildLineChart() {
 function renderMetaChart() {
   const meta=parseInt(document.getElementById('meta-valor').value)||500;
   const scores={};
-  // só mês atual
-  const now=new Date();
-  const ym=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
-  allData.forEach(r=>{
-    if (r.data&&r.data.startsWith(ym)) {
-      scores[r.colaborador]=(scores[r.colaborador]||0)+r.quantidade;
-    }
+  const data = filteredData.length>0 ? filteredData : allData;
+  data.forEach(r=>{
+    if(r.colaborador) scores[r.colaborador]=(scores[r.colaborador]||0)+r.quantidade;
   });
   const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
   const el=document.getElementById('meta-list');
@@ -1160,6 +1151,7 @@ function buildTop10Chart() {
 // ── CHARTS BASE ──
 function rebuildCharts() {
   const b=getBase();
+  const data = filteredData.length>0 ? filteredData : allData;
   ['sku','pizza','line'].forEach(k=>{if(charts[k]){charts[k].destroy();charts[k]=null;}});
   const months=[];
   for(let i=5;i>=0;i--){const d=new Date();d.setMonth(d.getMonth()-i);months.push({label:d.toLocaleString('pt-BR',{month:'short'}),key:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`});}
@@ -1167,11 +1159,11 @@ function rebuildCharts() {
   const skuColors=isDark?['#F97316','#EC4899','#14B8A6']:['#EA580C','#DB2777','#0D9488'];
   charts.sku=new Chart(document.getElementById('skuChart'),{
     type:'bar',
-    data:{labels:months.map(m=>m.label),datasets:skuTypes.map((sku,si)=>({label:sku,data:months.map(m=>allData.filter(r=>r.sku===sku&&r.data&&r.data.startsWith(m.key)).reduce((s,r)=>s+r.quantidade,0)),backgroundColor:skuColors[si],borderRadius:3,barPercentage:.7}))},
+    data:{labels:months.map(m=>m.label),datasets:skuTypes.map((sku,si)=>({label:sku,data:months.map(m=>data.filter(r=>r.sku===sku&&r.data&&r.data.startsWith(m.key)).reduce((s,r)=>s+r.quantidade,0)),backgroundColor:skuColors[si],borderRadius:3,barPercentage:.7}))},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},scales:{x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}},y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}}}}
   });
   const tipoC={Reposição:0,Armazenamento:0,Movimentação:0,Legendas:0};
-  allData.forEach(r=>{if(tipoC[r.tipo]!==undefined)tipoC[r.tipo]+=r.quantidade;});
+  data.forEach(r=>{if(tipoC[r.tipo]!==undefined)tipoC[r.tipo]+=r.quantidade;});
   const pieColors=isDark?['#14B8A6','#3B82F6','#A855F7','#F97316']:['#0D9488','#2563EB','#7C3AED','#EA580C'];
   charts.pizza=new Chart(document.getElementById('pizzaChart'),{
     type:'doughnut',
