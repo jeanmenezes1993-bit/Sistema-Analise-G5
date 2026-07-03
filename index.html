@@ -548,12 +548,12 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         <div class="grid-2">
           <!-- HEATMAP -->
           <div class="cc">
-            <div class="ct">Heatmap de Produção</div>
-            <div class="cs">intensidade por dia da semana — mês atual (estilo GitHub)</div>
-            <div class="heatmap-wrap">
-              <div class="heatmap" id="heatmap-container"></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
+              <div><div class="ct">Heatmap de Produção</div><div class="cs">padrões de pico e queda por dia da semana</div></div>
+              <select id="heatmap-month-sel" class="fi" style="width:140px;font-size:11px;padding:5px 8px;" onchange="renderHeatmap()"></select>
             </div>
-            <div class="heatmap-legend">
+            <div id="heatmap-container" style="overflow-x:auto;"></div>
+            <div class="heatmap-legend" style="margin-top:10px;">
               <span class="heatmap-legend-label">Menos</span>
               <div class="heatmap-legend-cells" id="heatmap-legend"></div>
               <span class="heatmap-legend-label">Mais</span>
@@ -891,124 +891,161 @@ function updateMetrics() {
 
 // ── HEATMAP ──
 function renderHeatmap() {
-  const now=new Date();
-  const year=now.getFullYear(), month=now.getMonth();
-  const daysInMonth=new Date(year,month+1,0).getDate();
-  const firstDay=new Date(year,month,1).getDay(); // 0=Dom
+  const selEl = document.getElementById('heatmap-month-sel');
+  const container = document.getElementById('heatmap-container');
+  if(!selEl || !container) return;
 
-  // contar produção por dia
-  const prodByDay={};
-  const heatData = filteredData.length>0 ? filteredData : allData;
-  heatData.forEach(r=>{
-    if (!r.data) return;
-    const d=new Date(r.data+'T12:00:00');
-    if (d.getFullYear()===year && d.getMonth()===month) {
-      prodByDay[d.getDate()]=(prodByDay[d.getDate()]||0)+r.quantidade;
+  // Populate month selector if empty
+  if(!selEl.options.length){
+    const now = new Date();
+    for(let i=5;i>=0;i--){
+      const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+      const val = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+      const lbl = d.toLocaleString('pt-BR',{month:'long',year:'numeric'});
+      const opt = document.createElement('option');
+      opt.value = val; opt.textContent = lbl.charAt(0).toUpperCase()+lbl.slice(1);
+      if(i===0) opt.selected = true;
+      selEl.appendChild(opt);
+    }
+  }
+
+  const selVal = selEl.value;
+  const [year, month] = selVal.split('-').map(Number);
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const firstDow = new Date(year, month-1, 1).getDay(); // 0=Dom
+
+  // Count production per day using ALL data (heatmap shows historical)
+  const prodByDay = {};
+  const srcData = allData;
+  srcData.forEach(r=>{
+    if(!r.data) return;
+    const d = new Date(r.data+'T12:00:00');
+    if(d.getFullYear()===year && d.getMonth()===month-1){
+      const day = d.getDate();
+      prodByDay[day] = (prodByDay[day]||0) + r.quantidade;
     }
   });
 
-  const maxVal=Math.max(...Object.values(prodByDay),1);
+  const maxVal = Math.max(...Object.values(prodByDay), 1);
 
-  // montar grade (semanas como colunas, dias da semana como linhas)
-  // ordem: Dom, Seg, Ter, Qua, Qui, Sex, Sab
-  const dayLabels=['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];
-
-  // criar array de 7 linhas x N colunas (semanas)
-  const totalCells=firstDay+daysInMonth;
-  const numWeeks=Math.ceil(totalCells/7);
-
-  // cells[week][dow] = day number or null
-  const grid=[];
-  for (let w=0;w<numWeeks;w++) { grid.push(Array(7).fill(null)); }
-  for (let d=1;d<=daysInMonth;d++) {
-    const idx=firstDay+d-1;
-    const week=Math.floor(idx/7);
-    const dow=idx%7;
-    grid[week][dow]=d;
+  function getColor(val){
+    if(!val) return isDark ? '#1E293B' : '#F0EDE7';
+    const pct = val/maxVal;
+    if(isDark){
+      if(pct < 0.25) return '#14532d';
+      if(pct < 0.50) return '#166534';
+      if(pct < 0.75) return '#15803d';
+      return '#16a34a';
+    } else {
+      if(pct < 0.25) return '#bbf7d0';
+      if(pct < 0.50) return '#4ade80';
+      if(pct < 0.75) return '#16a34a';
+      return '#14532d';
+    }
   }
 
-  const getColor=(val)=>{
-    if (!val) return isDark?'rgba(255,255,255,0.05)':'#E5E2DC';
-    const pct=val/maxVal;
-    if (pct<0.25) return isDark?'rgba(234,88,12,0.25)':'rgba(234,88,12,0.2)';
-    if (pct<0.5)  return isDark?'rgba(234,88,12,0.5)':'rgba(234,88,12,0.4)';
-    if (pct<0.75) return isDark?'rgba(234,88,12,0.75)':'rgba(234,88,12,0.65)';
-    return isDark?'#F97316':'#EA580C';
-  };
+  function fmtVal(v){
+    if(!v) return '';
+    return v >= 1000 ? (v/1000).toFixed(1)+'k' : v;
+  }
 
-  const container=document.getElementById('heatmap-container');
-  container.innerHTML='';
+  const dayLabels = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  const numWeeks = Math.ceil((firstDow + daysInMonth) / 7);
 
-  // labels dias da semana
-  const labelsCol=document.createElement('div');
-  labelsCol.className='heatmap-labels-left';
+  // Build grid: rows = weeks, cols = days of week
+  const grid = Array.from({length:numWeeks}, ()=>Array(7).fill(null));
+  for(let d=1;d<=daysInMonth;d++){
+    const idx2 = firstDow + d - 1;
+    grid[Math.floor(idx2/7)][idx2%7] = d;
+  }
+
+  const cellStyle = `
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border-radius:6px;padding:4px 2px;min-height:52px;min-width:80px;
+    font-family:'Inter',sans-serif;cursor:default;transition:opacity .15s;
+  `;
+
+  let html = `<table style="width:100%;border-collapse:separate;border-spacing:4px;">`;
+  // Header row
+  html += '<thead><tr><th style="width:50px;"></th>';
   dayLabels.forEach(l=>{
-    const span=document.createElement('div');
-    span.className='heatmap-day-label';
-    span.textContent=l;
-    labelsCol.appendChild(span);
+    html += `<th style="font-size:11px;font-weight:500;color:var(--text3);text-align:center;padding:0 0 6px;">${l}</th>`;
   });
-  container.appendChild(labelsCol);
+  html += '</tr></thead><tbody>';
 
-  // colunas por semana
-  grid.forEach((week,wi)=>{
-    const col=document.createElement('div');
-    col.className='heatmap-col';
-    // label semana
-    const wl=document.createElement('div');
-    wl.className='heatmap-week-label';
-    wl.textContent='S'+(wi+1);
-    col.appendChild(wl);
-    week.forEach((day,di)=>{
-      const cell=document.createElement('div');
-      cell.className='heatmap-cell';
-      const val=day?prodByDay[day]||0:0;
-      cell.style.background=day?getColor(val):'transparent';
-      if (day) cell.title=`Dia ${day}: ${val} unidades`;
-      col.appendChild(cell);
+  grid.forEach((week, wi)=>{
+    html += `<tr><td style="font-size:10px;color:var(--text3);font-weight:500;vertical-align:middle;padding-right:6px;">Sem ${wi+1}</td>`;
+    week.forEach((day, di)=>{
+      const val = day ? (prodByDay[day]||0) : 0;
+      const bg = day ? getColor(val) : 'transparent';
+      const textColor = day && val>0 ? (isDark?'#f0fdf4':'#fff') : 'var(--text3)';
+      const valColor = day && val>0 ? (isDark?'#bbf7d0':'rgba(255,255,255,.85)') : 'var(--text3)';
+      const border = day ? `border:1px solid ${isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)'}` : '';
+      html += `<td style="padding:0;">`;
+      if(day){
+        html += `<div style="${cellStyle}background:${bg};${border};" title="Dia ${day}: ${val} unidades">
+          <span style="font-size:12px;font-weight:600;color:${textColor};line-height:1;">${day}</span>
+          ${val>0?`<span style="font-size:10px;color:${valColor};margin-top:2px;">${fmtVal(val)}</span>`:''}
+        </div>`;
+      } else {
+        html += `<div style="min-height:52px;min-width:80px;"></div>`;
+      }
+      html += '</td>';
     });
-    container.appendChild(col);
+    html += '</tr>';
   });
 
-  // legenda
-  const legendEl=document.getElementById('heatmap-legend');
-  const steps=[0,0.25,0.5,0.75,1];
-  legendEl.innerHTML=steps.map(p=>`<div class="heatmap-legend-cell" style="background:${p===0?(isDark?'rgba(255,255,255,0.05)':'#E5E2DC'):isDark?`rgba(234,88,12,${0.25+p*0.75})`:`rgba(234,88,12,${0.2+p*0.8})`}"></div>`).join('');
+  html += '</tbody></table>';
+  container.innerHTML = html;
+
+  // Update legend
+  const legendEl = document.getElementById('heatmap-legend');
+  if(legendEl){
+    const steps = isDark
+      ? ['#1E293B','#14532d','#166534','#15803d','#16a34a']
+      : ['#F0EDE7','#bbf7d0','#4ade80','#16a34a','#14532d'];
+    legendEl.innerHTML = steps.map(c=>`<div class="heatmap-legend-cell" style="background:${c}"></div>`).join('');
+  }
 }
 
 // ── LINHA DIÁRIA ──
 function buildLineChart() {
-  const now=new Date();
-  const year=now.getFullYear(), month=now.getMonth();
-  const daysInMonth=new Date(year,month+1,0).getDate();
-  const data = filteredData.length>0 ? filteredData : allData;
+  const now = new Date();
+  const year = now.getFullYear(), month = now.getMonth();
+  const daysInMonth = new Date(year,month+1,0).getDate();
+  const data = (filteredData && filteredData.length>0) ? filteredData : allData;
 
-  const prodByDay=Array(daysInMonth).fill(0);
+  const prodByDay = Array(daysInMonth).fill(0);
   data.forEach(r=>{
     if(!r.data) return;
-    const d=new Date(r.data+'T12:00:00');
+    const d = new Date(r.data+'T12:00:00');
     if(d.getFullYear()===year && d.getMonth()===month){
-      prodByDay[d.getDate()-1]+=r.quantidade;
+      prodByDay[d.getDate()-1] += r.quantidade;
     }
   });
 
-  const labels=Array.from({length:daysInMonth},(_,i)=>i+1);
-  const b=getBase();
-  const orColor=isDark?'#F97316':'#EA580C';
+  const labels = Array.from({length:daysInMonth},(_,i)=>i+1);
+  const b = getBase();
+  const orColor = isDark?'#F97316':'#EA580C';
 
   if(charts.line){charts.line.destroy();charts.line=null;}
-  charts.line=new Chart(document.getElementById('lineChart'),{
+  charts.line = new Chart(document.getElementById('lineChart'),{
     type:'line',
     data:{
       labels,
       datasets:[{
         label:'Produção',data:prodByDay,
-        borderColor:orColor,backgroundColor:isDark?'rgba(249,115,22,0.08)':'rgba(234,88,12,0.08)',
-        fill:true,tension:.4,pointRadius:3,pointBackgroundColor:orColor,
-        pointBorderColor:'transparent',borderWidth:2,
+        borderColor:orColor,
+        backgroundColor:isDark?'rgba(249,115,22,0.08)':'rgba(234,88,12,0.08)',
+        fill:true,tension:.4,
+        pointRadius: prodByDay.some(v=>v>0) ? 3 : 0,
+        pointBackgroundColor:orColor,
+        pointBorderColor:'transparent',
+        borderWidth:2,
       }]
     },
-    options:{responsive:true,maintainAspectRatio:false,
+    options:{
+      responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.y+' unidades'}}},
       scales:{
         x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},
