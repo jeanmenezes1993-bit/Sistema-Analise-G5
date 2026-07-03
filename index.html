@@ -894,21 +894,17 @@ function renderHeatmap() {
   const labelEl   = document.getElementById('heatmap-period-label');
   if(!container) return;
 
-  // Use filteredData if available, otherwise allData
   const data = (filteredData && filteredData.length > 0) ? filteredData : allData;
 
-  // Get date range from filtered data
   const dates = data.map(r=>r.data).filter(Boolean).sort();
   if(!dates.length){
     container.innerHTML = '<div class="empty-state">Nenhum dado no período</div>';
     return;
   }
 
-  // Determine start and end month from filtered data
   const firstDate = new Date(dates[0]+'T12:00:00');
   const lastDate  = new Date(dates[dates.length-1]+'T12:00:00');
 
-  // Count production per date
   const prodByDate = {};
   data.forEach(r=>{
     if(r.data) prodByDate[r.data] = (prodByDate[r.data]||0) + r.quantidade;
@@ -917,19 +913,26 @@ function renderHeatmap() {
   const maxVal = Math.max(...Object.values(prodByDate), 1);
 
   function getColor(val){
-    if(!val) return isDark ? '#1E293B' : '#F0EDE7';
+    if(!val) return isDark ? '#1E293B' : '#F7F5F1';
     const pct = val/maxVal;
     if(isDark){
-      if(pct < 0.25) return '#14532d';
-      if(pct < 0.50) return '#166534';
-      if(pct < 0.75) return '#15803d';
-      return '#16a34a';
+      if(pct < 0.25) return 'rgba(249,115,22,0.25)';
+      if(pct < 0.50) return 'rgba(249,115,22,0.50)';
+      if(pct < 0.75) return 'rgba(249,115,22,0.75)';
+      return '#F97316';
     } else {
-      if(pct < 0.25) return '#bbf7d0';
-      if(pct < 0.50) return '#4ade80';
-      if(pct < 0.75) return '#16a34a';
-      return '#14532d';
+      if(pct < 0.25) return '#FED7AA';
+      if(pct < 0.50) return '#FB923C';
+      if(pct < 0.75) return '#EA580C';
+      return '#C2410C';
     }
+  }
+
+  function getTextColor(val){
+    if(!val) return 'var(--text2)';
+    const pct = val/maxVal;
+    if(isDark) return pct < 0.25 ? '#FED7AA' : '#fff';
+    return pct < 0.25 ? '#9A3412' : '#fff';
   }
 
   function fmtVal(v){
@@ -937,44 +940,37 @@ function renderHeatmap() {
     return v >= 1000 ? (v/1000).toFixed(1)+'k' : v;
   }
 
-  // Build list of months in range
   const months = [];
   let cur = new Date(firstDate.getFullYear(), firstDate.getMonth(), 1);
   const endMonth = new Date(lastDate.getFullYear(), lastDate.getMonth(), 1);
-  while(cur <= endMonth){
-    months.push(new Date(cur));
-    cur.setMonth(cur.getMonth()+1);
-  }
+  while(cur <= endMonth){ months.push(new Date(cur)); cur.setMonth(cur.getMonth()+1); }
 
-  // Update subtitle
   if(labelEl){
     if(months.length === 1){
       labelEl.textContent = firstDate.toLocaleString('pt-BR',{month:'long',year:'numeric'});
     } else {
-      labelEl.textContent = `${firstDate.toLocaleString('pt-BR',{month:'short',year:'numeric'})} — ${lastDate.toLocaleString('pt-BR',{month:'short',year:'numeric'})}`;
+      labelEl.textContent = firstDate.toLocaleString('pt-BR',{month:'short',year:'numeric'})+' — '+lastDate.toLocaleString('pt-BR',{month:'short',year:'numeric'});
     }
   }
 
   const dayLabels = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-
   let html = '';
 
   months.forEach((monthDate, mi) => {
-    const year = monthDate.getFullYear();
+    const year  = monthDate.getFullYear();
     const month = monthDate.getMonth();
     const daysInMonth = new Date(year, month+1, 0).getDate();
-    const firstDow = new Date(year, month, 1).getDay();
-    const numWeeks = Math.ceil((firstDow + daysInMonth) / 7);
+    const firstDow    = new Date(year, month, 1).getDay();
+    const numWeeks    = Math.ceil((firstDow + daysInMonth) / 7);
 
-    // Build grid
     const grid = Array.from({length:numWeeks}, ()=>Array(7).fill(null));
     for(let d=1;d<=daysInMonth;d++){
-      const idx2 = firstDow + d - 1;
-      grid[Math.floor(idx2/7)][idx2%7] = d;
+      const pos = firstDow + d - 1;
+      grid[Math.floor(pos/7)][pos%7] = d;
     }
 
     if(months.length > 1){
-      html += `<div style="font-size:11px;font-weight:600;color:var(--text2);margin:${mi>0?'16px':0} 0 6px;">${monthDate.toLocaleString('pt-BR',{month:'long',year:'numeric'}).replace(/^\w/,c=>c.toUpperCase())}</div>`;
+      html += `<div style="font-size:11px;font-weight:600;color:var(--text2);margin:${mi>0?'16px':0} 0 6px;">${monthDate.toLocaleString('pt-BR',{month:'long',year:'numeric'})}</div>`;
     }
 
     html += `<table style="width:100%;border-collapse:separate;border-spacing:3px;margin-bottom:4px;">`;
@@ -985,21 +981,34 @@ function renderHeatmap() {
     html += '</tr></thead><tbody>';
 
     grid.forEach((week, wi)=>{
-      html += `<tr><td style="font-size:9px;color:var(--text3);font-weight:500;vertical-align:middle;padding-right:4px;white-space:nowrap;">Sem ${wi+1}</td>`;
+      // calc week total for tooltip
+      const weekTotal = week.reduce((sum, day)=>{
+        if(!day) return sum;
+        const dk = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+        return sum + (prodByDate[dk]||0);
+      }, 0);
+
+      html += `<tr>
+        <td style="font-size:9px;color:var(--text3);font-weight:500;vertical-align:middle;padding-right:4px;white-space:nowrap;cursor:default;"
+          title="Semana ${wi+1}: ${weekTotal.toLocaleString('pt-BR')} unidades">Sem ${wi+1}</td>`;
+
       week.forEach(day=>{
         if(day){
-          const dateKey = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-          const val = prodByDate[dateKey]||0;
+          const dk  = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+          const val = prodByDate[dk]||0;
           const bg  = getColor(val);
-          const textColor = val>0 ? (isDark?'#f0fdf4':'#fff') : 'var(--text2)';
-          const valColor  = val>0 ? (isDark?'#bbf7d0':'rgba(255,255,255,.85)') : 'var(--text3)';
+          const tc  = getTextColor(val);
           html += `<td style="padding:0;">
-            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
-              border-radius:6px;padding:4px 2px;min-height:48px;
-              background:${bg};border:1px solid ${isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.05)'};
-              cursor:default;" title="Dia ${day}: ${val} unidades">
-              <span style="font-size:11px;font-weight:600;color:${textColor};line-height:1;">${day}</span>
-              ${val>0?`<span style="font-size:9px;color:${valColor};margin-top:2px;">${fmtVal(val)}</span>`:''}
+            <div class="hm-cell"
+              style="display:flex;flex-direction:column;align-items:center;justify-content:center;
+                border-radius:6px;padding:4px 2px;min-height:48px;
+                background:${bg};border:1px solid ${isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.05)'};
+                cursor:default;transition:transform .15s,box-shadow .15s;"
+              data-day="${day}" data-val="${val}" data-week="${wi+1}" data-weektotal="${weekTotal}"
+              onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 2px 8px rgba(234,88,12,.35)';showHeatTip(this,event)"
+              onmouseout="this.style.transform='';this.style.boxShadow='';hideHeatTip()">
+              <span style="font-size:11px;font-weight:600;color:${tc};line-height:1;">${day}</span>
+              ${val>0?`<span style="font-size:9px;color:${tc};opacity:.85;margin-top:2px;">${fmtVal(val)}</span>`:''}
             </div></td>`;
         } else {
           html += `<td style="padding:0;"><div style="min-height:48px;"></div></td>`;
@@ -1012,21 +1021,62 @@ function renderHeatmap() {
 
   container.innerHTML = html;
 
-  // Legend
   if(legendEl){
     const steps = isDark
-      ? ['#1E293B','#14532d','#166534','#15803d','#16a34a']
-      : ['#F0EDE7','#bbf7d0','#4ade80','#16a34a','#14532d'];
+      ? ['#1E293B','rgba(249,115,22,0.25)','rgba(249,115,22,0.5)','#F97316','#EA580C']
+      : ['#F7F5F1','#FED7AA','#FB923C','#EA580C','#C2410C'];
     legendEl.innerHTML = steps.map(c=>`<div class="heatmap-legend-cell" style="background:${c}"></div>`).join('');
   }
 }
 
+// Heatmap tooltip
+let heatTip = null;
+function showHeatTip(el, e){
+  hideHeatTip();
+  const day      = el.dataset.day;
+  const val      = parseInt(el.dataset.val)||0;
+  const week     = el.dataset.week;
+  const weekTot  = parseInt(el.dataset.weektotal)||0;
+  const tip = document.createElement('div');
+  tip.id = 'heat-tip';
+  tip.style.cssText = `position:fixed;z-index:9999;background:${isDark?'#1E293B':'#1A1917'};color:#fff;
+    border-radius:8px;padding:8px 12px;font-size:11px;font-family:'Inter',sans-serif;
+    pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.25);min-width:140px;`;
+  tip.innerHTML = `
+    <div style="font-weight:600;margin-bottom:4px;color:#FB923C;">Dia ${day}</div>
+    <div style="display:flex;justify-content:space-between;gap:12px;">
+      <span style="color:rgba(255,255,255,.7);">Produção:</span>
+      <span style="font-weight:600;">${val.toLocaleString('pt-BR')} un.</span>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.1);margin:5px 0;"></div>
+    <div style="display:flex;justify-content:space-between;gap:12px;">
+      <span style="color:rgba(255,255,255,.7);">Semana ${week}:</span>
+      <span style="font-weight:600;color:#FB923C;">${weekTot.toLocaleString('pt-BR')} un.</span>
+    </div>`;
+  document.body.appendChild(tip);
+  heatTip = tip;
+  moveTip(e);
+  el.addEventListener('mousemove', moveTip);
+}
+function moveTip(e){
+  if(!heatTip) return;
+  const x = e.clientX+14, y = e.clientY-10;
+  heatTip.style.left = Math.min(x, window.innerWidth-160)+'px';
+  heatTip.style.top  = Math.max(y-heatTip.offsetHeight, 4)+'px';
+}
+function hideHeatTip(){
+  if(heatTip){ heatTip.remove(); heatTip=null; }
+}
+
 // ── LINHA DIÁRIA ──
 function buildLineChart() {
-  const now = new Date();
-  const year = now.getFullYear(), month = now.getMonth();
-  const daysInMonth = new Date(year,month+1,0).getDate();
-  const data = (filteredData && filteredData.length>0) ? filteredData : allData;
+  const now   = new Date();
+  const year  = now.getFullYear();
+  const month = now.getMonth();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+
+  // Use filteredData; if period filter spans multiple months, still show current month
+  const data = (filteredData && filteredData.length > 0) ? filteredData : allData;
 
   const prodByDay = Array(daysInMonth).fill(0);
   data.forEach(r=>{
@@ -1037,9 +1087,10 @@ function buildLineChart() {
     }
   });
 
-  const labels = Array.from({length:daysInMonth},(_,i)=>i+1);
-  const b = getBase();
-  const orColor = isDark?'#F97316':'#EA580C';
+  const labels   = Array.from({length:daysInMonth},(_,i)=>i+1);
+  const b        = getBase();
+  const orColor  = isDark ? '#F97316' : '#EA580C';
+  const hasData  = prodByDay.some(v=>v>0);
 
   if(charts.line){charts.line.destroy();charts.line=null;}
   charts.line = new Chart(document.getElementById('lineChart'),{
@@ -1047,22 +1098,31 @@ function buildLineChart() {
     data:{
       labels,
       datasets:[{
-        label:'Produção',data:prodByDay,
-        borderColor:orColor,
-        backgroundColor:isDark?'rgba(249,115,22,0.08)':'rgba(234,88,12,0.08)',
-        fill:true,tension:.4,
-        pointRadius: prodByDay.some(v=>v>0) ? 3 : 0,
-        pointBackgroundColor:orColor,
-        pointBorderColor:'transparent',
-        borderWidth:2,
+        label:'Produção',
+        data: prodByDay,
+        borderColor: orColor,
+        backgroundColor: isDark?'rgba(249,115,22,0.08)':'rgba(234,88,12,0.08)',
+        fill: true,
+        tension: .4,
+        pointRadius: hasData ? prodByDay.map(v=>v>0?3:0) : 0,
+        pointHoverRadius: 5,
+        pointBackgroundColor: orColor,
+        pointBorderColor: 'transparent',
+        borderWidth: 2,
       }]
     },
     options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.y+' unidades'}}},
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{
+          title: ctx => 'Dia '+ctx[0].label,
+          label: ctx => ' '+ctx.parsed.y.toLocaleString('pt-BR')+' unidades'
+        }}
+      },
       scales:{
         x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},
-        y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false},beginAtZero:true}
+        y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10},callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v},border:{display:false},beginAtZero:true}
       }
     }
   });
