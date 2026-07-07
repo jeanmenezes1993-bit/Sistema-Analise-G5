@@ -1070,14 +1070,25 @@ function hideHeatTip(){
 
 // ── LINHA DIÁRIA ──
 function buildLineChart() {
-  const now   = new Date();
-  const year  = now.getFullYear();
-  const month = now.getMonth();
+  const data = (filteredData && filteredData.length > 0) ? filteredData : allData;
+  const b       = getBase();
+  const orColor = isDark ? '#F97316' : '#EA580C';
+
+  // Get all dates from filtered data to determine the range
+  const validDates = data.map(r=>r.data).filter(Boolean).sort();
+  if(!validDates.length){
+    if(charts.line){charts.line.destroy();charts.line=null;}
+    return;
+  }
+
+  // Use the most recent month in the filtered data
+  const lastDateStr = validDates[validDates.length-1];
+  const refDate     = new Date(lastDateStr+'T12:00:00');
+  const year        = refDate.getFullYear();
+  const month       = refDate.getMonth();
   const daysInMonth = new Date(year, month+1, 0).getDate();
 
-  // Use filteredData; if period filter spans multiple months, still show current month
-  const data = (filteredData && filteredData.length > 0) ? filteredData : allData;
-
+  // Accumulate production per day for that month
   const prodByDay = Array(daysInMonth).fill(0);
   data.forEach(r=>{
     if(!r.data) return;
@@ -1087,10 +1098,13 @@ function buildLineChart() {
     }
   });
 
-  const labels   = Array.from({length:daysInMonth},(_,i)=>i+1);
-  const b        = getBase();
-  const orColor  = isDark ? '#F97316' : '#EA580C';
-  const hasData  = prodByDay.some(v=>v>0);
+  const labels  = Array.from({length:daysInMonth},(_,i)=>i+1);
+  const hasData = prodByDay.some(v=>v>0);
+  const monthLabel = refDate.toLocaleString('pt-BR',{month:'long',year:'numeric'});
+
+  // Update subtitle
+  const lineSubEl = document.querySelector('#page-dashboard .grid-2 .cc:last-child .cs');
+  if(lineSubEl) lineSubEl.textContent = 'produção por dia — '+monthLabel;
 
   if(charts.line){charts.line.destroy();charts.line=null;}
   charts.line = new Chart(document.getElementById('lineChart'),{
@@ -1101,28 +1115,43 @@ function buildLineChart() {
         label:'Produção',
         data: prodByDay,
         borderColor: orColor,
-        backgroundColor: isDark?'rgba(249,115,22,0.08)':'rgba(234,88,12,0.08)',
+        backgroundColor: isDark?'rgba(249,115,22,0.10)':'rgba(234,88,12,0.08)',
         fill: true,
         tension: .4,
-        pointRadius: hasData ? prodByDay.map(v=>v>0?3:0) : 0,
-        pointHoverRadius: 5,
+        pointRadius: hasData ? prodByDay.map(v=>v>0?4:0) : 0,
+        pointHoverRadius: 6,
         pointBackgroundColor: orColor,
-        pointBorderColor: 'transparent',
-        borderWidth: 2,
+        pointBorderColor: '#fff',
+        pointBorderWidth: 1.5,
+        borderWidth: 2.5,
       }]
     },
     options:{
       responsive:true, maintainAspectRatio:false,
       plugins:{
         legend:{display:false},
-        tooltip:{callbacks:{
-          title: ctx => 'Dia '+ctx[0].label,
-          label: ctx => ' '+ctx.parsed.y.toLocaleString('pt-BR')+' unidades'
-        }}
+        tooltip:{
+          callbacks:{
+            title: ctx => 'Dia '+ctx[0].label+' — '+monthLabel,
+            label: ctx => ' '+ctx.parsed.y.toLocaleString('pt-BR')+' unidades'
+          }
+        }
       },
       scales:{
-        x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},
-        y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10},callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v},border:{display:false},beginAtZero:true}
+        x:{
+          grid:{color:b.grid},
+          ticks:{color:b.tick,font:{size:10}},
+          border:{display:false}
+        },
+        y:{
+          grid:{color:b.grid},
+          ticks:{
+            color:b.tick,font:{size:10},
+            callback: v => v>=1000?(v/1000).toFixed(1)+'k':v
+          },
+          border:{display:false},
+          beginAtZero:true
+        }
       }
     }
   });
