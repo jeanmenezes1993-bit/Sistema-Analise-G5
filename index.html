@@ -497,8 +497,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         <div class="period-filter">
           <button class="period-btn" onclick="setPeriod('hoje',this)">Hoje</button>
           <button class="period-btn" onclick="setPeriod('semana',this)">Esta Semana</button>
-          <button class="period-btn active" onclick="setPeriod('mes',this)">Este Mês</button>
-          <button class="period-btn" onclick="setPeriod('tudo',this)">Tudo</button>
+          <button class="period-btn" onclick="setPeriod('mes',this)">Este Mês</button>
+          <button class="period-btn active" onclick="setPeriod('tudo',this)">Tudo</button>
+          <button class="period-btn" id="btn-clear-period" onclick="clearPeriod()" style="color:#DC2626;border-color:rgba(220,38,38,.25);display:none;">✕ Limpar</button>
           <div class="period-custom">
             <input class="period-input" type="date" id="period-start">
             <span class="period-sep">até</span>
@@ -1626,7 +1627,7 @@ function getSkuLabel(r){
 
 // ── FILTRO DE PERÍODO ──
 let filteredData = [];
-let currentPeriod = 'mes';
+let currentPeriod = 'tudo';
 let currentPage = 1;
 const PAGE_SIZE = 15;
 let editingId = null;
@@ -1636,7 +1637,21 @@ function setPeriod(period, btn){
   currentPage = 1;
   document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
+  const clearBtn = document.getElementById('btn-clear-period');
+  if(clearBtn) clearBtn.style.display = period==='tudo' ? 'none' : 'inline-block';
   applyFilter();
+}
+
+function clearPeriod(){
+  currentPeriod = 'tudo';
+  currentPage = 1;
+  document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-clear-period').style.display = 'none';
+  // Clear custom date inputs
+  document.getElementById('period-start').value = '';
+  document.getElementById('period-end').value   = '';
+  filteredData = [...allData];
+  renderDashboard();
 }
 
 function applyFilter(){
