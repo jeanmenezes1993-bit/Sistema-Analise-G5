@@ -561,7 +561,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
           <!-- LINHA DIÁRIA -->
           <div class="cc">
             <div class="ct">Evolução Diária</div>
-            <div class="cs">produção total por dia do mês atual</div>
+            <div class="cs" id="line-chart-sub">produção total por dia do mês atual</div>
             <div style="position:relative;height:200px;"><canvas id="lineChart"></canvas></div>
           </div>
         </div>
@@ -1070,25 +1070,29 @@ function hideHeatTip(){
 
 // ── LINHA DIÁRIA ──
 function buildLineChart() {
-  const data = (filteredData && filteredData.length > 0) ? filteredData : allData;
   const b       = getBase();
   const orColor = isDark ? '#F97316' : '#EA580C';
 
-  // Get all dates from filtered data to determine the range
-  const validDates = data.map(r=>r.data).filter(Boolean).sort();
-  if(!validDates.length){
-    if(charts.line){charts.line.destroy();charts.line=null;}
-    return;
+  // Always use filteredData (even if empty = shows zeros for the period)
+  const data = filteredData || [];
+
+  let year, month, daysInMonth;
+
+  if(data.length > 0){
+    // Use the most recent month in filtered data
+    const validDates = data.map(r=>r.data).filter(Boolean).sort();
+    const refDate    = new Date(validDates[validDates.length-1]+'T12:00:00');
+    year  = refDate.getFullYear();
+    month = refDate.getMonth();
+  } else {
+    // No data in period: use current month
+    const now = new Date();
+    year  = now.getFullYear();
+    month = now.getMonth();
   }
 
-  // Use the most recent month in the filtered data
-  const lastDateStr = validDates[validDates.length-1];
-  const refDate     = new Date(lastDateStr+'T12:00:00');
-  const year        = refDate.getFullYear();
-  const month       = refDate.getMonth();
-  const daysInMonth = new Date(year, month+1, 0).getDate();
+  daysInMonth = new Date(year, month+1, 0).getDate();
 
-  // Accumulate production per day for that month
   const prodByDay = Array(daysInMonth).fill(0);
   data.forEach(r=>{
     if(!r.data) return;
@@ -1098,13 +1102,13 @@ function buildLineChart() {
     }
   });
 
-  const labels  = Array.from({length:daysInMonth},(_,i)=>i+1);
-  const hasData = prodByDay.some(v=>v>0);
-  const monthLabel = refDate.toLocaleString('pt-BR',{month:'long',year:'numeric'});
+  const labels     = Array.from({length:daysInMonth},(_,i)=>i+1);
+  const hasData    = prodByDay.some(v=>v>0);
+  const monthLabel = new Date(year, month, 1).toLocaleString('pt-BR',{month:'long',year:'numeric'});
 
   // Update subtitle
-  const lineSubEl = document.querySelector('#page-dashboard .grid-2 .cc:last-child .cs');
-  if(lineSubEl) lineSubEl.textContent = 'produção por dia — '+monthLabel;
+  const cs = document.getElementById('line-chart-sub');
+  if(cs) cs.textContent = 'produção por dia — '+monthLabel;
 
   if(charts.line){charts.line.destroy();charts.line=null;}
   charts.line = new Chart(document.getElementById('lineChart'),{
@@ -1121,7 +1125,7 @@ function buildLineChart() {
         pointRadius: hasData ? prodByDay.map(v=>v>0?4:0) : 0,
         pointHoverRadius: 6,
         pointBackgroundColor: orColor,
-        pointBorderColor: '#fff',
+        pointBorderColor:'#fff',
         pointBorderWidth: 1.5,
         borderWidth: 2.5,
       }]
@@ -1130,28 +1134,14 @@ function buildLineChart() {
       responsive:true, maintainAspectRatio:false,
       plugins:{
         legend:{display:false},
-        tooltip:{
-          callbacks:{
-            title: ctx => 'Dia '+ctx[0].label+' — '+monthLabel,
-            label: ctx => ' '+ctx.parsed.y.toLocaleString('pt-BR')+' unidades'
-          }
-        }
+        tooltip:{callbacks:{
+          title: ctx=>'Dia '+ctx[0].label+' — '+monthLabel,
+          label: ctx=>' '+ctx.parsed.y.toLocaleString('pt-BR')+' unidades'
+        }}
       },
       scales:{
-        x:{
-          grid:{color:b.grid},
-          ticks:{color:b.tick,font:{size:10}},
-          border:{display:false}
-        },
-        y:{
-          grid:{color:b.grid},
-          ticks:{
-            color:b.tick,font:{size:10},
-            callback: v => v>=1000?(v/1000).toFixed(1)+'k':v
-          },
-          border:{display:false},
-          beginAtZero:true
-        }
+        x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},
+        y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10},callback:v=>v>=1000?(v/1000).toFixed(1)+'k':v},border:{display:false},beginAtZero:true}
       }
     }
   });
@@ -1289,28 +1279,78 @@ function buildTop10Chart() {
 
 // ── CHARTS BASE ──
 function rebuildCharts() {
-  const b=getBase();
-  const data = filteredData.length>0 ? filteredData : allData;
+  const b    = getBase();
+  const data = (filteredData && filteredData.length > 0) ? filteredData : allData;
+
   ['sku','pizza','line'].forEach(k=>{if(charts[k]){charts[k].destroy();charts[k]=null;}});
-  const months=[];
-  for(let i=5;i>=0;i--){const d=new Date();d.setMonth(d.getMonth()-i);months.push({label:d.toLocaleString('pt-BR',{month:'short'}),key:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`});}
-  const skuTypes=['Capas','Películas','Acessórios'];
-  const skuColors=isDark?['#F97316','#EC4899','#14B8A6']:['#EA580C','#DB2777','#0D9488'];
-  charts.sku=new Chart(document.getElementById('skuChart'),{
+
+  // --- SKU POR MÊS ---
+  // Build months from the filtered data range (not fixed last 6 months)
+  const allDatesInData = data.map(r=>r.data).filter(Boolean).sort();
+  let months = [];
+
+  if(allDatesInData.length){
+    const firstD = new Date(allDatesInData[0]+'T12:00:00');
+    const lastD  = new Date(allDatesInData[allDatesInData.length-1]+'T12:00:00');
+    let cur = new Date(firstD.getFullYear(), firstD.getMonth(), 1);
+    const stop = new Date(lastD.getFullYear(), lastD.getMonth(), 1);
+    while(cur <= stop){
+      months.push({
+        label: cur.toLocaleString('pt-BR',{month:'short'}),
+        key: `${cur.getFullYear()}-${String(cur.getMonth()+1).padStart(2,'0')}`
+      });
+      cur.setMonth(cur.getMonth()+1);
+    }
+  } else {
+    // fallback: last 6 months
+    for(let i=5;i>=0;i--){
+      const d=new Date(); d.setMonth(d.getMonth()-i);
+      months.push({label:d.toLocaleString('pt-BR',{month:'short'}),key:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`});
+    }
+  }
+
+  const skuTypes  = ['Capas','Películas','Acessórios'];
+  const skuColors = isDark?['#F97316','#EC4899','#14B8A6']:['#EA580C','#DB2777','#0D9488'];
+
+  charts.sku = new Chart(document.getElementById('skuChart'),{
     type:'bar',
-    data:{labels:months.map(m=>m.label),datasets:skuTypes.map((sku,si)=>({label:sku,data:months.map(m=>data.filter(r=>r.sku===sku&&r.data&&r.data.startsWith(m.key)).reduce((s,r)=>s+r.quantidade,0)),backgroundColor:skuColors[si],borderRadius:3,barPercentage:.7}))},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},scales:{x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}},y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}}}}
+    data:{
+      labels: months.map(m=>m.label),
+      datasets: skuTypes.map((sku,si)=>({
+        label: sku,
+        data: months.map(m=>data.filter(r=>r.sku===sku&&r.data&&r.data.startsWith(m.key)).reduce((s,r)=>s+r.quantidade,0)),
+        backgroundColor: skuColors[si],
+        borderRadius: 3,
+        barPercentage: .7
+      }))
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+      scales:{
+        x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}},
+        y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10},callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v}}
+      }
+    }
   });
-  const tipoC={Reposição:0,Armazenamento:0,Movimentação:0,Legendas:0};
-  data.forEach(r=>{if(tipoC[r.tipo]!==undefined)tipoC[r.tipo]+=r.quantidade;});
-  const pieColors=isDark?['#14B8A6','#3B82F6','#A855F7','#F97316']:['#0D9488','#2563EB','#7C3AED','#EA580C'];
-  charts.pizza=new Chart(document.getElementById('pizzaChart'),{
+
+  // --- PIZZA ---
+  const tipoC = {Reposição:0,Armazenamento:0,Movimentação:0,Legendas:0};
+  data.forEach(r=>{if(tipoC[r.tipo]!==undefined) tipoC[r.tipo]+=r.quantidade;});
+  const pieColors = isDark?['#14B8A6','#3B82F6','#A855F7','#F97316']:['#0D9488','#2563EB','#7C3AED','#EA580C'];
+  charts.pizza = new Chart(document.getElementById('pizzaChart'),{
     type:'doughnut',
-    data:{labels:Object.keys(tipoC),datasets:[{data:Object.values(tipoC),backgroundColor:pieColors,borderWidth:2,borderColor:b.border,hoverOffset:4}]},
+    data:{
+      labels: Object.keys(tipoC),
+      datasets:[{data:Object.values(tipoC),backgroundColor:pieColors,borderWidth:2,borderColor:b.border,hoverOffset:4}]
+    },
     options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false}}}
   });
+
+  // --- LINE + HEATMAP ---
   buildLineChart();
   renderHeatmap();
+
   if(document.getElementById('page-top10').classList.contains('active')) buildTop10Chart();
 }
 
