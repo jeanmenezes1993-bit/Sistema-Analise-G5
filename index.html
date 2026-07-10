@@ -793,12 +793,12 @@ async function loadAtividades() {
 }
 
 function renderAll() {
-  filteredData=[...allData];
-  applyFilter();
+  filteredData=[];
+  renderEmptyDashboard();
   renderPodium();
   renderAtividadesPaged();
   renderMetaChart();
-  document.getElementById('badge-total').textContent = allData.length;
+  if(document.getElementById('badge-total')) document.getElementById('badge-total').textContent = allData.length;
 }
 
 function renderAtividades() {
@@ -1638,20 +1638,67 @@ function setPeriod(period, btn){
   document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
   const clearBtn = document.getElementById('btn-clear-period');
-  if(clearBtn) clearBtn.style.display = period==='tudo' ? 'none' : 'inline-block';
+  if(clearBtn) clearBtn.style.display = 'inline-block';
   applyFilter();
 }
 
 function clearPeriod(){
-  currentPeriod = 'tudo';
+  currentPeriod = null;
   currentPage = 1;
   document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('btn-clear-period').style.display = 'none';
-  // Clear custom date inputs
   document.getElementById('period-start').value = '';
   document.getElementById('period-end').value   = '';
-  filteredData = [...allData];
-  renderDashboard();
+  filteredData = [];
+  renderEmptyDashboard();
+}
+
+function renderEmptyDashboard(){
+  // Metrics
+  document.getElementById('m-total').textContent  = '—';
+  document.getElementById('m-prod').textContent   = '—';
+  document.getElementById('m-colab').textContent  = '—';
+  document.getElementById('m-sku').textContent    = '—';
+  if(document.getElementById('badge-total')) document.getElementById('badge-total').textContent = allData.length;
+
+  // Top 5
+  document.getElementById('top5-list').innerHTML = '<div class="empty-state">Selecione um período para ver os dados</div>';
+
+  // Meta
+  document.getElementById('meta-list').innerHTML = '<div class="empty-state">Selecione um período para ver os dados</div>';
+
+  // Destroy all charts and show empty
+  ['sku','pizza','line'].forEach(k=>{if(charts[k]){charts[k].destroy();charts[k]=null;}});
+
+  // SKU chart empty
+  const b = getBase();
+  charts.sku = new Chart(document.getElementById('skuChart'),{
+    type:'bar',
+    data:{labels:[],datasets:[]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:b.grid},ticks:{color:b.tick}},y:{grid:{color:b.grid},ticks:{color:b.tick},beginAtZero:true}}}
+  });
+
+  // Pizza empty
+  charts.pizza = new Chart(document.getElementById('pizzaChart'),{
+    type:'doughnut',
+    data:{labels:['Sem dados'],datasets:[{data:[1],backgroundColor:[isDark?'#1E293B':'#E2DED7'],borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{enabled:false}}}
+  });
+
+  // Line empty
+  charts.line = new Chart(document.getElementById('lineChart'),{
+    type:'line',
+    data:{labels:[],datasets:[]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:b.grid},ticks:{color:b.tick}},y:{grid:{color:b.grid},ticks:{color:b.tick},beginAtZero:true}}}
+  });
+
+  // Heatmap empty
+  const container = document.getElementById('heatmap-container');
+  if(container) container.innerHTML = '<div class="empty-state" style="padding:40px;">Selecione um período para ver o heatmap</div>';
+  const labelEl = document.getElementById('heatmap-period-label');
+  if(labelEl) labelEl.textContent = 'selecione um período acima';
 }
 
 function applyFilter(){
