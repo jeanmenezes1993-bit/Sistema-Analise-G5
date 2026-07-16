@@ -464,29 +464,29 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
     </div>
     <div class="sb-section">Principal</div>
     <button class="sb-nav-item active" onclick="showPage('dashboard',this)">
-      <div class="sb-nav-icon">▦</div>
-      <div class="sb-nav-inner"><span class="sb-nav-label">Dashboard</span><span class="sb-badge" id="badge-total">0</span></div>
+      <div class="sb-nav-icon">📊</div>
+      <div class="sb-nav-inner"><span class="sb-nav-label">Dashboard</span></div>
     </button>
     <button class="sb-nav-item" onclick="showPage('registro',this)">
-      <div class="sb-nav-icon">＋</div>
+      <div class="sb-nav-icon">📂</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Registro</span></div>
     </button>
     <div class="sb-section">Análise</div>
     <button class="sb-nav-item" onclick="showPage('ranking',this)">
-      <div class="sb-nav-icon">★</div>
+      <div class="sb-nav-icon">🏆</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Ranking</span></div>
     </button>
     <button class="sb-nav-item" onclick="showPage('top10',this)">
-      <div class="sb-nav-icon">▲</div>
+      <div class="sb-nav-icon">⬆</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Top 10 SKUs</span></div>
     </button>
     <button class="sb-nav-item" onclick="showPage('consulta',this)">
-      <div class="sb-nav-icon">🔍</div>
+      <div class="sb-nav-icon">👁</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Consulta</span></div>
     </button>
     <div class="sb-section">Configuração</div>
     <button class="sb-nav-item" onclick="showPage('cadastro-sku',this)">
-      <div class="sb-nav-icon">☰</div>
+      <div class="sb-nav-icon">⚙</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Cadastro de SKU</span></div>
     </button>
     <div class="sb-footer">
@@ -783,69 +783,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
     </div>
   </div>
 </div>
-
-
-      <!-- CONSULTA -->
-      <div class="page" id="page-consulta">
-        <div class="fc" style="margin-bottom:14px;">
-          <div class="ft">Filtrar Atividades</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:flex-end;">
-            <div class="fgr">
-              <div class="fl">Colaborador</div>
-              <select class="fi" id="consulta-colab">
-                <option value="">Todos os colaboradores</option>
-              </select>
-            </div>
-            <div class="fgr">
-              <div class="fl">Mês</div>
-              <select class="fi" id="consulta-mes">
-                <option value="">Todos os meses</option>
-              </select>
-            </div>
-            <div class="fgr">
-              <div class="fl">Tipo de Atividade</div>
-              <select class="fi" id="consulta-tipo">
-                <option value="">Todos os tipos</option>
-                <option value="Reposição">Reposição</option>
-                <option value="Armazenamento">Armazenamento</option>
-                <option value="Movimentação">Movimentação</option>
-                <option value="Legendas">Legendas</option>
-              </select>
-            </div>
-            <button class="bts" onclick="runConsulta()" style="margin-top:0;">Consultar</button>
-          </div>
-        </div>
-
-        <div class="cc" id="consulta-resultado" style="display:none;">
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;" id="consulta-cards"></div>
-          <div class="ct" id="consulta-title">Resultados</div>
-          <div class="cs" id="consulta-sub" style="margin-bottom:12px;"></div>
-          <table class="rt">
-            <thead>
-              <tr>
-                <th>Data</th>
-                <th>Colaborador</th>
-                <th>Tipo</th>
-                <th>Categoria</th>
-                <th>SKU</th>
-                <th style="text-align:right;">Quantidade</th>
-              </tr>
-            </thead>
-            <tbody id="consulta-tbody"></tbody>
-          </table>
-          <div class="pagination">
-            <div class="pagination-info" id="consulta-pag-info">— registros</div>
-            <div class="pagination-btns" id="consulta-pag-btns"></div>
-          </div>
-        </div>
-
-        <div class="cc" id="consulta-empty" style="text-align:center;padding:48px 16px;">
-          <div style="font-size:40px;margin-bottom:14px;">🔍</div>
-          <div style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:6px;">Selecione os filtros acima</div>
-          <div style="font-size:12px;color:var(--text3);">Escolha um colaborador e/ou mês para consultar as atividades registradas</div>
-        </div>
-      </div>
-
 <!-- MODAL COLABORADOR -->
 <div class="colab-modal-overlay" id="colab-modal" onclick="if(event.target===this)closeColabModal()">
   <div class="colab-modal">
@@ -878,6 +815,52 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
     </div>
   </div>
 </div>
+
+      <!-- CONSULTA -->
+      <div class="page" id="page-consulta">
+        <div class="fc" style="margin-bottom:14px;">
+          <div class="ft">Filtrar Atividades</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:flex-end;">
+            <div class="fgr">
+              <div class="fl">Colaborador</div>
+              <select class="fi" id="consulta-colab"><option value="">Todos os colaboradores</option></select>
+            </div>
+            <div class="fgr">
+              <div class="fl">Mês</div>
+              <select class="fi" id="consulta-mes"><option value="">Todos os meses</option></select>
+            </div>
+            <div class="fgr">
+              <div class="fl">Tipo de Atividade</div>
+              <select class="fi" id="consulta-tipo">
+                <option value="">Todos os tipos</option>
+                <option value="Reposição">Reposição</option>
+                <option value="Armazenamento">Armazenamento</option>
+                <option value="Movimentação">Movimentação</option>
+                <option value="Legendas">Legendas</option>
+              </select>
+            </div>
+            <button class="bts" onclick="runConsulta()" style="margin-top:0;">Consultar</button>
+          </div>
+        </div>
+        <div class="cc" id="consulta-resultado" style="display:none;">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;" id="consulta-cards"></div>
+          <div class="ct" id="consulta-title">Resultados</div>
+          <div class="cs" id="consulta-sub" style="margin-bottom:12px;"></div>
+          <table class="rt">
+            <thead><tr><th>Data</th><th>Colaborador</th><th>Tipo</th><th>Categoria</th><th>SKU</th><th style="text-align:right;">Quantidade</th></tr></thead>
+            <tbody id="consulta-tbody"></tbody>
+          </table>
+          <div class="pagination">
+            <div class="pagination-info" id="consulta-pag-info">— registros</div>
+            <div class="pagination-btns" id="consulta-pag-btns"></div>
+          </div>
+        </div>
+        <div class="cc" id="consulta-empty" style="text-align:center;padding:48px 16px;">
+          <div style="font-size:40px;margin-bottom:14px;">🔍</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:6px;">Selecione os filtros acima</div>
+          <div style="font-size:12px;color:var(--text3);">Escolha um colaborador e/ou mês para consultar as atividades registradas</div>
+        </div>
+      </div>
 
 <div class="toast" id="toast"></div>
 
