@@ -480,6 +480,10 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
       <div class="sb-nav-icon">▲</div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Top 10 SKUs</span></div>
     </button>
+    <button class="sb-nav-item" onclick="showPage('consulta',this)">
+      <div class="sb-nav-icon">🔍</div>
+      <div class="sb-nav-inner"><span class="sb-nav-label">Consulta</span></div>
+    </button>
     <div class="sb-section">Configuração</div>
     <button class="sb-nav-item" onclick="showPage('cadastro-sku',this)">
       <div class="sb-nav-icon">☰</div>
@@ -780,6 +784,67 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
   </div>
 </div>
 
+
+      <!-- CONSULTA -->
+      <div class="page" id="page-consulta">
+        <div class="fc" style="margin-bottom:14px;">
+          <div class="ft">Filtrar Atividades</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:flex-end;">
+            <div class="fgr">
+              <div class="fl">Colaborador</div>
+              <select class="fi" id="consulta-colab">
+                <option value="">Todos os colaboradores</option>
+              </select>
+            </div>
+            <div class="fgr">
+              <div class="fl">Mês</div>
+              <select class="fi" id="consulta-mes">
+                <option value="">Todos os meses</option>
+              </select>
+            </div>
+            <div class="fgr">
+              <div class="fl">Tipo de Atividade</div>
+              <select class="fi" id="consulta-tipo">
+                <option value="">Todos os tipos</option>
+                <option value="Reposição">Reposição</option>
+                <option value="Armazenamento">Armazenamento</option>
+                <option value="Movimentação">Movimentação</option>
+                <option value="Legendas">Legendas</option>
+              </select>
+            </div>
+            <button class="bts" onclick="runConsulta()" style="margin-top:0;">Consultar</button>
+          </div>
+        </div>
+
+        <div class="cc" id="consulta-resultado" style="display:none;">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;" id="consulta-cards"></div>
+          <div class="ct" id="consulta-title">Resultados</div>
+          <div class="cs" id="consulta-sub" style="margin-bottom:12px;"></div>
+          <table class="rt">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Colaborador</th>
+                <th>Tipo</th>
+                <th>Categoria</th>
+                <th>SKU</th>
+                <th style="text-align:right;">Quantidade</th>
+              </tr>
+            </thead>
+            <tbody id="consulta-tbody"></tbody>
+          </table>
+          <div class="pagination">
+            <div class="pagination-info" id="consulta-pag-info">— registros</div>
+            <div class="pagination-btns" id="consulta-pag-btns"></div>
+          </div>
+        </div>
+
+        <div class="cc" id="consulta-empty" style="text-align:center;padding:48px 16px;">
+          <div style="font-size:40px;margin-bottom:14px;">🔍</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:6px;">Selecione os filtros acima</div>
+          <div style="font-size:12px;color:var(--text3);">Escolha um colaborador e/ou mês para consultar as atividades registradas</div>
+        </div>
+      </div>
 
 <!-- MODAL COLABORADOR -->
 <div class="colab-modal-overlay" id="colab-modal" onclick="if(event.target===this)closeColabModal()">
@@ -1502,6 +1567,7 @@ const PAGES={
   registro:{title:'Registro de Atividade',sub:'cadastro de produção e histórico'},
   ranking:{title:'Ranking de Eficiência',sub:'classificação dos colaboradores'},
   top10:{title:'Top 10 SKUs',sub:'produtos mais saídos'},
+  consulta:{title:'Consulta por Colaborador',sub:'filtre atividades por nome e período'},
   'cadastro-sku':{title:'Cadastro de SKU',sub:'gerencie os SKUs ativos da empresa'},
 };
 function showPage(id,btn){
@@ -1513,6 +1579,7 @@ function showPage(id,btn){
   document.getElementById('tb-title').textContent=p.title;
   document.getElementById('tb-sub').textContent=p.sub;
   if(id==='top10') setTimeout(buildTop10Chart,80);
+  if(id==='consulta') initConsulta();
 }
 function toggleRadio(gid,el){document.querySelectorAll('#'+gid+' .rb').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');}
 function toggleTheme(){
@@ -1578,6 +1645,136 @@ window.addEventListener('DOMContentLoaded',()=>{
   setTimeout(()=>document.getElementById('login-user').focus(),100);
 });
 
+
+
+// ── CONSULTA ──
+let consultaPage = 1;
+let consultaData = [];
+const CONSULTA_PAGE_SIZE = 20;
+
+function initConsulta(){
+  // Populate colaborador select
+  const sel = document.getElementById('consulta-colab');
+  if(!sel || sel.options.length > 1) return;
+  COLABORADORES.forEach(c=>{
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    sel.appendChild(opt);
+  });
+
+  // Populate month select from allData
+  const monthSel = document.getElementById('consulta-mes');
+  const months = new Set();
+  allData.forEach(r=>{ if(r.data) months.add(r.data.substring(0,7)); });
+  [...months].sort().reverse().forEach(m=>{
+    const d = new Date(m+'-01T12:00:00');
+    const lbl = d.toLocaleString('pt-BR',{month:'long',year:'numeric'});
+    const opt = document.createElement('option');
+    opt.value = m; opt.textContent = lbl.charAt(0).toUpperCase()+lbl.slice(1);
+    monthSel.appendChild(opt);
+  });
+}
+
+function runConsulta(){
+  const colab = document.getElementById('consulta-colab').value;
+  const mes   = document.getElementById('consulta-mes').value;
+  const tipo  = document.getElementById('consulta-tipo').value;
+
+  // Filter
+  consultaData = allData.filter(r=>{
+    if(colab && r.colaborador !== colab) return false;
+    if(mes   && (!r.data || !r.data.startsWith(mes))) return false;
+    if(tipo  && r.tipo !== tipo) return false;
+    return true;
+  }).sort((a,b)=> a.data > b.data ? -1 : 1);
+
+  consultaPage = 1;
+  renderConsulta();
+}
+
+function renderConsulta(){
+  const resultado = document.getElementById('consulta-resultado');
+  const empty     = document.getElementById('consulta-empty');
+
+  resultado.style.display = 'block';
+  empty.style.display     = 'none';
+
+  // Summary cards
+  const totalAtiv = consultaData.length;
+  const totalProd = consultaData.reduce((s,r)=>s+(r.quantidade||0), 0);
+  const colabs    = [...new Set(consultaData.map(r=>r.colaborador))];
+  const skuC      = {};
+  consultaData.forEach(r=>{ const k=r.nome_sku||r.sku; skuC[k]=(skuC[k]||0)+r.quantidade; });
+  const topSku = Object.entries(skuC).sort((a,b)=>b[1]-a[1])[0];
+
+  document.getElementById('consulta-cards').innerHTML = `
+    <div class="mc"><div class="mc-label">Atividades</div><div class="mc-val">${totalAtiv}</div><div class="mc-sub">registros encontrados</div></div>
+    <div class="mc"><div class="mc-label">Produção Total</div><div class="mc-val">${totalProd.toLocaleString('pt-BR')}</div><div class="mc-sub">unidades</div></div>
+    <div class="mc"><div class="mc-label">Colaboradores</div><div class="mc-val">${colabs.length}</div><div class="mc-sub">${colabs.length===1?colabs[0].split(' ')[0]:'no filtro'}</div></div>
+    <div class="mc"><div class="mc-label">SKU Destaque</div><div class="mc-val" style="font-size:12px;color:var(--or);line-height:1.3;">${topSku?topSku[0].substring(0,20)+(topSku[0].length>20?'...':''):'—'}</div><div class="mc-sub">${topSku?topSku[1]+' un.':''}</div></div>
+  `;
+
+  // Title
+  const colab = document.getElementById('consulta-colab').value;
+  const mes   = document.getElementById('consulta-mes').value;
+  const tipo  = document.getElementById('consulta-tipo').value;
+  let titleParts = [];
+  if(colab) titleParts.push(colab.split(' ')[0]);
+  if(mes){ const d=new Date(mes+'-01T12:00:00'); titleParts.push(d.toLocaleString('pt-BR',{month:'long',year:'numeric'})); }
+  if(tipo) titleParts.push(tipo);
+  document.getElementById('consulta-title').textContent = titleParts.length ? titleParts.join(' · ') : 'Todas as Atividades';
+  document.getElementById('consulta-sub').textContent = `${totalAtiv} registro${totalAtiv!==1?'s':''} encontrado${totalAtiv!==1?'s':''}`;
+
+  // Table
+  const tbody = document.getElementById('consulta-tbody');
+  if(!consultaData.length){
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Nenhuma atividade encontrada com esses filtros</td></tr>';
+    document.getElementById('consulta-pag-info').textContent = '0 registros';
+    document.getElementById('consulta-pag-btns').innerHTML = '';
+    return;
+  }
+
+  const total      = consultaData.length;
+  const totalPages = Math.ceil(total/CONSULTA_PAGE_SIZE);
+  if(consultaPage > totalPages) consultaPage = totalPages;
+  const start = (consultaPage-1)*CONSULTA_PAGE_SIZE;
+  const slice = consultaData.slice(start, start+CONSULTA_PAGE_SIZE);
+
+  tbody.innerHTML = slice.map(r=>{
+    const skuLabel = getSkuLabel(r);
+    return `<tr>
+      <td style="white-space:nowrap;">${r.data||'—'}</td>
+      <td style="font-weight:500;">${r.colaborador||'—'}</td>
+      <td><span class="badge ${bc(r.tipo)}">${r.tipo||'—'}</span></td>
+      <td><span class="badge ${bc(r.sku)}">${r.sku||'—'}</span></td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${skuLabel}">${skuLabel}</td>
+      <td style="text-align:right;font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--or);">${(r.quantidade||0).toLocaleString('pt-BR')}</td>
+    </tr>`;
+  }).join('');
+
+  // Pagination
+  const endIdx = Math.min(consultaPage*CONSULTA_PAGE_SIZE, total);
+  document.getElementById('consulta-pag-info').textContent = `${start+1}–${endIdx} de ${total} registros`;
+  let html = `<button class="page-btn" onclick="goConsultaPage(${consultaPage-1})" ${consultaPage<=1?'disabled':''}>‹</button>`;
+  const range = 2;
+  for(let i=1;i<=totalPages;i++){
+    if(i===1||i===totalPages||Math.abs(i-consultaPage)<=range){
+      html+=`<button class="page-btn ${i===consultaPage?'active':''}" onclick="goConsultaPage(${i})">${i}</button>`;
+    } else if(Math.abs(i-consultaPage)===range+1){
+      html+=`<span style="color:var(--text3);padding:0 4px;">…</span>`;
+    }
+  }
+  html+=`<button class="page-btn" onclick="goConsultaPage(${consultaPage+1})" ${consultaPage>=totalPages?'disabled':''}>›</button>`;
+  document.getElementById('consulta-pag-btns').innerHTML = html;
+}
+
+function goConsultaPage(p){
+  const total = consultaData.length;
+  const totalPages = Math.ceil(total/CONSULTA_PAGE_SIZE);
+  if(p<1||p>totalPages) return;
+  consultaPage = p;
+  renderConsulta();
+}
 
 // ── COLABORADORES ──
 const COLABORADORES = [
