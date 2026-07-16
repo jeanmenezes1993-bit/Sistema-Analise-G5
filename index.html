@@ -311,6 +311,28 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .page-btn:hover{border-color:var(--or);color:var(--or);}
 .page-btn.active{background:var(--or);border-color:var(--or);color:white;}
 .page-btn:disabled{opacity:.35;cursor:not-allowed;}
+
+/* MODAL COLABORADOR */
+.colab-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:998;display:none;align-items:center;justify-content:center;padding:20px;}
+.colab-modal-overlay.show{display:flex;}
+.colab-modal{background:var(--card);border:1px solid var(--bdr);border-radius:14px;width:100%;max-width:700px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+.colab-modal-head{padding:20px 24px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.colab-modal-avatar{width:40px;height:40px;border-radius:50%;background:var(--or-bg);border:2px solid var(--or-bdr);display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--or);flex-shrink:0;}
+.colab-modal-info{flex:1;}
+.colab-modal-name{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;}
+.colab-modal-sub{font-size:11px;color:var(--text3);margin-top:1px;}
+.colab-modal-close{background:none;border:1px solid var(--bdr);border-radius:8px;width:32px;height:32px;cursor:pointer;color:var(--text3);font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .18s;}
+.colab-modal-close:hover{background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.3);color:#DC2626;}
+.colab-modal-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px 24px;border-bottom:1px solid var(--bdr);flex-shrink:0;}
+.colab-stat{background:var(--metric);border-radius:8px;padding:10px 12px;text-align:center;}
+.colab-stat-val{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:var(--or);line-height:1;}
+.colab-stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+.colab-modal-body{overflow-y:auto;padding:16px 24px 20px;flex:1;}
+.colab-modal-table{width:100%;border-collapse:collapse;font-size:11px;}
+.colab-modal-table th{text-align:left;padding:7px 10px;color:var(--text3);font-size:9px;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--bdr);font-weight:500;position:sticky;top:0;background:var(--card);}
+.colab-modal-table td{padding:9px 10px;border-bottom:1px solid var(--bdr);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.colab-modal-table tr:last-child td{border-bottom:none;}
+.colab-modal-table tr:hover td{background:var(--metric);}
 </style>
 </head>
 <body>
@@ -754,6 +776,40 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
     <div class="modal-footer">
       <button class="modal-btn-cancel" onclick="closeEditModal()">Cancelar</button>
       <button class="modal-btn-save" onclick="saveEdit()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL COLABORADOR -->
+<div class="colab-modal-overlay" id="colab-modal" onclick="if(event.target===this)closeColabModal()">
+  <div class="colab-modal">
+    <div class="colab-modal-head">
+      <div class="colab-modal-avatar" id="cm-avatar">--</div>
+      <div class="colab-modal-info">
+        <div class="colab-modal-name" id="cm-name">—</div>
+        <div class="colab-modal-sub" id="cm-period">período selecionado</div>
+      </div>
+      <button class="colab-modal-close" onclick="closeColabModal()">×</button>
+    </div>
+    <div class="colab-modal-stats">
+      <div class="colab-stat"><div class="colab-stat-val" id="cm-total-ativ">—</div><div class="colab-stat-label">Atividades</div></div>
+      <div class="colab-stat"><div class="colab-stat-val" id="cm-total-prod">—</div><div class="colab-stat-label">Produção Total</div></div>
+      <div class="colab-stat"><div class="colab-stat-val" id="cm-top-sku">—</div><div class="colab-stat-label">SKU Mais Registrado</div></div>
+    </div>
+    <div class="colab-modal-body">
+      <table class="colab-modal-table">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>Categoria</th>
+            <th>SKU</th>
+            <th style="text-align:right;">Qtd</th>
+          </tr>
+        </thead>
+        <tbody id="cm-tbody"></tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -1778,7 +1834,11 @@ function renderTop5Filtered(){
   el.innerHTML=sorted.map(([name,pts],i)=>`
     <div class="t5i">
       <div class="t5r ${i<3?'r'+(i+1):''}">${i+1}º</div>
-      <div class="t5n">${name}</div>
+      <div class="t5n" onclick="openColabModal('${name.replace(/'/g,"\\'")}')}"
+        style="cursor:pointer;text-decoration:underline;text-decoration-color:var(--or);text-underline-offset:2px;"
+        title="Ver atividades de ${name.replace(/'/g,"\\'")}">
+        ${name}
+      </div>
       <div class="t5bw"><div class="t5b" style="width:${Math.round(pts/max*100)}%"></div></div>
       <div class="t5v">${pts}</div>
     </div>`).join('');
@@ -1882,6 +1942,62 @@ document.addEventListener('click', e=>{
   if(e.target.id==='edit-modal') closeEditModal();
 });
 
+
+
+// ── MODAL COLABORADOR ──
+function openColabModal(nome){
+  const data = (filteredData && filteredData.length > 0) ? filteredData : allData;
+  const ativs = data.filter(r=>r.colaborador===nome).sort((a,b)=>b.data>a.data?1:-1);
+
+  // Avatar initials
+  const ini = nome.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+  document.getElementById('cm-avatar').textContent = ini;
+  document.getElementById('cm-name').textContent   = nome;
+
+  // Period label
+  if(filteredData && filteredData.length > 0){
+    const dates = filteredData.map(r=>r.data).filter(Boolean).sort();
+    const first = new Date(dates[0]+'T12:00:00').toLocaleDateString('pt-BR');
+    const last  = new Date(dates[dates.length-1]+'T12:00:00').toLocaleDateString('pt-BR');
+    document.getElementById('cm-period').textContent = first === last ? first : first+' até '+last;
+  } else {
+    document.getElementById('cm-period').textContent = 'todos os registros';
+  }
+
+  // Stats
+  const totalAtiv = ativs.length;
+  const totalProd = ativs.reduce((s,r)=>s+(r.quantidade||0),0);
+  const skuCount  = {};
+  ativs.forEach(r=>{ const k=r.nome_sku||r.sku; skuCount[k]=(skuCount[k]||0)+r.quantidade; });
+  const topSku = Object.entries(skuCount).sort((a,b)=>b[1]-a[1])[0];
+
+  document.getElementById('cm-total-ativ').textContent = totalAtiv;
+  document.getElementById('cm-total-prod').textContent = totalProd.toLocaleString('pt-BR');
+  document.getElementById('cm-top-sku').textContent    = topSku ? topSku[0].substring(0,12)+(topSku[0].length>12?'...':'') : '—';
+
+  // Table
+  const tbody = document.getElementById('cm-tbody');
+  if(!ativs.length){
+    tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Nenhuma atividade no período</td></tr>';
+  } else {
+    tbody.innerHTML = ativs.map(r=>{
+      const skuLabel = getSkuLabel(r);
+      return `<tr>
+        <td>${r.data||'—'}</td>
+        <td><span class="badge ${bc(r.tipo)}">${r.tipo||'—'}</span></td>
+        <td><span class="badge ${bc(r.sku)}">${r.sku||'—'}</span></td>
+        <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;" title="${skuLabel}">${skuLabel}</td>
+        <td style="text-align:right;font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--or)">${(r.quantidade||0).toLocaleString('pt-BR')}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  document.getElementById('colab-modal').classList.add('show');
+}
+
+function closeColabModal(){
+  document.getElementById('colab-modal').classList.remove('show');
+}
 
 // ── START ──
 document.getElementById('f-data').valueAsDate=new Date();
