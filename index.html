@@ -9,43 +9,33 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  /* TEMA CLARO — Flat Colorful (padrão) */
-  --or:#E8705A;--or-bg:rgba(232,112,90,0.10);--or-bdr:rgba(232,112,90,0.25);
-  --bg:#F0F0EB;--card:#FFFFFF;--sb:#2C3E50;
-  --bdr:#E0E0D8;--text:#2C3E50;--text2:#34495E;--text3:#95A5A6;
-  --metric:#FAFAF7;--teal:#1ABC9C;--blue:#3498DB;--purple:#9B59B6;
-  --sb-text:#FFFFFF;--sb-text3:#BDC3C7;--sb-bdr:rgba(255,255,255,0.08);
-}
-[data-theme="light"]{
-  --or:#E8705A;--or-bg:rgba(232,112,90,0.10);--or-bdr:rgba(232,112,90,0.25);
-  --bg:#F0F0EB;--card:#FFFFFF;--sb:#2C3E50;
-  --bdr:#E0E0D8;--text:#2C3E50;--text2:#34495E;--text3:#95A5A6;
-  --metric:#FAFAF7;--teal:#1ABC9C;--blue:#3498DB;--purple:#9B59B6;
-  --sb-text:#FFFFFF;--sb-text3:#BDC3C7;--sb-bdr:rgba(255,255,255,0.08);
+:raiz{
+  --ou:#00BCD4;--ou-bg:rgba(0,188,212,0.10);--ou-bdr:rgba(0,188,212,0.25);
+  --bg:#0D1117;--card:#161B22;--sb:#0D1117;
+  --bdr:rgba(255,255,255,0.08);--texto:#E6EDF3;--texto2:#C9D1D9;--texto3:#8B949E;
+  --métrico:#1C2128;--verde-azulado:#26C6DA;--azul:#58A6FF;--roxo:#A855F7;
+  --border2:rgba(0,188,212,0.15);
 }
 [data-theme="dark"]{
-  /* TEMA ESCURO */
-  --or:#E8705A;--or-bg:rgba(232,112,90,0.12);--or-bdr:rgba(232,112,90,0.25);
-  --bg:#1A2332;--card:#243040;--sb:#1A2332;
-  --bdr:rgba(255,255,255,0.08);--text:#F1F5F9;--text2:#CBD5E1;--text3:#8899AA;
-  --metric:#2C3E50;--teal:#1ABC9C;--blue:#3498DB;--purple:#9B59B6;
-  --sb-text:#FFFFFF;--sb-text3:#BDC3C7;--sb-bdr:rgba(255,255,255,0.08);
+  --ou:#00BCD4;--ou-bg:rgba(0,188,212,0.10);--ou-bdr:rgba(0,188,212,0.25);
+  --bg:#0D1117;--card:#161B22;--sb:#0D1117;
+  --bdr:rgba(255,255,255,0.08);--texto:#E6EDF3;--texto2:#C9D1D9;--texto3:#8B949E;
+  --métrico:#1C2128;--verde-azulado:#26C6DA;--azul:#58A6FF;--roxo:#A855F7;
 }
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;transition:background .3s,color .3s;}
+corpo{fundo:var(--bg);cor:var(--texto);família de fontes:'Inter',sans-serif;transição:fundo .3s,cor .3s;}
 .layout{display:flex;min-height:100vh;}
 
-/* SIDEBAR */
+/* BARRA LATERAL */
 .sidebar{width:210px;flex-shrink:0;background:var(--sb);border-right:1px solid var(--bdr);display:flex;flex-direction:column;transition:background .3s;position:fixed;height:100vh;z-index:10;overflow-y:auto;}
 .sb-head{padding:20px 16px 14px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;}
 .sb-brand{display:flex;flex-direction:column;gap:1px;}
 .sb-brand-sub{font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#71717A;}
-.sb-brand-name{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:var(--sb-text,#FAFAFA);letter-spacing:1px;text-transform:uppercase;line-height:1;}
+.sb-brand-name{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:#FAFAFA;letter-spacing:1px;text-transform:uppercase;line-height:1;}
 .sb-brand-name span{color:var(--or);}
-.sb-section{padding:16px 12px 4px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sb-text3,#71717A);}
+.sb-section{padding:16px 12px 4px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#71717A;}
 .sb-nav-item{display:flex;align-items:center;margin:3px 8px;border-radius:9px;cursor:pointer;overflow:hidden;border:1.5px solid transparent;transition:border-color .18s,background .18s;background:none;width:calc(100% - 16px);text-align:left;font-family:'Inter',sans-serif;box-shadow:none;outline:none;}
 .sb-nav-item:hover{background:rgba(255,255,255,0.06);}
-.sb-nav-item.active{border-color:rgba(232,112,90,0.35);background:rgba(232,112,90,0.10);}
+.sb-nav-item.active{border-color:rgba(0,188,212,0.4);background:rgba(0,188,212,0.12);}
 .sb-nav-icon{width:36px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;color:#A1A1AA;transition:color .18s;}
 .sb-nav-item.active .sb-nav-icon,.sb-nav-item:hover .sb-nav-icon{color:var(--or);}
 .sb-nav-inner{flex:1;padding:0 8px 0 0;height:40px;display:flex;align-items:center;justify-content:space-between;}
@@ -55,35 +45,35 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .sb-badge{font-size:10px;font-weight:700;background:var(--or);color:#fff;padding:1px 7px;border-radius:20px;font-family:'Rajdhani',sans-serif;}
 .sb-footer{margin-top:auto;padding:14px 16px;border-top:1px solid rgba(255,255,255,0.08);}
 .sb-user{display:flex;align-items:center;gap:10px;}
-.sb-av{width:34px;height:34px;border-radius:50%;background:var(--or-bg);border:2px solid var(--or-bdr);display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;color:var(--or);}
-.sb-uname{font-size:12px;font-weight:600;color:var(--sb-text,#F4F4F5);}
-.sb-urole{font-size:10px;color:var(--sb-text3,#71717A);}
+.sb-av{largura:34px;altura:34px;radius-da-borda:50%;fundo:var(--or-bg);borda:2px sólida var(--or-bdr);exibição:flex;alinhamento-itens:centro;justificação-conteúdo:centro;família-fonte:'Rajdhani',sans-serif;tamanho-da-fonte:12px;peso-da-fonte:700;cor:var(--or);}
+.sb-uname{font-size:12px;font-weight:600;color:#F4F4F5;}
+.sb-urole{font-size:10px;color:#71717A;}
 
-/* MAIN */
+/* PRINCIPAL */
 .main{flex:1;display:flex;flex-direction:column;min-width:0;margin-left:210px;}
 .topbar{height:50px;background:var(--card);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 20px;gap:10px;transition:background .3s;position:sticky;top:0;z-index:9;}
 .tb-title{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;}
 .tb-sub{font-size:11px;color:var(--text3);}
 .tb-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
-.tb-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);}
+.tb-dot{largura:7px;altura:7px;borda-raio:50%;fundo:var(--teal);}
 .tb-date{font-size:11px;color:var(--text3);}
 .tb-toggle{display:flex;align-items:center;gap:8px;padding:5px 12px;background:var(--metric);border:1px solid var(--bdr);border-radius:20px;cursor:pointer;}
 .tb-toggle-label{font-size:11px;font-weight:500;color:var(--text2);}
-.tb-tt{width:28px;height:16px;border-radius:8px;background:var(--bdr);position:relative;transition:background .3s;flex-shrink:0;}
+.tb-tt{largura:28px;altura:16px;radius-da-borda:8px;fundo:var(--bdr);posição:relativa;transição:fundo .3s;flex-shrink:0;}
 .tb-tt-k{position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:var(--or);transition:transform .25s;}
 [data-theme="dark"] .tb-tt-k{transform:translateX(12px);}
-[data-theme="dark"] .tb-tt{background:rgba(232,112,90,0.25);}
+[data-theme="dark"] .tb-tt{background:rgba(0,188,212,0.25);}
 .content{padding:18px;flex:1;}
 .page{display:none;}.page.active{display:block;}
 
-/* LOADING */
+/* CARREGANDO */
 .loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.85);display:flex;align-items:center;justify-content:center;z-index:999;transition:opacity .3s;}
 [data-theme="dark"] .loading-overlay{background:rgba(10,15,30,0.85);}
 .loading-overlay.hide{opacity:0;pointer-events:none;}
-.spinner{width:32px;height:32px;border:3px solid var(--bdr);border-top-color:var(--or);border-radius:50%;animation:spin .7s linear infinite;}
+.spinner{largura:32px;altura:32px;borda:3px sólida var(--bdr);cor-da-borda-superior:var(--or);raio-da-borda:50%;animação:girar .7s linear infinito;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* METRICS */
+/* MÉTRICAS */
 .metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
 .mc{background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:14px;position:relative;overflow:hidden;transition:background .3s;}
 .mc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--or);}
@@ -98,19 +88,19 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .cs{font-size:10px;color:var(--text3);margin-bottom:12px;}
 .leg{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
 .li{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text2);}
-.ld{width:7px;height:7px;border-radius:2px;flex-shrink:0;}
+.ld{largura:7px;altura:7px;borda-raio:2px;flex-encolhimento:0;}
 
-/* TOP5 */
+/* TOP 5 */
 .t5{display:flex;flex-direction:column;gap:6px;}
 .t5i{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--metric);border:1px solid var(--bdr);border-radius:7px;}
 .t5r{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--text3);min-width:18px;}
 .t5r.r1{color:#D97706;}.t5r.r2{color:#64748B;}.t5r.r3{color:#92400E;}
 .t5n{flex:1;font-size:12px;color:var(--text);font-weight:500;}
 .t5bw{flex:1.1;background:var(--bdr);border-radius:3px;height:5px;overflow:hidden;}
-.t5b{height:100%;border-radius:3px;background:var(--or);}
+.t5b{altura:100%;borda-raio:3px;fundo:var(--or);}
 .t5v{font-size:11px;color:var(--or);font-weight:600;min-width:28px;text-align:right;font-family:'Rajdhani',sans-serif;}
 
-/* PODIUM */
+/* PÓDIO */
 .podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;height:170px;margin-bottom:14px;}
 .ps{display:flex;flex-direction:column;align-items:center;gap:6px;}
 .pav{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;border:2px solid;position:relative;}
@@ -121,9 +111,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .pn{font-size:11px;color:var(--text);font-weight:500;text-align:center;}
 .pp{font-family:'Rajdhani',sans-serif;font-size:10px;color:var(--text3);}
 .pb{border-radius:6px 6px 0 0;width:64px;display:flex;align-items:center;justify-content:center;}
-.p1 .pb{height:80px;background:rgba(217,119,6,.08);border:1px solid rgba(217,119,6,.25);}
-.p2 .pb{height:56px;background:rgba(100,116,139,.06);border:1px solid rgba(100,116,139,.2);}
-.p3 .pb{height:40px;background:rgba(146,64,14,.06);border:1px solid rgba(146,64,14,.2);}
+.p1 .pb{altura:80px;fundo:rgba(217,119,6,.08);borda:1px sólida rgba(217,119,6,.25);}
+.p2 .pb{altura:56px;fundo:rgba(100,116,139,.06);borda:1px sólida rgba(100,116,139,.2);}
+.p3 .pb{altura:40px;fundo:rgba(146,64,14,.06);borda:1px sólida rgba(146,64,14,.2);}
 .ppos{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;}
 .p1 .ppos{color:#D97706;}.p2 .ppos{color:#64748B;}.p3 .ppos{color:#92400E;}
 .rr{display:flex;flex-direction:column;gap:5px;}
@@ -133,7 +123,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .rrc{font-size:10px;color:var(--text2);background:var(--bdr);border-radius:4px;padding:2px 6px;}
 .rrs{color:var(--or);font-weight:600;font-family:'Rajdhani',sans-serif;}
 
-/* HEATMAP */
+/* MAPA DE CALOR */
 .heatmap-wrap{overflow-x:auto;}
 .heatmap{display:flex;gap:4px;align-items:flex-start;}
 .heatmap-labels-left{display:flex;flex-direction:column;gap:2px;margin-right:4px;padding-top:18px;}
@@ -159,14 +149,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .meta-bar-real{position:absolute;top:0;left:0;height:100%;border-radius:4px;transition:width .6s ease;}
 .meta-pct{font-size:10px;font-weight:600;margin-top:2px;text-align:right;}
 
-/* META FORM */
+/* FORMULÁRIO META */
 .meta-config{background:var(--metric);border:1px solid var(--bdr);border-radius:8px;padding:12px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .meta-config-label{font-size:11px;color:var(--text2);font-weight:500;}
 .meta-input{background:var(--card);border:1px solid var(--bdr);border-radius:6px;padding:6px 10px;font-size:12px;color:var(--text);font-family:'Inter',sans-serif;outline:none;width:90px;}
 .meta-input:focus{border-color:var(--or);}
 .meta-btn{background:var(--or);border:none;border-radius:6px;padding:6px 14px;color:white;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.5px;}
 
-/* FORM */
+/* FORMA */
 .fc{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:24px;margin-bottom:14px;}
 .ft{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--bdr);}
 .fg{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
@@ -179,10 +169,10 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .rb{padding:6px 12px;border-radius:6px;border:1px solid var(--bdr);background:var(--metric);color:var(--text2);font-size:11px;cursor:pointer;transition:all .18s;font-family:'Inter',sans-serif;}
 .rb.sel{background:var(--or-bg);border-color:var(--or-bdr);color:var(--or);font-weight:500;}
 .bts{background:var(--or);border:none;border-radius:8px;padding:10px 24px;color:white;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;margin-top:14px;transition:opacity .2s;}
-.bts:hover{opacity:.88;}
+.bts:hover{opacidade:.88;}
 .bts:disabled{opacity:.5;cursor:not-allowed;}
 
-/* SKU SEARCH */
+/* PESQUISA DE SKU */
 .sku-search-wrap{position:relative;}
 .sku-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--card);border:1px solid var(--or-bdr);border-radius:8px;margin-top:4px;z-index:50;max-height:180px;overflow-y:auto;display:none;box-shadow:0 4px 16px rgba(0,0,0,0.1);}
 .sku-dropdown.show{display:block;}
@@ -196,7 +186,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .sku-selected-clear{font-size:16px;cursor:pointer;color:var(--text3);line-height:1;}
 .sku-selected-clear:hover{color:var(--or);}
 
-/* CADASTRO SKU */
+/* CÓDIGO CADASTRO */
 .sku-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
 .sku-card{background:var(--metric);border:1px solid var(--bdr);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;}
 .sku-card-info{display:flex;flex-direction:column;gap:3px;}
@@ -209,20 +199,20 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .btn-add-sku:hover{opacity:.88;}
 .btn-add-sku:disabled{opacity:.5;cursor:not-allowed;}
 
-/* TABLE */
+/* MESA */
 .rt{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed;}
 .rt th{text-align:left;padding:7px 10px;color:var(--text3);font-size:9px;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--bdr);font-weight:500;}
 .rt td{padding:9px 10px;border-bottom:1px solid var(--bdr);color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
 .b-rep{background:rgba(13,148,136,.1);color:#0D9488;}
-.b-arm{background:rgba(37,99,235,.1);color:#E8705A;}
-.b-mov{background:rgba(124,58,237,.1);color:#E8705A;}
-.b-leg{background:rgba(232,112,90,.10);color:#E8705A;}
+.b-arm{background:rgba(37,99,235,.1);color:#00BCD4;}
+.b-mov{background:rgba(124,58,237,.1);color:#7C3AED;}
+.b-leg{background:rgba(0,188,212,.1);color:#00BCD4;}
 .b-cap{background:rgba(217,119,6,.1);color:#D97706;}
 .b-pel{background:rgba(219,39,119,.1);color:#DB2777;}
 .b-ace{background:rgba(22,163,74,.1);color:#16A34A;}
 [data-theme="dark"] .b-rep{background:rgba(20,184,166,.15);color:#14B8A6;}
-[data-theme="dark"] .b-arm{background:rgba(59,130,246,.15);color:#E8705A;}
+[data-theme="dark"] .b-arm{background:rgba(59,130,246,.15);color:#26C6DA;}
 [data-theme="dark"] .b-mov{background:rgba(168,85,247,.15);color:#C084FC;}
 [data-theme="dark"] .b-leg{background:rgba(249,115,22,.15);color:#F97316;}
 [data-theme="dark"] .b-cap{background:rgba(245,158,11,.15);color:#F59E0B;}
@@ -238,38 +228,38 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 /* COLABORADOR DROPDOWN */
 .colab-wrap{position:relative;}
 .colab-dropdown{
-  position:absolute;top:100%;left:0;right:0;
-  background:var(--card);border:1.5px solid var(--or-bdr);
-  border-radius:8px;margin-top:4px;z-index:50;
+  posição:absoluta;topo:100%;esquerda:0;direita:0;
+  fundo:var(--card);borda:1.5px sólida var(--or-bdr);
+  raio da borda: 8px; margem superior: 4px; índice z: 50;
   box-shadow:0 4px 16px rgba(0,0,0,0.1);
-  display:none;overflow:hidden;
+  exibir:nenhum;overflow:oculto;
 }
 .colab-dropdown.show{display:block;}
 .colab-opt{
-  padding:10px 14px;font-size:12px;cursor:pointer;
+  preenchimento:10px 14px;tamanho da fonte:12px;cursor:ponteiro;
   color:var(--text);border-bottom:1px solid var(--bdr);
   display:flex;align-items:center;gap:10px;
-  transition:background .15s;
+  transição:fundo .15s;
 }
 .colab-opt:last-child{border-bottom:none;}
 .colab-opt:hover{background:var(--or-bg);}
 .colab-opt-avatar{
-  width:28px;height:28px;border-radius:50%;flex-shrink:0;
-  background:var(--or-bg);border:1.5px solid var(--or-bdr);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;color:var(--or);
+  largura:28px;altura:28px;raio da borda:50%;flex-shrink:0;
+  fundo:var(--or-bg);borda:1.5px sólida var(--or-bdr);
+  exibir:flex;alinhar-itens:centro;justificar-conteúdo:centro;
+  família-da-fonte:'Rajdhani',sans-serif;tamanho-da-fonte:10px;peso-da-fonte:700;cor:var(--or);
 }
 .colab-opt-name{font-weight:500;color:var(--text);}
 
-/* ONLINE INDICATOR */
+/* INDICADOR ONLINE */
 .online-wrap{display:flex;align-items:center;gap:6px;}
-.online-dot{
-  width:7px;height:7px;border-radius:50%;
-  background:#22C55E;flex-shrink:0;
+.online-ponto{
+  largura:7px;altura:7px;raio da borda:50%;
+  fundo:#22C55E;flex-shrink:0;
   box-shadow:0 0 0 0 rgba(34,197,94,0.5);
-  animation:pulse-green 2s infinite;
+  animação:pulso-verde 2s infinito;
 }
-@keyframes pulse-green{
+@keyframes verde-pulso{
   0%{box-shadow:0 0 0 0 rgba(34,197,94,0.5);}
   70%{box-shadow:0 0 0 6px rgba(34,197,94,0);}
   100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
@@ -279,7 +269,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 /* DUPLA */
 .dupla-toggle{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
 .dupla-switch{width:36px;height:20px;border-radius:10px;background:var(--bdr);border:1.5px solid var(--bdr2);cursor:pointer;position:relative;transition:background .25s;flex-shrink:0;}
-.dupla-switch.on{background:#E8705A;border-color:#E8705A;}
+.dupla-switch.on{background:#00BCD4;border-color:#00BCD4;}
 .dupla-switch-k{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:white;transition:transform .25s;box-shadow:0 1px 3px rgba(0,0,0,0.2);}
 .dupla-switch.on .dupla-switch-k{transform:translateX(16px);}
 .dupla-label{font-size:12px;font-weight:500;color:var(--text2);}
@@ -287,18 +277,18 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .dupla-info{font-size:10px;color:var(--text3);margin-top:4px;padding:6px 10px;background:var(--metric);border-radius:6px;border:1px solid var(--bdr);}
 .dupla-info span{color:var(--or);font-weight:600;}
 
-/* FILTRO PERÍODO */
+/* PERÍODO DE FILTRO */
 .period-filter{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
 .period-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--bdr);background:none;color:var(--text2);font-size:11px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .18s;}
 .period-btn:hover{border-color:var(--or);color:var(--or);}
-.period-btn.active{background:rgba(232,112,90,0.10);border-color:#E8705A;color:#E8705A;font-weight:600;}
+.period-btn.active{background:rgba(0,188,212,0.12);border-color:#00BCD4;color:#00BCD4;font-weight:600;}
 .period-custom{display:flex;align-items:center;gap:6px;}
 .period-input{background:var(--metric);border:1.5px solid var(--bdr);border-radius:8px;padding:5px 10px;font-size:11px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;}
 .period-input:focus{border-color:var(--or);}
 .period-sep{font-size:11px;color:var(--text3);}
-.period-apply{background:#E8705A;border:none;border-radius:8px;padding:5px 12px;color:white;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.5px;}
+.period-apply{background:#00BCD4;border:none;border-radius:8px;padding:5px 12px;color:white;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.5px;}
 
-/* EDITAR MODAL */
+/* MODAL DE EDIÇÃO */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:999;display:none;align-items:center;justify-content:center;}
 .modal-overlay.show{display:flex;}
 .modal-card{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:28px;width:100%;max-width:480px;position:relative;}
@@ -323,7 +313,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .page-btn.active{background:var(--or);border-color:var(--or);color:white;}
 .page-btn:disabled{opacity:.35;cursor:not-allowed;}
 
-/* MODAL COLABORADOR */
+/* COLABORADOR MODAL */
 .colab-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:998;display:none;align-items:center;justify-content:center;padding:20px;}
 .colab-modal-overlay.show{display:flex;}
 .colab-modal{background:var(--card);border:1px solid var(--bdr);border-radius:14px;width:100%;max-width:700px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
@@ -347,56 +337,56 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 
 /* FORMULÁRIO RÁPIDO */
 .quick-form-wrap{
-  background:var(--card);border:1.5px solid var(--or-bdr);
-  border-radius:12px;padding:20px;margin-bottom:14px;
-  position:relative;overflow:hidden;
+  fundo:var(--card);borda:1.5px sólida var(--or-bdr);
+  raio da borda: 12px; preenchimento: 20px; margem inferior: 14px;
+  posição:relativa;overflow:oculto;
 }
 .quick-form-wrap::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,#E8705A,#E8705A,#F5C4BC);
+  conteúdo:'';posição:absoluta;topo:0;esquerda:0;direita:0;altura:3px;
+  fundo:linear-gradient(90deg,#00BCD4,#26C6DA,#80DEEA);
 }
 .quick-form-title{
-  font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;
-  color:var(--or);text-transform:uppercase;letter-spacing:1px;
-  margin-bottom:14px;display:flex;align-items:center;gap:8px;
+  família-da-fonte:'Rajdhani',sans-serif;tamanho-da-fonte:14px;peso-da-fonte:700;
+  cor:var(--or);transformação-de-texto:maiúsculas;espaçamento-entre-letras:1px;
+  margem-inferior:14px;exibição:flex;alinhamento-itens:centro;espaçamento:8px;
 }
 .quick-form-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  exibição:grade;colunas-template-grade:repetir(3,1fr);espaçamento:10px;
 }
 .quick-form-row{
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;
+  exibição:grade;colunas-template-grade:1fr 1fr;espaçamento:10px;margem-superior:10px;
 }
 .quick-field{display:flex;flex-direction:column;gap:4px;}
 .quick-field.span2{grid-column:span 2;}
 .quick-field.span3{grid-column:span 3;}
 .quick-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-weight:500;}
-.quick-input{
-  background:var(--metric);border:1.5px solid var(--bdr);
-  border-radius:8px;padding:9px 11px;font-size:12px;color:var(--text);
-  font-family:'Inter',sans-serif;outline:none;width:100%;
+.entrada-rápida{
+  fundo:var(--metric);borda:1.5px sólida var(--bdr);
+  raio da borda:8px;preenchimento:9px 11px;tamanho da fonte:12px;cor:var(--texto);
+  família-da-fonte:'Inter',sans-serif;contorno:nenhum;largura:100%;
   transition:border-color .2s;-webkit-appearance:none;
 }
 .quick-input:focus{border-color:var(--or);}
 .quick-input::placeholder{color:var(--text3);}
 .quick-actions{display:flex;gap:8px;margin-top:14px;align-items:center;}
-.btn-quick-fill{
-  background:var(--or);border:none;border-radius:8px;
-  padding:10px 24px;color:white;font-family:'Rajdhani',sans-serif;
-  font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  cursor:pointer;transition:opacity .2s;
+.btn-preenchimento-rápido{
+  fundo:var(--or);borda:nenhuma;raio-da-borda:8px;
+  preenchimento:10px 24px;cor:branco;fonte:'Rajdhani',sans-serif;
+  tamanho da fonte: 14px; peso da fonte: 700; espaçamento entre letras: 1px; transformação do texto: maiúsculas;
+  cursor:ponteiro;transição:opacidade .2s;
 }
 .btn-quick-fill:hover{opacity:.88;}
 .btn-quick-clear{
-  background:none;border:1.5px solid var(--bdr);border-radius:8px;
-  padding:10px 16px;color:var(--text2);font-family:'Rajdhani',sans-serif;
-  font-size:13px;font-weight:600;cursor:pointer;transition:all .18s;
+  fundo:nenhum;borda:1,5px sólida var(--bdr);raio-da-borda:8px;
+  preenchimento:10px 16px;cor:var(--text2);fonte:'Rajdhani',sans-serif;
+  tamanho da fonte: 13px; peso da fonte: 600; cursor: ponteiro; transição: todas .18s;
 }
 .btn-quick-clear:hover{border-color:var(--or);color:var(--or);}
 .quick-hint{font-size:11px;color:var(--text3);margin-left:auto;}
 .quick-preview{
-  background:var(--metric);border:1px solid var(--bdr);
-  border-radius:8px;padding:10px 14px;margin-top:10px;
-  font-size:11px;color:var(--text2);display:none;
+  fundo:var(--metric);borda:1px sólida var(--bdr);
+  raio da borda: 8px; preenchimento: 10px 14px; margem superior: 10px;
+  tamanho da fonte: 11px; cor: var(--texto2); exibição: nenhuma;
   align-items:center;gap:8px;flex-wrap:wrap;
 }
 .quick-preview.show{display:flex;}
@@ -409,63 +399,63 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 <body>
 
 <style>
-/* LOGIN */
-.login-screen{
-  position:fixed;inset:0;z-index:9999;
-  background:linear-gradient(135deg,#7C2D12 0%,#1D4ED8 40%,#3B82F6 70%,#818CF8 100%);
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity .4s,transform .4s;
+/* CONECTE-SE */
+.tela-de-login{
+  posição:fixa;inserção:0;índice-z:9999;
+  fundo:gradiente-linear(135deg,#7C2D12 0%,#1D4ED8 40%,#3B82F6 70%,#818CF8 100%);
+  exibir:flex;alinhar-itens:centro;justificar-conteúdo:centro;
+  transição:opacidade .4s,transformação .4s;
 }
 [data-theme="dark"] .login-screen{background:linear-gradient(135deg,#020617 0%,#0F172A 40%,#7C2D12 100%);}
 .login-screen.hide{opacity:0;pointer-events:none;transform:scale(1.04);}
 
 .login-card{
-  background:var(--card,#fff);
-  border:1px solid var(--bdr,rgba(255,255,255,0.08));
-  border-radius:16px;
-  padding:40px 36px;
-  width:100%;max-width:380px;
-  box-shadow:0 20px 60px rgba(44,62,80,0.15),0 8px 20px rgba(232,112,90,0.15);
-  position:relative;overflow:hidden;
+  fundo:var(--card,#fff);
+  borda:1px sólido var(--bdr,rgba(255.255.255.0.08));
+  raio-da-borda:16px;
+  preenchimento: 40px 36px;
+  largura:100%;largura máxima:380px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.6),0 8px 20px rgba(0,188,212,0.15);
+  posição:relativa;overflow:oculto;
 }
 .login-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,#E8705A,#E8705A,#F5C4BC);
+  conteúdo:'';posição:absoluta;topo:0;esquerda:0;direita:0;altura:3px;
+  fundo:linear-gradient(90deg,#00BCD4,#26C6DA,#80DEEA);
 }
 .login-brand{text-align:center;margin-bottom:32px;}
 .login-brand-sub{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text3,#999);margin-bottom:4px;}
 .login-brand-name{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--text,#111);text-transform:uppercase;letter-spacing:1px;}
-.login-brand-name span{color:#E8705A;}
-.login-brand-desc{font-size:11px;color:var(--text3,#A3AED0);margin-top:4px;}
+.login-brand-name span{color:#00BCD4;}
+.login-brand-desc{font-size:11px;color:var(--text3,#8B949E);margin-top:4px;}
 
 .login-field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
 .login-label{font-size:10px;color:var(--text3,#8B949E);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
 .login-input{
-  background:var(--metric,#FAFAF7);
-  border:1.5px solid var(--bdr,#E2DED7);
-  border-radius:8px;padding:11px 13px;
-  font-size:13px;color:var(--text,#111);
-  font-family:'Inter',sans-serif;
-  outline:none;width:100%;transition:border-color .2s;
+  fundo:var(--metric,#1C2128);
+  borda:1,5px sólida var(--bdr,#E2DED7);
+  raio da borda: 8px; preenchimento: 11px 13px;
+  tamanho da fonte: 13px; cor: var(--texto,#111);
+  família-da-fonte:'Inter',sem-serif;
+  outline:nenhum;largura:100%;transição:cor da borda .2s;
 }
-.login-input:focus{border-color:#E8705A;}
+.login-input:focus{border-color:#00BCD4;}
 
-.login-btn{
-  width:100%;background:linear-gradient(135deg,#E8705A,#E8705A);border:none;border-radius:9px;
-  padding:13px;color:white;
-  font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;
-  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
-  margin-top:8px;transition:opacity .2s,transform .1s;
+.botão-login{
+  largura:100%;fundo:gradiente-linear(135deg,#00ACC1,#26C6DA);borda:nenhuma;raio-da-borda:9px;
+  preenchimento:13px;cor:branco;
+  família-da-fonte:'Rajdhani',sans-serif;tamanho-da-fonte:16px;peso-da-fonte:700;
+  espaçamento entre letras: 1px; transformação de texto: maiúsculas; cursor: ponteiro;
+  margem superior:8px;transição:opacidade .2s,transformação .1s;
 }
 .login-btn:hover{opacity:.9;}
 .login-btn:active{transform:scale(.98);}
 .login-btn:disabled{opacity:.5;cursor:not-allowed;}
 
 .login-error{
-  background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);
-  border-radius:7px;padding:10px 13px;
-  font-size:12px;color:#DC2626;margin-top:10px;
-  display:none;text-align:center;
+  fundo:rgba(220,38,38,.08);borda:1px sólida rgba(220,38,38,.2);
+  raio da borda: 7px; preenchimento: 10px 13px;
+  tamanho da fonte: 12px; cor: #DC2626; margem superior: 10px;
+  exibir:nenhum;alinhamento do texto:centro;
 }
 .login-error.show{display:block;}
 .login-footer{text-align:center;margin-top:20px;font-size:10px;color:var(--text3,#bbb);letter-spacing:.5px;}
@@ -476,17 +466,17 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 
 .login-avatar-wrap{display:flex;justify-content:center;margin-bottom:24px;}
 .login-avatar{
-  width:64px;height:64px;border-radius:50%;
-  background:rgba(0,188,212,0.1);border:2px solid rgba(232,112,90,0.25);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:#E8705A;
+  largura:64px;altura:64px;raio da borda:50%;
+  fundo:rgba(0,188,212,0.1);borda:2px sólida rgba(0,188,212,0.25);
+  exibir:flex;alinhar-itens:centro;justificar-conteúdo:centro;
+  família-da-fonte:'Rajdhani',sans-serif;tamanho-da-fonte:24px;peso-da-fonte:700;cor:#00BCD4;
 }
 
-/* show/hide password */
+/* mostrar/ocultar senha */
 .login-input-wrap{position:relative;}
 .login-input-wrap .login-input{padding-right:40px;}
 .login-eye{
-  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  posição:absoluta;direita:12px;topo:50%;transformação:translateY(-50%);
   cursor:pointer;color:var(--text3,#bbb);font-size:14px;user-select:none;
 }
 </style>
@@ -497,7 +487,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
       <div class="login-avatar">G5</div>
     </div>
     <div class="login-brand">
-      <div class="login-brand-sub">Sistema Análise</div>
+      <div class="login-brand-sub">Análise do Sistema</div>
       <div class="login-brand-name"><span>G5</span></div>
       <div class="login-brand-desc">Controle de Armazenamento e Produção</div>
     </div>
@@ -516,7 +506,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
     </div>
 
     <button class="login-btn" id="login-btn" onclick="doLogin()">Entrar</button>
-    <div class="login-error" id="login-error">Usuário ou senha incorretos. Tente novamente.</div>
+    <div class="login-error" id="login-error">Usuário ou senha incorreta. Tente novamente.</div>
 
     <div class="login-footer">Sistema Análise G5 · Acesso Restrito</div>
   </div>
@@ -529,14 +519,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
   <aside class="sidebar">
     <div class="sb-head">
       <div class="sb-brand">
-        <div class="sb-brand-sub">Sistema Análise</div>
+        <div class="sb-brand-sub">Análise do Sistema</div>
         <div class="sb-brand-name"><span>G5</span></div>
       </div>
     </div>
-    <div class="sb-section">Principal</div>
+    <div class="sb-section">Diretor</div>
     <button class="sb-nav-item active" onclick="showPage('dashboard',this)">
       <div class="sb-nav-icon">📊</div>
-      <div class="sb-nav-inner"><span class="sb-nav-label">Dashboard</span></div>
+      <div class="sb-nav-inner"><span class="sb-nav-label">Painel de controle</span></div>
     </button>
     <button class="sb-nav-item" onclick="showPage('registro',this)">
       <div class="sb-nav-icon">📂</div>
@@ -545,15 +535,15 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
     <div class="sb-section">Análise</div>
     <button class="sb-nav-item" onclick="showPage('ranking',this)">
       <div class="sb-nav-icon">🏆</div>
-      <div class="sb-nav-inner"><span class="sb-nav-label">Ranking</span></div>
+      <div class="sb-nav-inner"><span class="sb-nav-label">Classificação</span></div>
     </button>
     <button class="sb-nav-item" onclick="showPage('top10',this)">
       <div class="sb-nav-icon">⬆</div>
-      <div class="sb-nav-inner"><span class="sb-nav-label">Top 10 SKUs</span></div>
+      <div class="sb-nav-inner"><span class="sb-nav-label">10 SKUs principais</span></div>
     </button>
     <button class="sb-nav-item" onclick="showPage('consulta',this)">
       <div class="sb-nav-icon">👁</div>
-      <div class="sb-nav-inner"><span class="sb-nav-label">Consulta</span></div>
+      <div class="sb-nav-inner"><span class="sb-nav-label">Consultar</span></div>
     </button>
     <div class="sb-section">Configuração</div>
     <button class="sb-nav-item" onclick="showPage('cadastro-sku',this)">
@@ -563,7 +553,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
     <div class="sb-footer">
       <div class="sb-user">
         <div class="sb-av">G5</div>
-        <div><div class="sb-uname">Admin</div><div class="sb-urole">Gerente Geral</div></div>
+        <div><div class="sb-uname">Administrador</div><div class="sb-urole">Gerente Geral</div></div>
       </div>
     </div>
   </aside>
@@ -571,7 +561,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
   <div class="main">
     <div class="topbar">
       <span style="font-size:15px;color:var(--or)">▦</span>
-      <span class="tb-title" id="tb-title">Dashboard</span>
+      <span class="tb-title" id="tb-title">Painel de controle</span>
       <span class="tb-sub" id="tb-sub">visão geral do armazém</span>
       <div class="tb-right">
         <div class="online-wrap">
@@ -587,10 +577,10 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 
     <div class="content">
 
-      <!-- DASHBOARD -->
+      <!-- PAINEL DE CONTROLE -->
       <div class="page active" id="page-dashboard">
 
-        <!-- FILTRO PERÍODO -->
+        <!-- PERÍODO DE FILTRO -->
         <div class="period-filter">
           <button class="period-btn" onclick="setPeriod('hoje',this)">Hoje</button>
           <button class="period-btn" onclick="setPeriod('semana',this)">Esta Semana</button>
@@ -605,117 +595,225 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
           </div>
         </div>
 
-        <!-- ROW 1: GRID COLORIDO 3 COLUNAS -->
-        <div style="display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:14px;margin-bottom:14px;">
+        <!-- MÉTRICAS -->
+        <div class="metrics-row">
+          <div class="mc"><div class="mc-label">Total de atividades</div><div class="mc-val" id="m-total">—</div><div class="mc-sub">registros no banco</div></div>
+          <div class="mc"><div class="mc-label">Produção Total</div><div class="mc-val" id="m-prod">—</div><div class="mc-sub">unidades registradas</div></div>
+          <div class="mc"><div class="mc-label">Colaboradores</div><div class="mc-val" id="m-colab">—</div><div class="mc-sub">ativos este mês</div></div>
+          <div class="mc"><div class="mc-label">SKU</div>
+<div id="m-sku" style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--or);line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;word-break:break-word;">—</div>
+<div id="m-sku-desc" style="display:none;"></div></div>
+        </div>
 
-          <!-- COL 1: TOP COLABORADORES (coral) -->
-          <div style="background:#E8705A;border-radius:14px;padding:16px;color:white;min-height:220px;">
-            <div style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;opacity:.85;">🏆 Top Colaboradores</div>
-            <div id="dash-top-colabs" style="display:flex;flex-direction:column;gap:10px;"></div>
-          </div>
-
-          <!-- COL 2: GRÁFICO SKU POR MÊS -->
-          <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-              <div style="font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;">📊 SKU por Mês</div>
-              <div style="font-size:10px;color:#E8705A;font-weight:600;">— Volume</div>
+        <!-- SKU + PIZZA + TOP5 -->
+        <div class="grid-3">
+          <div class="cc">
+            <div class="ct">SKU por mês</div><div class="cs">volume mensal por categoria</div>
+            <div style="posição:relativa;altura:190px;"><canvas id="skuChart"></canvas></div>
+            <div class="leg">
+              <div class="li"><div class="ld" style="background:#00BCD4"></div>Capas</div>
+              <div class="li"><div class="ld" style="background:#DB2777"></div>Filmes</div>
+              <div class="li"><div class="ld" style="background:#4F46E5"></div>Acessórios</div>
             </div>
-            <div style="position:relative;height:160px;"><canvas id="skuChart"></canvas></div>
-            <div style="display:flex;gap:10px;margin-top:8px;">
-              <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:var(--text3);"><div style="width:8px;height:8px;border-radius:2px;background:#E8705A;"></div>Capas</div>
-              <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:var(--text3);"><div style="width:8px;height:8px;border-radius:2px;background:#DB2777;"></div>Películas</div>
-              <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:var(--text3);"><div style="width:8px;height:8px;border-radius:2px;background:#1ABC9C;"></div>Acessórios</div>
+          </div>
+          <div class="cc">
+            <div class="ct">Categorias</div><div class="cs">distribuição por tipo</div>
+            <div style="position:relative;height:155px;"><canvas id="pizzaChart"></canvas></div>
+            <div class="leg" style="margin-top:10px;">
+              <div class="li"><div class="ld" style="background:#4F46E5"></div>Reposição</div>
+              <div class="li"><div class="ld" style="background:#00BCD4"></div>Armazenamento</div>
+              <div class="li"><div class="ld" style="background:#7C3AED"></div>Movimentação</div>
+              <div class="li"><div class="ld" style="background:#00BCD4"></div>Legendas</div>
             </div>
           </div>
-
-          <!-- COL 3: CATEGORIAS (teal) -->
-          <div style="background:#1ABC9C;border-radius:14px;padding:16px;color:white;min-height:220px;">
-            <div style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;opacity:.85;">📦 Categorias</div>
-            <div style="position:relative;height:120px;"><canvas id="pizzaChart"></canvas></div>
-            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;" id="pizza-legend"></div>
+          <div class="cc">
+            <div class="ct">Top 5</div><div class="cs">colaboradores por volume</div>
+            <div class="t5" id="top5-list"><div class="empty-state">Carregando...</div></div>
           </div>
         </div>
 
-        <!-- ROW 2: 4 MÉTRICAS COLORIDAS -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px;">
-          <div style="background:#E8705A;border-radius:12px;padding:14px 16px;color:white;">
-            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;opacity:.8;margin-bottom:4px;">Total Atividades</div>
-            <div style="font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;line-height:1;" id="m-total">—</div>
-            <div style="font-size:10px;opacity:.75;margin-top:2px;">registros no banco</div>
-          </div>
-          <div style="background:#1ABC9C;border-radius:12px;padding:14px 16px;color:white;">
-            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;opacity:.8;margin-bottom:4px;">Produção Total</div>
-            <div style="font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;line-height:1;" id="m-prod">—</div>
-            <div style="font-size:10px;opacity:.75;margin-top:2px;">unidades registradas</div>
-          </div>
-          <div style="background:#F5A623;border-radius:12px;padding:14px 16px;color:white;">
-            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;opacity:.8;margin-bottom:4px;">Colaboradores</div>
-            <div style="font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;line-height:1;" id="m-colab">—</div>
-            <div style="font-size:10px;opacity:.75;margin-top:2px;">ativos no período</div>
-          </div>
-          <div style="background:var(--card);border:2px solid #E8705A;border-radius:12px;padding:14px 16px;">
-            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">SKU Destaque</div>
-            <div style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:#E8705A;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;" id="m-sku">—</div>
-            <div style="display:none;" id="m-sku-desc"></div>
-          </div>
-        </div>
-
-        <!-- ROW 3: HEATMAP + EVOLUÇÃO DIÁRIA + META -->
-        <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:14px;margin-bottom:14px;">
-
-          <!-- HEATMAP -->
-          <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px;">
-            <div class="ct">Heatmap de Produção</div>
-            <div class="cs" id="heatmap-period-label" style="margin-bottom:8px;">selecione um período</div>
-            <div id="heatmap-container" style="overflow-x:auto;"></div>
-            <div class="heatmap-legend" style="margin-top:8px;">
+        <!-- HEATMAP + LINHA -->
+        <div class="grid-2">
+          <!-- MAPA DE CALOR -->
+          <div class="cc">
+            <div class="ct">Mapa de calor de produção</div>
+            <div class="cs" id="heatmap-period-label">padrões de pico e queda por dia</div>
+            <div id="heatmap-container" style="overflow-x:auto;margin-top:8px;"></div>
+            <div class="heatmap-legend" style="margin-top:10px;">
               <span class="heatmap-legend-label">Menos</span>
               <div class="heatmap-legend-cells" id="heatmap-legend"></div>
               <span class="heatmap-legend-label">Mais</span>
             </div>
           </div>
 
-          <!-- EVOLUÇÃO DIÁRIA -->
-          <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px;">
+          <!-- LINHA DIÁRIA -->
+          <div class="cc">
             <div class="ct">Evolução Diária</div>
-            <div class="cs" id="line-chart-sub" style="margin-bottom:8px;">produção por dia do mês</div>
-            <div style="position:relative;height:180px;"><canvas id="lineChart"></canvas></div>
+            <div class="cs" id="line-chart-sub">produção total por dia do mês atual</div>
+            <div style="position:relative;height:200px;"><canvas id="lineChart"></canvas></div>
           </div>
         </div>
 
-        <!-- ROW 4: TOP 10 SKUs + META + RANKING PÓDIO -->
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
-
-          <!-- TOP 5 COLABORADORES lista -->
-          <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px;">
-            <div class="ct" style="margin-bottom:4px;">Top 5 Colaboradores</div>
-            <div class="cs" style="margin-bottom:12px;">por volume no período</div>
-            <div id="top5-list"></div>
+        <!-- META vs REALIZADO -->
+        <div class="cc" style="margin-bottom:12px;">
+          <div class="ct">Meta vs Realizado</div>
+          <div class="cs">comparativo de produção mensal por colaborador</div>
+          <div class="meta-config">
+            <span class="meta-config-label">Meta mensal por colaborador:</span>
+            <input class="meta-input" type="number" id="meta-valor" value="500" min="1">
+            <span class="meta-config-label">unidades</span>
+            <button class="meta-btn" onclick="renderMetaChart()">Atualizar</button>
           </div>
-
-          <!-- META VS REALIZADO -->
-          <div style="background:#F5A623;border-radius:14px;padding:16px;color:white;">
-            <div style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;opacity:.9;">🎯 Meta vs Realizado</div>
-            <div style="font-size:10px;opacity:.75;margin-bottom:12px;">meta mensal por colaborador</div>
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-              <span style="font-size:10px;opacity:.8;">Meta:</span>
-              <input type="number" id="meta-valor" value="500" style="width:70px;background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.4);border-radius:6px;padding:4px 8px;color:white;font-size:12px;font-weight:600;outline:none;">
-              <span style="font-size:10px;opacity:.8;">un.</span>
-              <button onclick="updateMeta()" style="background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.4);border-radius:6px;padding:4px 10px;color:white;font-size:11px;font-weight:600;cursor:pointer;">OK</button>
-            </div>
-            <div id="meta-list"></div>
-          </div>
-
-          <!-- PÓDIO -->
-          <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px;">
-            <div class="ct" style="margin-bottom:12px;">🥇 Pódio</div>
-            <div class="podium-wrap" id="podium"></div>
-          </div>
+          <div class="meta-list" id="meta-list"><div class="empty-state">Carregando...</div></div>
         </div>
-
       </div>
 
-      <!-- RANKING -->
+      <!-- REGISTRO + ATIVIDADES -->
+      <div class="page" id="page-registro">
+
+        <!-- FORMULÁRIO RÁPIDO -->
+        <div class="quick-form-wrap">
+          <div class="quick-form-title">⚡ Preenchimento Rápido</div>
+          <div class="quick-form-grid">
+            <div class="quick-field">
+              <div class="quick-label">Colaborador</div>
+              <select class="quick-input" id="qf-colab">
+                <option value="">Selecione...</option>
+                <option value="Felipe Lemes Galvão">Felipe Lemes Galvão</option>
+                <option value="Luís Carlos Passos Conceição">Luís Carlos Passos Conceição</option>
+                <option value="Gustavo Sena dos Santos Pita">Gustavo Sena dos Santos Pita</option>
+              </select>
+            </div>
+            <div class="quick-field">
+              <div class="quick-label">Dados</div>
+              <input class="quick-input" type="date" id="qf-data">
+            </div>
+            <div class="quick-field">
+              <div class="quick-label">Quantidade</div>
+              <input class="quick-input" type="number" id="qf-qtd" placeholder="Ex: 150" min="1">
+            </div>
+            <div class="quick-field">
+              <div class="quick-label">Tipo de atividade</div>
+              <select class="quick-input" id="qf-tipo">
+                <option value="">Selecione...</option>
+                <option value="Reposição">Reposição</option>
+                <option value="Armazenamento">Armazenamento</option>
+                <option value="Movimentação">Movimentação</option>
+                <option value="Legendas">Legendas</option>
+              </select>
+            </div>
+            <div class="quick-field">
+              <div class="quick-label">Categoria do Produto</div>
+              <select class="quick-input" id="qf-cat">
+                <option value="">Selecione...</option>
+                <option value="Capas">Capas</option>
+                <option value="Películas">Películas</option>
+                <option value="Acessórios">Acessórios</option>
+              </select>
+            </div>
+            <div class="quick-field">
+              <div class="quick-label">SKU — Código do Produto</div>
+              <input class="quick-input" type="text" id="qf-sku" placeholder="Ex: 29030" oninput="qfSkuSearch()">
+            </div>
+          </div>
+
+          <!-- Visualização do SKU encontrado -->
+          <div class="quick-preview" id="qf-sku-preview">
+            <span class="quick-preview-item"><span class="quick-preview-label">SKU:</span><span class="quick-preview-val" id="qf-sku-nome">—</span></span>
+          </div>
+
+          <div class="quick-actions">
+            <button class="btn-quick-fill" onclick="quickFill()">⚡ Preencher</button>
+            <button class="btn-quick-clear" onclick="quickClear()">Limpar</button>
+            <span class="quick-hint">Preencha os campos e clique para transferir para o formulário abaixo</span>
+          </div>
+        </div>
+
+        <div class="fc">
+          <div class="ft">Atividade do Registrador</div>
+          <div class="fg">
+            <div class="fgr full">
+              <!-- ALTERAR DUPLA -->
+              <div class="dupla-toggle">
+                <div class="dupla-switch" id="dupla-switch" onclick="toggleDupla()">
+                  <div class="dupla-switch-k"></div>
+                </div>
+                <span class="dupla-label">Atividade em dupla</span>
+                <span class="dupla-badge" id="dupla-badge" style="display:none;">÷ 2</span>
+              </div>
+
+              <!-- COLABORADORES -->
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div>
+                  <div class="fl" style="margin-bottom:5px;">Colaborador 1</div>
+                  <div class="colab-wrap">
+                    <input class="fi" type="text" id="f-colab" placeholder="Selecione ou digite o nome..."
+                      autocomplete="off" oninput="filterColabs(1)" onfocus="showColabDrop(1)"
+                      onblur="setTimeout(()=>hideColabDrop(1),200)"
+                      onkeydown="if(event.key===\'Escape\')hideColabDrop(1)">
+                    <div class="colab-dropdown" id="colab-dropdown-1"></div>
+                  </div>
+                </div>
+                <div id="colab2-wrap" style="display:none;">
+                  <div class="fl" style="margin-bottom:5px;">Colaborador 2</div>
+                  <div class="colab-wrap">
+                    <input class="fi" type="text" id="f-colab2" placeholder="Selecione o 2º colaborador..."
+                      autocomplete="off" oninput="filterColabs(2)" onfocus="showColabDrop(2)"
+                      onblur="setTimeout(()=>hideColabDrop(2),200)"
+                      onkeydown="if(event.key===\'Escape\')hideColabDrop(2)">
+                    <div class="colab-dropdown" id="colab-dropdown-2"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="dupla-info" id="dupla-info" style="display:none;">
+                A quantidade será dividida igualmente: <span id="dupla-qtd-preview">—</span> unidades para cada colaborador.
+              </div>
+            </div>
+            <div class="fgr"><div class="fl">Dados</div><input class="fi" type="date" id="f-data"></div>
+            <div class="fgr full"><div class="fl">Tipo de Atividade</div>
+              <div class="rg" id="rg-tipo">
+                <div class="rb sel" onclick="toggleRadio('rg-tipo',this)">Reposição</div>
+                <div class="rb" onclick="toggleRadio('rg-tipo',this)">Armazenamento</div>
+                <div class="rb" onclick="toggleRadio('rg-tipo',this)">Movimentação</div>
+                <div class="rb" onclick="toggleRadio('rg-tipo',this)">Legendas</div>
+              </div>
+            </div>
+            <div class="fgr full"><div class="fl">Nomenclatura</div>
+              <div class="rg" id="rg-cat">
+                <div class="rb sel" onclick="toggleRadio('rg-cat',this)">Capas</div>
+                <div class="rb" onclick="toggleRadio('rg-cat',this)">Filmes</div>
+                <div class="rb" onclick="toggleRadio('rg-cat',this)">Acessórios</div>
+              </div>
+            </div>
+            <div class="fgr full">
+              <div class="fl">Código de Produto</div>
+              <div class="sku-search-wrap">
+                <input class="fi" type="text" id="f-sku-search" placeholder="Digite o código do produto (ex: 29030)..." autocomplete="off" oninput="filterSkus()" onfocus="showSkuDropdown()" onblur="setTimeout(hideSkuDropdown,200)">
+                <div class="sku-dropdown" id="sku-dropdown"></div>
+              </div>
+              <div class="sku-selected" id="sku-selected" style="display:none;">
+                <span class="sku-selected-name" id="sku-selected-name"></span>
+                <span class="sku-selected-clear" onclick="clearSku()">×</span>
+              </div>
+            </div>
+            <div class="fgr"><div class="fl">Quantidade</div><input class="fi" type="number" id="f-qtd" placeholder="Ex: 150" min="1" oninput="updateDuplaPreview()"></div>
+            <div class="fgr" style="align-self:flex-end;"><button class="bts" id="btn-registrar" onclick="submitForm()">Registrar</button></div>
+          </div>
+        </div>
+        <div class="cc">
+          <div class="ct">Atividades Recentes</div><div class="cs">histórico de registros do banco</div>
+          <table class="rt">
+            <thead><tr><th>Colaborador</th><th>Tipo</th><th>Categoria</th><th colspan="2">SKU — Código e Produto</th><th>Qtd</th><th>Data</th><th style="width:70px;"></th></tr></thead>
+            <tbody id="recent-tbody"><tr><td colspan="8" class="empty-state">Carregando...</td></tr></tbody>
+          </table>
+          <div class="paginação">
+            <div class="pagination-info" id="pag-info">— registros</div>
+            <div class="pagination-btns" id="pag-btns"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLASSIFICAÇÃO -->
       <div class="page" id="page-ranking">
         <div class="cc">
           <div class="ct">Ranking de Eficiência</div><div class="cs">classificação geral por produtividade</div>
@@ -749,7 +847,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
             <div class="fl" style="margin-bottom:8px;">Adicionar novo SKU</div>
             <div class="sku-form-row">
               <div class="fgr"><div class="fl">Nomenclatura</div><input class="fi" type="text" id="field-codigo" placeholder="Ex: 29030" onkeydown="if(event.key==='Enter')document.getElementById('field-nome').focus()"></div>
-              <div class="fgr"><div class="fl">Código de Produto</div><input class="fi" type="text" id="field-nome" placeholder="Ex: Capa TPU Anti Shock iPhone 16" onkeydown="if(event.key==='Enter')document.getElementById('sku-cat').focus()"></div>
+              <div class="fgr"><div class="fl">Código do Produto</div><input class="fi" type="text" id="field-nome" placeholder="Ex: Capa TPU Anti Shock iPhone 16" onkeydown="if(event.key==='Enter')document.getElementById('sku-cat').focus()"></div>
               <div class="fgr"><div class="fl">Categoria</div>
                 <select class="fi" id="sku-cat">
                   <option value="">Selecione...</option>
@@ -769,7 +867,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
       <!-- CONSULTA -->
       <div class="page" id="page-consulta">
         <div class="fc" style="margin-bottom:14px;">
-          <div class="ft">Filtrar Atividades</div>
+          <div class="ft">Filtrar atividades</div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:flex-end;">
             <div class="fgr">
               <div class="fl">Colaborador</div>
@@ -780,7 +878,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
               <select class="fi" id="consulta-mes"><option value="">Todos os meses</option></select>
             </div>
             <div class="fgr">
-              <div class="fl">Tipo de Atividade</div>
+              <div class="fl">Tipo de atividade</div>
               <select class="fi" id="consulta-tipo">
                 <option value="">Todos os tipos</option>
                 <option value="Reposição">Reposição</option>
@@ -797,10 +895,10 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
           <div class="ct" id="consulta-title">Resultados</div>
           <div class="cs" id="consulta-sub" style="margin-bottom:12px;"></div>
           <table class="rt">
-            <thead><tr><th>Data</th><th>Colaborador</th><th>Tipo</th><th>Categoria</th><th>SKU</th><th style="text-align:right;">Quantidade</th></tr></thead>
+            <thead><tr><th>Dados</th><th>Colaborador</th><th>Tipo</th><th>Categoria</th><th>SKU</th><th style="text-align:right;">Quantidade</th></tr></thead>
             <tbody id="consulta-tbody"></tbody>
           </table>
-          <div class="pagination">
+          <div class="paginação">
             <div class="pagination-info" id="consulta-pag-info">— registros</div>
             <div class="pagination-btns" id="consulta-pag-btns"></div>
           </div>
@@ -817,7 +915,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 </div>
 
 
-<!-- MODAL EDITAR -->
+<!-- EDITOR MODAL -->
 <div class="modal-overlay" id="edit-modal">
   <div class="modal-card">
     <button class="modal-close" onclick="closeEditModal()">×</button>
@@ -832,7 +930,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         <input class="modal-input" type="number" id="edit-qtd" min="1">
       </div>
       <div class="modal-field">
-        <div class="modal-label">Data</div>
+        <div class="modal-label">Dados</div>
         <input class="modal-input" type="date" id="edit-data">
       </div>
       <div class="modal-field">
@@ -871,7 +969,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
       <table class="colab-modal-table">
         <thead>
           <tr>
-            <th>Data</th>
+            <th>Dados</th>
             <th>Tipo</th>
             <th>Categoria</th>
             <th>SKU</th>
@@ -894,45 +992,45 @@ const db = createClient(SUPA_URL, SUPA_KEY);
 
 let isDark=false, charts={}, allData=[], allSkus=[], selectedSku=null;
 
-async function init() {
-  showLoading(true);
-  try {
+função assíncrona init() {
+  mostrarCarregando(verdadeiro);
+  tentar {
     await Promise.all([loadAtividades(), loadSkus()]);
   } catch(e) {
     showToast('Erro ao carregar dados: ' + e.message, 'error');
-  } finally {
-    showLoading(false);
+  } finalmente {
+    mostrarCarregando(falso);
   }
 }
 
 // ── ATIVIDADES ──
-async function loadAtividades() {
-  try {
+função assíncrona carregarAtividades() {
+  tentar {
     const { data, error } = await db.from('atividades').select('*').order('created_at',{ascending:false});
-    if (error) { showToast('Erro ao carregar atividades: '+error.message,'error'); allData=[]; renderAll(); return; }
-    allData = data||[];
-    renderAll();
+    if (error) { showToast('Erro ao carregar atividades: '+error.message,'error'); todosDados=[]; renderTodos(); retornar; }
+    todosDados = dados||[];
+    renderizarTudo();
   } catch(e) {
     showToast('Falha de conexão: '+e.message,'error');
-    allData=[]; renderAll();
+    todosOsDados=[]; renderizarTodos();
   }
 }
 
-function renderAll() {
-  filteredData=[];
-  renderEmptyDashboard();
+função renderizarTudo() {
+  dadosfiltrados=[];
+  renderizarPainelVazio();
   renderPodium();
   renderAtividadesPaged();
   renderMetaChart();
   if(document.getElementById('badge-total')) document.getElementById('badge-total').textContent = allData.length;
 }
 
-function renderAtividades() {
+função renderizarAtividades() {
   const tbody = document.getElementById('recent-tbody');
   if (!allData.length) { tbody.innerHTML='<tr><td colspan="8" class="empty-state">Nenhum registro ainda</td></tr>'; return; }
   tbody.innerHTML = allData.slice(0,30).map(r=>{
     const skuLabel = getSkuLabel(r);
-    return `<tr>
+    retornar `<tr>
       <td>${r.colaborador}</td>
       <td><span class="badge ${bc(r.tipo)}">${r.tipo}</span></td>
       <td><span class="badge ${bc(r.sku)}">${r.sku||'—'}</span></td>
@@ -940,65 +1038,65 @@ function renderAtividades() {
       <td>${r.quantidade}</td>
       <td>${r.data}</td>
       <td style="display:flex;gap:4px;align-items:center;">
-        <button onclick="openEditModal('${r.id}','${r.colaborador}','${r.quantidade}','${r.data}','${r.tipo}')" title="Editar registro" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:13px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(232,112,90,.10)';this.style.borderColor='rgba(232,112,90,.25)';this.style.color='var(--or)'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">✏️</button>
+        <button onclick="openEditModal('${r.id}','${r.colaborador}','${r.quantidade}','${r.data}','${r.tipo}')" title="Editar registro" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:13px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(0,188,212,.1)';this.style.borderColor='rgba(0,188,212,.3)';this.style.color='var(--or)'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">✏️</button>
         <button onclick="deleteAtividade('${r.id}')" title="Excluir registro" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:14px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(220,38,38,.1)';this.style.borderColor='rgba(220,38,38,.3)';this.style.color='#DC2626'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">🗑</button>
       </td>
     </tr>`;
-  }).join('');
+  }).juntar('');
 }
 
-async function submitForm() {
-  const colaborador  = document.getElementById('f-colab').value.trim();
+função assíncrona submitForm() {
+  const colaborador = document.getElementById('f-colab').value.trim();
   const colaborador2 = isDupla ? document.getElementById('f-colab2').value.trim() : '';
-  const data         = document.getElementById('f-data').value;
-  const quantidade   = parseInt(document.getElementById('f-qtd').value);
-  const tipo         = document.querySelector('#rg-tipo .rb.sel')?.textContent||'';
-  const sku          = document.querySelector('#rg-cat .rb.sel')?.textContent||'';
-  const nome_sku     = selectedSku ? selectedSku.nome : (document.getElementById('f-sku-search').value.trim()||null);
+  const data = document.getElementById('f-data').value;
+  const quantidade = parseInt(document.getElementById('f-qtd').value);
+  const tipo = document.querySelector('#rg-tipo .rb.sel')?.textContent||'';
+  const sku = document.querySelector('#rg-cat .rb.sel')?.textContent||'';
+  const nome_sku = selectedSku ? selectedSku.nome : (document.getElementById('f-sku-search').value.trim()||null);
 
-  if (!colaborador||!data||!quantidade) { showToast('Preencha todos os campos!','error'); return; }
-  if (isDupla && !colaborador2) { showToast('Selecione o 2º colaborador!','error'); return; }
-  if (isDupla && colaborador===colaborador2) { showToast('Os colaboradores devem ser diferentes!','error'); return; }
+  if (!colaborador||!data||!quantidade) { showToast('Preencha todos os campos!','error'); retornar; }
+  if (isDupla && !colaborador2) { showToast('Selecione o 2º colaborador!','error'); retornar; }
+  if (isDupla && colaborador===colaborador2) { showToast('Os colaboradores devem ser diferentes!','error'); retornar; }
 
   const btn=document.getElementById('btn-registrar');
   btn.disabled=true; btn.textContent='Salvando...';
 
-  if (isDupla) {
+  se (éDupla) {
     const metade = Math.floor(quantidade/2);
-    const resto  = quantidade-(metade*2);
+    const resto = quantidade-(metade*2);
     const codigo_sku = selectedSku ? selectedSku.nomenclatura : null;
-    const {error} = await db.from('atividades').insert([
-      {colaborador: colaborador,  tipo, sku, nome_sku, codigo_sku, quantidade: metade+resto, data},
-      {colaborador: colaborador2, tipo, sku, nome_sku, codigo_sku, quantidade: metade,       data},
+    const {erro} = aguarda db.from('atividades').insert([
+      {colaborador: colaborador, tipo, sku, nome_sku, codigo_sku, quantidade: metade+resto, data},
+      {colaborador: colaborador2, tipo, sku, nome_sku, codigo_sku, quantidade: metade, dados},
     ]);
     btn.disabled=false; btn.textContent='Registrar';
     if (error) { showToast('Erro: '+error.message,'error'); return; }
     showToast(`✓ Dupla registrada! ${metade} un. para cada colaborador.`,'success');
-  } else {
+  } outro {
     const codigo_sku = selectedSku ? selectedSku.nomenclatura : null;
-    const {error} = await db.from('atividades').insert([{colaborador,tipo,sku,nome_sku,codigo_sku,quantidade,data}]);
+    const {erro} = aguarda db.from('atividades').insert([{colaborador,tipo,sku,nome_sku,codigo_sku,quantidade,dados}]);
     btn.disabled=false; btn.textContent='Registrar';
     if (error) { showToast('Erro: '+error.message,'error'); return; }
-    showToast('✓ Atividade registrada!','success');
+    showToast('✓ Atividade registrada!','sucesso');
   }
 
   document.getElementById('f-colab').value='';
   document.getElementById('f-colab2').value='';
   document.getElementById('f-qtd').value='';
   clearSku();
-  await loadAtividades();
+  aguarde loadAtividades();
 }
 
 // ── MÉTRICAS ──
-function updateMetrics() {
+função atualizarMétricas() {
   const prod=allData.reduce((s,r)=>s+(r.quantidade||0),0);
   const colabs=[...new Set(allData.map(r=>r.colaborador))].length;
-  // Aggregate by codigo_sku + nome_sku para garantir padrão código - nome
+  // Agregar por codigo_sku + nome_sku para garantir padrão código - nome
   const skuC={}, skuLabels={};
-  allData.forEach(r=>{
-    const codigo = r.codigo_sku || '';
-    const nome   = r.nome_sku   || '';
-    let cod=codigo, nom=nome;
+  todosDados.paraCada(r=>{
+    const código = r.codigo_sku || '';
+    const nome = r.nome_sku || '';
+    seja cod=código, nom=nome;
     if(!cod && nom){ const obj=allSkus.find(s=>s.nome===nom); if(obj) cod=obj.nomenclatura||''; }
     const k = cod||nom||'—';
     skuC[k]=(skuC[k]||0)+r.quantidade;
@@ -1008,74 +1106,74 @@ function updateMetrics() {
   document.getElementById('m-total').textContent=allData.length;
   document.getElementById('m-prod').textContent=prod.toLocaleString('pt-BR');
   document.getElementById('m-colab').textContent=colabs;
-  const fullLine = topSku ? (skuLabels[topSku[0]]||topSku[0]) : '—';
+  const fullLine = topSku? (skuLabels[topSku[0]]||topSku[0]) : '—';
   document.getElementById('m-sku').textContent = fullLine;
   document.getElementById('m-sku').title = fullLine;
   document.getElementById('m-sku-desc').textContent = '';
 }
 
-// ── HEATMAP ──
-function renderHeatmap() {
+// ── MAPA DE CALOR ──
+função renderizarMapaDeCalor() {
   const container = document.getElementById('heatmap-container');
-  const legendEl  = document.getElementById('heatmap-legend');
-  const labelEl   = document.getElementById('heatmap-period-label');
-  if(!container) return;
+  const legendEl = document.getElementById('heatmap-legend');
+  const labelEl = document.getElementById('heatmap-period-label');
+  se(!container) retornar;
 
   const data = (filteredData && filteredData.length > 0) ? filteredData : allData;
 
   const dates = data.map(r=>r.data).filter(Boolean).sort();
   if(!dates.length){
     container.innerHTML = '<div class="empty-state">Nenhum dado no período</div>';
-    return;
+    retornar;
   }
 
   const firstDate = new Date(dates[0]+'T12:00:00');
-  const lastDate  = new Date(dates[dates.length-1]+'T12:00:00');
+  const lastDate = new Date(dates[dates.length-1]+'T12:00:00');
 
   const prodByDate = {};
-  data.forEach(r=>{
+  dados.paraCada(r=>{
     if(r.data) prodByDate[r.data] = (prodByDate[r.data]||0) + r.quantidade;
   });
 
   const maxVal = Math.max(...Object.values(prodByDate), 1);
 
-  function getColor(val){
+  função obterCor(val){
     if(!val) return isDark ? '#1E293B' : '#F7F5F1';
     const pct = val/maxVal;
-    if(isDark){
-      if(pct < 0.25) return 'rgba(232,112,90,0.25)';
-      if(pct < 0.50) return 'rgba(249,115,22,0.50)';
+    se(estáEscuro){
+      if(pct < 0.25) return 'rgba(0,188,212,0.25)';
+      se(pct < 0.50) retorne 'rgba(249,115,22,0.50)';
       if(pct < 0.75) return 'rgba(0,188,212,0.75)';
-      return '#E8705A';
-    } else {
-      if(pct < 0.25) return '#FAE8E4';
-      if(pct < 0.50) return '#E8705A';
-      if(pct < 0.75) return '#E8705A';
-      return '#D4604A';
+      retornar '#26C6DA';
+    } outro {
+      se (pct < 0,25) retorne '#B2EBF2';
+      se (pct < 0,50) retorne '#26C6DA';
+      se(pct < 0,75) retorne '#00BCD4';
+      retornar '#00838F';
     }
   }
 
-  function getTextColor(val){
+  função obterCorTexto(val){
     if(!val) return 'var(--text2)';
     const pct = val/maxVal;
-    if(isDark) return pct < 0.25 ? '#FAE8E4' : '#fff';
-    return pct < 0.25 ? '#C05040' : '#fff';
+    se(isDark) retorne pct < 0.25 ? '#B2EBF2' : '#fff';
+    retornar pct < 0,25 ? '#006064' : '#fff';
   }
 
-  function fmtVal(v){
-    if(!v) return '';
-    return v >= 1000 ? (v/1000).toFixed(1)+'k' : v;
+  função fmtVal(v){
+    se(!v) retorne '';
+    retornar v >= 1000 ? (v/1000).toFixed(1)+'k' : v;
   }
 
-  const months = [];
-  let cur = new Date(firstDate.getFullYear(), firstDate.getMonth(), 1);
+  const meses = [];
+  let cur = new Date(firstDate.getFullYear(), firstDate.getMonth() , 1);
   const endMonth = new Date(lastDate.getFullYear(), lastDate.getMonth(), 1);
   while(cur <= endMonth){ months.push(new Date(cur)); cur.setMonth(cur.getMonth()+1); }
 
-  if(labelEl){
-    if(months.length === 1){
+  se(rótuloEl){
+    se (meses.comprimento === 1){
       labelEl.textContent = firstDate.toLocaleString('pt-BR',{month:'long',year:'numeric'});
-    } else {
+    } outro {
       labelEl.textContent = firstDate.toLocaleString('pt-BR',{month:'short',year:'numeric'})+' — '+lastDate.toLocaleString('pt-BR',{month:'short',year:'numeric'});
     }
   }
@@ -1083,20 +1181,20 @@ function renderHeatmap() {
   const dayLabels = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
   let html = '';
 
-  months.forEach((monthDate, mi) => {
-    const year  = monthDate.getFullYear();
-    const month = monthDate.getMonth();
-    const daysInMonth = new Date(year, month+1, 0).getDate();
-    const firstDow    = new Date(year, month, 1).getDay();
-    const numWeeks    = Math.ceil((firstDow + daysInMonth) / 7);
+  meses.paraCada((dataDoMês, mi) => {
+    const ano = monthDate.getFullYear();
+    const mês = monthDate.getMonth();
+    const diasNoMês = new Date(ano, mês+1, 0).getDate();
+    const firstDow = new Date(year, month, 1).getDay();
+    const numWeeks = Math.ceil((primeiroDow + diasInMês) / 7);
 
     const grid = Array.from({length:numWeeks}, ()=>Array(7).fill(null));
-    for(let d=1;d<=daysInMonth;d++){
+    for(deixe d=1;d<=daysInMonth;d++){
       const pos = firstDow + d - 1;
       grid[Math.floor(pos/7)][pos%7] = d;
     }
 
-    if(months.length > 1){
+    se (meses.comprimento > 1){
       html += `<div style="font-size:11px;font-weight:600;color:var(--text2);margin:${mi>0?'16px':0} 0 6px;">${monthDate.toLocaleString('pt-BR',{month:'long',year:'numeric'})}</div>`;
     }
 
@@ -1107,37 +1205,37 @@ function renderHeatmap() {
     });
     html += '</tr></thead><tbody>';
 
-    grid.forEach((week, wi)=>{
-      // calc week total for tooltip
+    grade.forEach((semana, wi)=>{
+      // Calcular o total da semana para a dica de ferramenta
       const weekTotal = week.reduce((sum, day)=>{
-        if(!day) return sum;
+        se(!dia) retorne a soma;
         const dk = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-        return sum + (prodByDate[dk]||0);
+        retornar soma + (prodByDate[dk]||0);
       }, 0);
 
       html += `<tr>
         <td style="font-size:9px;color:var(--text3);font-weight:500;vertical-align:middle;padding-right:4px;white-space:nowrap;cursor:default;"
           title="Semana ${wi+1}: ${weekTotal.toLocaleString('pt-BR')} unidades">Sem ${wi+1}</td>`;
 
-      week.forEach(day=>{
-        if(day){
-          const dk  = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      semana.paraCada(dia=>{
+        se(dia){
+          const dk = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
           const val = prodByDate[dk]||0;
-          const bg  = getColor(val);
-          const tc  = getTextColor(val);
+          const bg = getColor(val);
+          const tc = getTextColor(val);
           html += `<td style="padding:0;">
             <div class="hm-cell"
               style="display:flex;flex-direction:column;align-items:center;justify-content:center;
-                border-radius:6px;padding:4px 2px;min-height:48px;
-                background:${bg};border:1px solid ${isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.05)'};
-                cursor:default;transition:transform .15s,box-shadow .15s;"
+                raio da borda: 6px; preenchimento: 4px 2px; altura mínima: 48px;
+                fundo:${bg};borda:1px sólida ${isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.05)'};
+                cursor:default;transição:transform .15s,box-shadow .15s;"
               data-day="${day}" data-val="${val}" data-week="${wi+1}" data-weektotal="${weekTotal}"
               onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 2px 8px rgba(234,88,12,.35)';showHeatTip(this,event)"
               onmouseout="this.style.transform='';this.style.boxShadow='';hideHeatTip()">
               <span style="font-size:11px;font-weight:600;color:${tc};line-height:1;">${day}</span>
               ${val>0?`<span style="font-size:9px;color:${tc};opacity:.85;margin-top:2px;">${fmtVal(val)}</span>`:''}
             </div></td>`;
-        } else {
+        } outro {
           html += `<td style="padding:0;"><div style="min-height:48px;"></div></td>`;
         }
       });
@@ -1148,29 +1246,29 @@ function renderHeatmap() {
 
   container.innerHTML = html;
 
-  if(legendEl){
+  se(legendaEl){
     const steps = isDark
-      ? ['#1E293B','rgba(232,112,90,0.25)','rgba(0,188,212,0.5)','#E8705A','#E8705A']
-      : ['#F7F5F1','#FAE8E4','#E8705A','#E8705A','#D4604A'];
+      ? ['#1E293B','rgba(0,188,212,0.25)','rgba(0,188,212,0.5)','#26C6DA','#00BCD4']
+      : ['#F7F5F1','#B2EBF2','#26C6DA','#00BCD4','#00838F'];
     legendEl.innerHTML = steps.map(c=>`<div class="heatmap-legend-cell" style="background:${c}"></div>`).join('');
   }
 }
 
-// Heatmap tooltip
+// Dica de ferramenta de mapa de calor
 let heatTip = null;
-function showHeatTip(el, e){
-  hideHeatTip();
-  const day      = el.dataset.day;
-  const val      = parseInt(el.dataset.val)||0;
-  const week     = el.dataset.week;
-  const weekTot  = parseInt(el.dataset.weektotal)||0;
+função mostrarPontaDeCalor(el, e){
+  ocultarPontaDeCalor();
+  const day = el.dataset.day;
+  const val = parseInt(el.dataset.val)||0;
+  const semana = el.dataset.semana;
+  const semanaTot = parseInt(el.dataset.weektotal)||0;
   const tip = document.createElement('div');
-  tip.id = 'heat-tip';
+  tip.id = 'ponta-de-aquecimento';
   tip.style.cssText = `position:fixed;z-index:9999;background:${isDark?'#1E293B':'#1A1917'};color:#fff;
-    border-radius:8px;padding:8px 12px;font-size:11px;font-family:'Inter',sans-serif;
+    raio da borda: 8px; preenchimento: 8px 12px; tamanho da fonte: 11px; família da fonte: 'Inter', sans-serif;
     pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.25);min-width:140px;`;
-  tip.innerHTML = `
-    <div style="font-weight:600;margin-bottom:4px;color:#E8705A;">Dia ${day}</div>
+  dica.innerHTML = `
+    <div style="font-weight:600;margin-bottom:4px;color:#26C6DA;">Dia ${day}">
     <div style="display:flex;justify-content:space-between;gap:12px;">
       <span style="color:rgba(255,255,255,.7);">Produção:</span>
       <span style="font-weight:600;">${val.toLocaleString('pt-BR')} un.</span>
@@ -1178,95 +1276,95 @@ function showHeatTip(el, e){
     <div style="border-top:1px solid rgba(255,255,255,.1);margin:5px 0;"></div>
     <div style="display:flex;justify-content:space-between;gap:12px;">
       <span style="color:rgba(255,255,255,.7);">Semana ${week}:</span>
-      <span style="font-weight:600;color:#E8705A;">${weekTot.toLocaleString('pt-BR')} un.</span>
+      <span style="font-weight:600;color:#26C6DA;">${weekTot.toLocaleString('pt-BR')} un.</span>
     </div>`;
-  document.body.appendChild(tip);
-  heatTip = tip;
-  moveTip(e);
+  documento.corpo.appendChild(dica);
+  heatTip = ponta;
+  moverDica(e);
   el.addEventListener('mousemove', moveTip);
 }
-function moveTip(e){
+função moveTip(e){
   if(!heatTip) return;
   const x = e.clientX+14, y = e.clientY-10;
   heatTip.style.left = Math.min(x, window.innerWidth-160)+'px';
-  heatTip.style.top  = Math.max(y-heatTip.offsetHeight, 4)+'px';
+  heatTip.style.top = Math.max(y-heatTip.offsetHeight, 4)+'px';
 }
-function hideHeatTip(){
+função ocultarPontaDeCalor(){
   if(heatTip){ heatTip.remove(); heatTip=null; }
 }
 
 // ── LINHA DIÁRIA ──
-function buildLineChart() {
-  const b       = getBase();
-  const orColor = isDark ? '#E8705A' : '#E8705A';
+função construirGráficoDeLinhas() {
+  const b = getBase();
+  const orColor = isDark ? '#26C6DA' : '#00BCD4';
 
-  // Always use filteredData (even if empty = shows zeros for the period)
-  const data = filteredData || [];
+  // Sempre use filteredData (mesmo que esteja vazio = mostra zeros para o período)
+  const data = dadosFiltrados || [];
 
-  let year, month, daysInMonth;
+  seja ano, mês, diasNoMês;
 
-  if(data.length > 0){
-    // Use the most recent month in filtered data
-    const validDates = data.map(r=>r.data).filter(Boolean).sort();
-    const refDate    = new Date(validDates[validDates.length-1]+'T12:00:00');
-    year  = refDate.getFullYear();
-    month = refDate.getMonth();
-  } else {
-    // No data in period: use current month
+  se(dados.comprimento > 0){
+    // Usar o mês mais recente nos dados filtrados
+    const datasValidas = data.map(r=>r.data).filter(Boolean).sort();
+    const refDate = new Date(validDates[validDates.length-1]+'T12:00:00');
+    ano = refDate.getFullYear();
+    mês = refDate.getMonth();
+  } outro {
+    // Sem dados no período: usar o mês atual
     const now = new Date();
-    year  = now.getFullYear();
-    month = now.getMonth();
+    ano = agora.obterAnoCompleto();
+    mês = agora.getMonth();
   }
 
-  daysInMonth = new Date(year, month+1, 0).getDate();
+  diasNoMês = novo Date(ano, mês+1, 0).getDate();
 
   const prodByDay = Array(daysInMonth).fill(0);
-  data.forEach(r=>{
+  dados.paraCada(r=>{
     if(!r.data) return;
     const d = new Date(r.data+'T12:00:00');
-    if(d.getFullYear()===year && d.getMonth()===month){
+    se (d.getFullYear() === ano && d.getMonth() === mês) {
       prodByDay[d.getDate()-1] += r.quantidade;
     }
   });
 
-  const labels     = Array.from({length:daysInMonth},(_,i)=>i+1);
-  const hasData    = prodByDay.some(v=>v>0);
+  const labels = Array.from({length:daysInMonth},(_,i)=>i+1);
+  const hasData = prodByDay.some(v=>v>0);
   const monthLabel = new Date(year, month, 1).toLocaleString('pt-BR',{month:'long',year:'numeric'});
 
-  // Update subtitle
+  // Atualizar legenda
   const cs = document.getElementById('line-chart-sub');
   if(cs) cs.textContent = 'produção por dia — '+monthLabel;
 
   if(charts.line){charts.line.destroy();charts.line=null;}
   charts.line = new Chart(document.getElementById('lineChart'),{
-    type:'line',
-    data:{
-      labels,
-      datasets:[{
-        label:'Produção',
-        data: prodByDay,
-        borderColor: orColor,
-        backgroundColor: isDark?'rgba(232,112,90,0.10)':'rgba(232,112,90,0.10)',
-        fill: true,
-        tension: .4,
+    tipo:'linha',
+    dados:{
+      rótulos,
+      conjuntos de dados:[{
+        rótulo: 'Produção',
+        dados: prodByDay,
+        borderColor: ouColor,
+        backgroundColor: isDark?'rgba(0,188,212,0.10)':'rgba(0,188,212,0.08)',
+        preencher: verdadeiro,
+        tensão: 0,4,
         pointRadius: hasData ? prodByDay.map(v=>v>0?4:0) : 0,
-        pointHoverRadius: 6,
-        pointBackgroundColor: orColor,
+        raioDePontoHover: 6,
+        pointBackgroundColor: ouCor,
         pointBorderColor:'#fff',
-        pointBorderWidth: 1.5,
-        borderWidth: 2.5,
+        larguraDaBordaDoPonto: 1,5,
+        largura da borda: 2,5,
       }]
     },
-    options:{
-      responsive:true, maintainAspectRatio:false,
+    opções:{
+      responsivo:true, manterProporção:false,
       plugins:{
-        legend:{display:false},
-        tooltip:{callbacks:{
-          title: ctx=>'Dia '+ctx[0].label+' — '+monthLabel,
-          label: ctx=>' '+ctx.parsed.y.toLocaleString('pt-BR')+' unidades'
+        legenda:{exibir:false},
+        dica de ferramenta:{callbacks:{
+          título: ctx=>'Dia '+ctx[0].label+' — '+monthLabel,
+          rótulo: ctx=>' '+ctx.parsed.y.toLocaleString('pt-BR')+' unidades'
         }}
       },
-      scales:{
+      escalas:{
         x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},
         y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10},callback:v=>v>=1000?(v/1000).toFixed(1)+'k':v},border:{display:false},beginAtZero:true}
       }
@@ -1275,36 +1373,36 @@ function buildLineChart() {
 }
 
 // ── META vs REALIZADO ──
-function renderMetaChart() {
+função renderizarMetaChart() {
   const meta=parseInt(document.getElementById('meta-valor').value)||500;
   const scores={};
   const data = filteredData.length>0 ? filteredData : allData;
-  data.forEach(r=>{
-    if(r.colaborador) scores[r.colaborador]=(scores[r.colaborador]||0)+r.quantidade;
+  dados.paraCada(r=>{
+    if(r.colaborador) pontuações[r.colaborador]=(pontuações[r.colaborador]||0)+r.quantidade;
   });
   const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
   const el=document.getElementById('meta-list');
-  if (!sorted.length) { el.innerHTML='<div class="empty-state">Nenhum dado no mês atual</div>'; return; }
+  if (!sorted.length) { el.innerHTML='<div class="empty-state">Nenhum dado no mês atual</div>'; retornar; }
   el.innerHTML=sorted.map(([name,real])=>{
     const pct=Math.min(Math.round(real/meta*100),100);
     const over=real>=meta;
-    const barColor=over?(isDark?'#FBBF24':'#0D9488'):(real/meta>0.7?(isDark?'#E8705A':'#E8705A'):(isDark?'#E8705A':'#E8705A'));
-    return `<div class="meta-item">
+    const barColor=over?(isDark?'#FBBF24':'#0D9488'):(real/meta>0.7?(isDark?'#26C6DA':'#00BCD4'):(isDark?'#26C6DA':'#00BCD4'));
+    retornar `<div class="meta-item">
       <div class="meta-header">
-        <span class="meta-name">${name}</span>
+        <span class="meta-name">${namedropspan>
         <span class="meta-nums"><span class="meta-num-real" style="color:${barColor}">${real}</span> / ${meta} un. — <b style="color:${barColor}">${pct}%</b></span>
       </div>
       <div class="meta-bar-wrap">
         <div class="meta-bar-real" style="width:${pct}%;background:${barColor}"></div>
       </div>
     </div>`;
-  }).join('');
+  }).juntar('');
 }
 
 // ── TOP5 ──
-function renderTop5() {
+função renderizarTop5() {
   const scores={};
-  allData.forEach(r=>{scores[r.colaborador]=(scores[r.colaborador]||0)+r.quantidade;});
+  allData.forEach(r=>{pontuações[r.colaborador]=(pontuações[r.colaborador]||0)+r.quantidade;});
   const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]).slice(0,5);
   const el=document.getElementById('top5-list');
   if (!sorted.length){el.innerHTML='<div class="empty-state">Nenhum dado ainda</div>';return;}
@@ -1312,23 +1410,23 @@ function renderTop5() {
   el.innerHTML=sorted.map(([name,pts],i)=>`
     <div class="t5i">
       <div class="t5r ${i<3?'r'+(i+1):''}">${i+1}º</div>
-      <div class="t5n">${name}</div>
+      <div class="t5n">${name div>
       <div class="t5bw"><div class="t5b" style="width:${Math.round(pts/max*100)}%"></div></div>
       <div class="t5v">${pts}</div>
     </div>`).join('');
 }
 
 // ── PÓDIO ──
-function renderPodium() {
+função renderPodium() {
   const scores={};
-  allData.forEach(r=>{scores[r.colaborador]=(scores[r.colaborador]||0)+r.quantidade;});
+  allData.forEach(r=>{pontuações[r.colaborador]=(pontuações[r.colaborador]||0)+r.quantidade;});
   const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
   const podiumEl=document.getElementById('podium');
   const restEl=document.getElementById('rank-rest');
   if (!sorted.length){podiumEl.innerHTML='<div class="empty-state" style="width:100%">Nenhum dado ainda</div>';restEl.innerHTML='';return;}
   const ini=n=>n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
-  const [p1,p2,p3,...rest]=sorted;
-  podiumEl.innerHTML=`
+  const [p1,p2,p3,...rest]=ordenado;
+  pódioEl.innerHTML=`
     ${p2?`<div class="ps p2"><div class="pav">${ini(p2[0])}</div><div class="pn">${p2[0]}</div><div class="pp">${p2[1]} pts</div><div class="pb"><div class="ppos">2º</div></div></div>`:''}
     <div class="ps p1"><div class="pav"><span class="pcr">👑</span>${ini(p1[0])}</div><div class="pn">${p1[0]}</div><div class="pp">${p1[1]} pts</div><div class="pb"><div class="ppos">1º</div></div></div>
     ${p3?`<div class="ps p3"><div class="pav">${ini(p3[0])}</div><div class="pn">${p3[0]}</div><div class="pp">${p3[1]} pts</div><div class="pb"><div class="ppos">3º</div></div></div>`:''}`;
@@ -1336,56 +1434,56 @@ function renderPodium() {
     <div class="rri"><div class="rrp">${i+4}º</div><div class="rrn">${n}</div><div class="rrs">${pts} pts</div></div>`).join('');
 }
 
-// ── TOP10 ──
-function buildTop10Chart() {
-  // Aggregate by unique key = codigo_sku or nome_sku
+// ── TOP 10 ──
+função construirGráficoTop10() {
+  // Agregar por chave única = codigo_sku ou nome_sku
   const skuT={}, skuC={}, skuLabel={};
 
-  allData.forEach(r=>{
+  todosDados.paraCada(r=>{
     // Use codigo_sku (novo campo) se disponível
-    const codigo = r.codigo_sku || '';
-    const nome   = r.nome_sku   || '';
+    const código = r.codigo_sku || '';
+    const nome = r.nome_sku || '';
 
     // Se não tiver codigo_sku, busca na tabela skus pelo nome
-    let cod = codigo;
-    let nom = nome;
-    if(!cod && nom){
+    seja cod = código;
+    seja nom = nome;
+    se(!cod && nom){
       const obj = allSkus.find(s=>s.nome===nom);
       if(obj) cod = obj.nomenclatura||'';
     }
 
     const key = cod || nom || '—';
-    skuT[key]  = (skuT[key]||0) + r.quantidade;
-    skuC[key]  = r.sku; // categoria
+    skuT[key] = (skuT[key]||0) + r.quantidade;
+    skuC[chave] = r.sku; //categoria
 
-    // Label sempre: codigo - nome
+    // Etiqueta sempre: código - nome
     if(cod && nom) skuLabel[key] = cod + ' - ' + nom;
-    else if(cod)   skuLabel[key] = cod;
-    else           skuLabel[key] = nom || '—';
+    senão se(cod) skuLabel[chave] = cod;
+    senão skuLabel[chave] = nom || '—';
   });
 
   const sorted = Object.entries(skuT).sort((a,b)=>b[1]-a[1]).slice(0,10);
   if(charts.top10){charts.top10.destroy();charts.top10=null;}
   const b = getBase();
-  const cmap = {'Capas':isDark?'#E8705A':'#E8705A','Películas':isDark?'#F472B6':'#DB2777','Acessórios':isDark?'#FBBF24':'#0D9488'};
+  const cmap = {'Capas':isDark?'#26C6DA':'#00BCD4','Películas':isDark?'#F472B6':'#DB2777','Acessórios':isDark?'#FBBF24':'#0D9488'};
 
   const chartLabels = sorted.map(([k])=>{
     const lbl = skuLabel[k]||k;
-    return lbl.length > 50 ? lbl.substring(0,50)+'...' : lbl;
+    retornar lbl.length > 50 ? lbl.substring(0,50)+'...' : lbl;
   });
 
   charts.top10 = new Chart(document.getElementById('top10Chart'),{
-    type:'bar',
-    data:{
-      labels: chartLabels,
+    tipo:'bar',
+    dados:{
+      rótulos: rótulos do gráfico,
       datasets:[{label:'Unidades',data:sorted.map(d=>d[1]),backgroundColor:sorted.map(([k])=>cmap[skuC[k]]||'#64748B'),borderRadius:5,barPercentage:.72}]
     },
-    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    opções:{eixoDeÍndice:'y',responsivo:verdadeiro,manterProporçãoDeAspecto:falso,
       plugins:{legend:{display:false},tooltip:{callbacks:{
-        title: ctx => skuLabel[sorted[ctx[0].dataIndex][0]] || ctx[0].label,
-        label: ctx => ' '+ctx.parsed.x+' unidades'
+        título: ctx => skuLabel[sorted[ctx[0].dataIndex][0]] || ctx[0].label,
+        rótulo: ctx => ' '+ctx.parsed.x+' unidades'
       }}},
-      scales:{
+      escalas:{
         x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}},border:{display:false}},
         y:{grid:{display:false},ticks:{color:isDark?'#E2E8F0':'#111111',font:{size:10,weight:'500'},maxTicksLimit:10},border:{display:false}}
       }
@@ -1393,68 +1491,68 @@ function buildTop10Chart() {
   });
 
   document.getElementById('top10-tbody').innerHTML = sorted.map(([key,vol],i)=>{
-    const lbl = skuLabel[key]||key;
+    const lbl = skuLabel[chave]||chave;
     const cat = skuC[key]||'—';
-    return `<tr>
+    retornar `<tr>
       <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:${i<3?['#D97706','#64748B','#92400E'][i]:'var(--text3)'}">${i+1}º</td>
       <td style="font-weight:500;font-size:11px;" title="${lbl}">${lbl}</td>
-      <td><span class="badge ${bc(cat)}">${cat}</span></td>
+      <td><span class="badge ${bc(cat)}">${cat sunspan></td>
       <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--or)">${vol}</td>
     </tr>`;
-  }).join('');
+  }).juntar('');
 }
 
-// ── CHARTS BASE ──
-function rebuildCharts() {
-  const b    = getBase();
+// ── BASE DE GRÁFICOS ──
+função rebuildCharts() {
+  const b = getBase();
   const data = (filteredData && filteredData.length > 0) ? filteredData : allData;
 
   ['sku','pizza','line'].forEach(k=>{if(charts[k]){charts[k].destroy();charts[k]=null;}});
 
   // --- SKU POR MÊS ---
-  // Build months from the filtered data range (not fixed last 6 months)
+  // Criar meses a partir do intervalo de dados filtrados (não fixo nos últimos 6 meses)
   const allDatesInData = data.map(r=>r.data).filter(Boolean).sort();
-  let months = [];
+  seja meses = [];
 
-  if(allDatesInData.length){
+  se(todosOsDatasNosDados.comprimento){
     const firstD = new Date(allDatesInData[0]+'T12:00:00');
-    const lastD  = new Date(allDatesInData[allDatesInData.length-1]+'T12:00:00');
+    const lastD = new Date(allDatesInData[allDatesInData.length-1]+'T12:00:00');
     let cur = new Date(firstD.getFullYear(), firstD.getMonth(), 1);
     const stop = new Date(lastD.getFullYear(), lastD.getMonth(), 1);
-    while(cur <= stop){
-      months.push({
-        label: cur.toLocaleString('pt-BR',{month:'short'}),
-        key: `${cur.getFullYear()}-${String(cur.getMonth()+1).padStart(2,'0')}`
+    enquanto(atual <= parar){
+      meses.push({
+        rótulo: cur.toLocaleString('pt-BR',{month:'short'}),
+        chave: `${cur.getFullYear()}-${String(cur.getMonth()+1).padStart(2,'0')}`
       });
       cur.setMonth(cur.getMonth()+1);
     }
-  } else {
-    // fallback: last 6 months
+  } outro {
+    // fallback: últimos 6 meses
     for(let i=5;i>=0;i--){
       const d=new Date(); d.setMonth(d.getMonth()-i);
       months.push({label:d.toLocaleString('pt-BR',{month:'short'}),key:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`});
     }
   }
 
-  const skuTypes  = ['Capas','Películas','Acessórios'];
-  const skuColors = isDark?['#E8705A','#EC4899','#FBBF24']:['#E8705A','#DB2777','#0D9488'];
+  const skuTypes = ['Capas','Películas','Acessórios'];
+  const skuColors = isDark?['#26C6DA','#EC4899','#FBBF24']:['#00BCD4','#DB2777','#0D9488'];
 
   charts.sku = new Chart(document.getElementById('skuChart'),{
-    type:'bar',
-    data:{
-      labels: months.map(m=>m.label),
-      datasets: skuTypes.map((sku,si)=>({
-        label: sku,
-        data: months.map(m=>data.filter(r=>r.sku===sku&&r.data&&r.data.startsWith(m.key)).reduce((s,r)=>s+r.quantidade,0)),
+    tipo:'bar',
+    dados:{
+      rótulos: meses.map(m=>m.rótulo),
+      conjuntos de dados: skuTypes.map((sku,si)=>({
+        etiqueta: sku,
+        dados: meses.map(m=>dados.filter(r=>r.sku===sku&&r.dados&&r.dados.startsWith(m.key)).reduce((s,r)=>s+r.quantidade,0)),
         backgroundColor: skuColors[si],
-        borderRadius: 3,
-        barPercentage: .7
+        raioDaBorda: 3,
+        porcentagem da barra: 0,7
       }))
     },
-    options:{
-      responsive:true, maintainAspectRatio:false,
+    opções:{
+      responsivo:true, manterProporção:false,
       plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
-      scales:{
+      escalas:{
         x:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10}}},
         y:{grid:{color:b.grid},ticks:{color:b.tick,font:{size:10},callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v}}
       }
@@ -1463,93 +1561,85 @@ function rebuildCharts() {
 
   // --- PIZZA ---
   const tipoC = {Reposição:0,Armazenamento:0,Movimentação:0,Legendas:0};
-  data.forEach(r=>{if(tipoC[r.tipo]!==undefined) tipoC[r.tipo]+=r.quantidade;});
-  const pieColors = isDark?['#FBBF24','#E8705A','#E8705A','#E8705A']:['#0D9488','#E8705A','#E8705A','#E8705A'];
+  data.forEach(r=>{if(tipoC[r.tipo]!==indefinido) tipoC[r.tipo]+=r.quantidade;});
+  const pieColors = isDark?['#FBBF24','#26C6DA','#A855F7','#26C6DA']:['#0D9488','#00BCD4','#7C3AED','#00BCD4'];
   charts.pizza = new Chart(document.getElementById('pizzaChart'),{
-    type:'doughnut',
-    data:{
-      labels: Object.keys(tipoC),
-      datasets:[{data:Object.values(tipoC),backgroundColor:pieColors,borderWidth:2,borderColor:'transparent',hoverOffset:4}]
+    tipo:'rosquinha',
+    dados:{
+      rótulos: Object.keys(tipoC),
+      datasets:[{data:Object.values(tipoC),backgroundColor:pieColors,borderWidth:2,borderColor:b.border,hoverOffset:4}]
     },
-    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false}}}
+    opções:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false}}}
   });
-  // Pizza legend on teal card
-  const pizzaLegEl = document.getElementById('pizza-legend');
-  if(pizzaLegEl){
-    const lnames = Object.keys(tipoC);
-    pizzaLegEl.innerHTML = lnames.map((k,i)=>`<div style="display:flex;align-items:center;gap:3px;font-size:9px;color:rgba(255,255,255,.9);">
-      <div style="width:7px;height:7px;border-radius:50%;background:${pieColors[i]};"></div>${k}
-    </div>`).join('');
-  }
 
-  // --- LINE + HEATMAP ---
-  buildLineChart();
+  // --- LINHA + MAPA DE CALOR ---
+  construirGráficoDeLinhas();
   renderHeatmap();
 
   if(document.getElementById('page-top10').classList.contains('active')) buildTop10Chart();
 }
 
 // ── SKUs ──
-async function loadSkus() {
-  try {
+função assíncrona carregarSkus() {
+  tentar {
     const {data,error}=await db.from('skus').select('*').order('nome');
-    allSkus=error?[]:(data||[]);
+    todosSkus=erro?[]:(dados||[]);
   } catch(e) {
-    allSkus=[];
+    todosSkus=[];
   }
   renderSkuList(); renderSkuDropdown('');
 }
-async function addSku() {
-  const codigo    = document.getElementById('field-codigo').value.trim(); // código numérico ex: 29030
-  const nome      = document.getElementById('field-nome').value.trim();   // nome do produto
+função assíncrona adicionarSku() {
+  const codigo = document.getElementById('field-codigo').value.trim(); // código numérico ex: 29030
+  const nome = document.getElementById('nome-campo').value.trim(); //nome do produto
   const categoria = document.getElementById('sku-cat').value;
-  if(!codigo){    showToast('Preencha o Código de Produto!','error'); document.getElementById('field-codigo').focus(); return; }
-  if(!nome){      showToast('Preencha o Nome do Produto!','error'); document.getElementById('field-nome').focus(); return; }
-  if(!categoria){ showToast('Selecione a Categoria!','error'); document.getElementById('sku-cat').focus(); return; }
+  if(!codigo){ showToast('Preencha o Código de Produto!','error'); document.getElementById('campo-codigo').focus(); retornar; }
+  if(!nome){ showToast('Preencha o Nome do Produto!','error'); document.getElementById('nome-campo').focus(); retornar; }
+  if(!categoria){ showToast('Selecione a categoria!','erro'); document.getElementById('sku-cat').focus(); retornar; }
   const btn=document.getElementById('btn-add-sku');
   btn.disabled=true; btn.textContent='Salvando...';
-  const {error}=await db.from('skus').insert([{ nomenclatura: codigo, nome: nome, categoria: categoria }]).select();
-  btn.disabled=false; btn.textContent='+ Adicionar';
+  const {erro}=await db.from('skus').insert([{ nomenclatura: codigo, nome: nome, categoria: categoria }]).select();
+  btn.disabled=falso; btn.textContent='+ Adicionar';
   if(error){ showToast('Erro: '+error.message,'error'); return; }
   document.getElementById('field-codigo').value='';
   document.getElementById('field-nome').value='';
   document.getElementById('sku-cat').value='';
-  showToast('✓ SKU cadastrado com sucesso!','success');
-  await loadSkus();
+  showToast('✓ SKU cadastrado com sucesso!','sucesso');
+  aguardar loadSkus();
 }
-async function deleteSku(id){
+função assíncrona deleteSku(id){
   if(!confirm('Excluir este SKU?'))return;
   const {error}=await db.from('skus').delete().eq('id',id);
   if(error){showToast('Erro: '+error.message,'error');return;}
-  showToast('SKU excluído','success');await loadSkus();
+  showToast('SKU excluído','sucesso');await loadSkus();
 }
-function renderSkuList(){
+função renderizarSkuList(){
   const el=document.getElementById('sku-list');
   document.getElementById('sku-count').textContent=allSkus.length;
   if(!allSkus.length){el.innerHTML='<div class="empty-state" style="grid-column:1/-1">Nenhum SKU cadastrado ainda</div>';return;}
   el.innerHTML=allSkus.map(s=>{
     const lbl = s.nomenclatura ? s.nomenclatura+' - '+s.nome : s.nome;
-    return `<div class="sku-card"><div class="sku-card-info">
+    retornar `<div class="sku-card"><div class="sku-card-info">
       <div class="sku-card-name" style="font-size:12px;font-weight:600;color:var(--text);line-height:1.4;">${lbl}</div>
       <div class="sku-card-cat" style="margin-top:4px;">${s.categoria}</div>
     </div><button class="sku-card-del" onclick="deleteSku('${s.id}')">×</button></div>`;
-  }).join('');
+  }).juntar('');
 }
-function renderSkuDropdown(q){
-  let filtered=q
+função renderizarSkuDropdown(q){
+  seja filtrado=q
     ?allSkus.filter(s=>(s.nomenclatura||'').toLowerCase().includes(q.toLowerCase())||s.nome.toLowerCase().includes(q.toLowerCase()))
     :allSkus.slice(0,50);
-  if(q){
-    filtered.sort((a,b)=>{
+  se(q){
+    filtrado.ordenar((a,b)=>{
       const aq=(a.nomenclatura||'').toLowerCase().startsWith(q.toLowerCase())?0:1;
       const bq=(b.nomenclatura||'').toLowerCase().startsWith(q.toLowerCase())?0:1;
-      return aq-bq;
+      retornar aq-bq;
     });
   }
   const el=document.getElementById('sku-dropdown');
   el.innerHTML=filtered.length?filtered.map(s=>{
     const lbl = s.nomenclatura ? s.nomenclatura+' - '+s.nome : s.nome;
-    return `<div class="sku-opt" onclick="selectSku('${s.id}','${s.nome.replace(/'/g,"\\'")}','${s.categoria}','${(s.nomenclatura||'').replace(/'/g,"\\'")}')">
+    retornar `<div class="sku-opt" onclick="selectSku('${s.id}','${s.nome.replace(/'/g,"\\'")}','${s.categoria}','${(s.nomenclatura||'').replace(/'/g,"\\'")}')">
       <span class="sku-opt-name" style="font-size:12px;font-weight:600;color:var(--text)">${lbl}</span>
       <span class="sku-opt-cat">${s.categoria}</span>
     </div>`;
@@ -1559,35 +1649,35 @@ function filterSkus(){renderSkuDropdown(document.getElementById('f-sku-search').
 function showSkuDropdown(){if(allSkus.length>0)document.getElementById('sku-dropdown').classList.add('show');}
 function hideSkuDropdown(){document.getElementById('sku-dropdown').classList.remove('show');}
 function selectSku(id,nome,categoria,nomenclatura){
-  selectedSku={id,nome,categoria,nomenclatura};
+  selectSku={id,nome,categoria,nomenclatura};
   document.getElementById('f-sku-search').value='';
-  document.getElementById('f-sku-search').placeholder='SKU selecionado ✓';
-  const lbl = nomenclatura ? nomenclatura+' - '+nome : nome;
+  document.getElementById('f-sku-search').placeholder='SKU selecionado✓';
+  const lbl = nomenclatura? nomenclatura+' - '+nome : nome;
   document.getElementById('sku-selected-name').textContent=lbl+' — '+categoria;
   document.getElementById('sku-selected').style.display='flex';
-  hideSkuDropdown();
+  ocultarSkuDropdown();
 }
-function clearSku(){
+função clearSku(){
   selectedSku=null;
   document.getElementById('f-sku-search').value='';
   document.getElementById('f-sku-search').placeholder='Digite o código do produto (ex: 29030)...';
   document.getElementById('sku-selected').style.display='none';
 }
 
-// ── UI ──
-const PAGES={
+// ── Interface do usuário ──
+const PÁGINAS={
   dashboard:{title:'Dashboard',sub:'visão geral do armazém'},
   registro:{title:'Registro de Atividade',sub:'cadastro de produção e histórico'},
   ranking:{title:'Ranking de Eficiência',sub:'classificação dos colaboradores'},
   top10:{title:'Top 10 SKUs',sub:'produtos mais saídos'},
   consulta:{title:'Consulta por Colaborador',sub:'filtre atividades por nome e período'},
-  'cadastro-sku':{title:'Cadastro de SKU',sub:'gerencie os SKUs ativos da empresa'},
+  'cadastro-sku':{title:'Cadastro de SKU',sub:'gerenciamento de SKUs ativos da empresa'},
 };
-function showPage(id,btn){
+função mostrarPágina(id,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-nav-item').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  btn.classList.add('active');
+  btn.classList.add('ativo');
   const p=PAGES[id];
   document.getElementById('tb-title').textContent=p.title;
   document.getElementById('tb-sub').textContent=p.sub;
@@ -1595,18 +1685,10 @@ function showPage(id,btn){
   if(id==='consulta') initConsulta();
 }
 function toggleRadio(gid,el){document.querySelectorAll('#'+gid+' .rb').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');}
-function toggleTheme(){
-  isDark=!isDark;
-  document.documentElement.setAttribute('data-theme',isDark?'dark':'light');
-  const lbl = document.getElementById('tlabel');
-  const knob = document.querySelector('.tb-tt-k');
-  if(lbl) lbl.textContent = isDark ? 'Tema Escuro' : 'Tema Claro';
-  // Update toggle style
-  const tog = document.querySelector('.tb-tt');
-  if(tog){
-    tog.style.background = isDark ? '#E8705A' : '#D1D5DB';
-    if(knob) knob.style.transform = isDark ? 'translateX(18px)' : 'translateX(0)';
-  }
+função alternarTema(){
+  éEscuro=!éEscuro;
+  document.documentElement.setAttribute('data-theme',isDark?'dark':'');
+  document.getElementById('tlabel').textContent=isDark?'Tema Escuro':'Tema Claro';
   setTimeout(rebuildCharts,50);
 }
 function bc(t){const m={'Reposição':'b-rep','Armazenamento':'b-arm','Movimentação':'b-mov','Legendas':'b-leg','Capas':'b-cap','Películas':'b-pel','Acessórios':'b-ace'};return m[t]||'';}
@@ -1615,138 +1697,130 @@ function showLoading(show){document.getElementById('loading').classList.toggle('
 function showToast(msg,type='success'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';setTimeout(()=>t.classList.remove('show'),3000);}
 
 
-// ── AUTH ──
-const USERS = [
-  { user: 'admin',    pass: 'g5admin',   nome: 'Admin',    role: 'Gerente Geral' },
-  { user: 'jean',     pass: 'g5jean',    nome: 'Jean',     role: 'Operador' },
-  { user: 'colaborador', pass: 'g5colab', nome: 'Colaborador', role: 'Operador' },
+// ── AUT ──
+const USUÁRIOS = [
+  { usuário: 'admin', senha: 'g5admin', nome: 'Admin', função: 'Gerente Geral' },
+  { usuário: 'jean', senha: 'g5jean', nome: 'Jean', função: 'Operador' },
+  { usuário: 'colaborador', pass: 'g5colab', nome: 'Colaborador', role: 'Operador' },
 ];
 
-function doLogin(){
+função doLogin(){
   const u = document.getElementById('login-user').value.trim();
   const p = document.getElementById('login-pass').value;
   const btn = document.getElementById('login-btn');
   const err = document.getElementById('login-error');
 
-  if(!u||!p){ err.textContent='Preencha usuário e senha.'; err.classList.add('show'); return; }
+  if(!u||!p){ err.textContent='Preencher usuário e senha.'; err.classList.add('mostrar'); retornar; }
 
   btn.disabled=true; btn.textContent='Entrando...';
   setTimeout(()=>{
-    const found = USERS.find(x=>x.user===u && x.pass===p);
-    if(found){
+    const encontrado = USERS.find(x=>x.user===u && x.pass===p);
+    se(encontrado){
       err.classList.remove('show');
-      // Update user info in sidebar
+      // Atualizar informações do usuário na barra lateral
       document.querySelector('.sb-uname').textContent = found.nome;
       document.querySelector('.sb-urole').textContent = found.role;
       document.querySelector('.sb-av').textContent = found.nome.substring(0,2).toUpperCase();
-      // Hide login screen and load data
+      // Ocultar tela de login e carregar dados
       document.getElementById('login-screen').classList.add('hide');
       setTimeout(()=>{ document.getElementById('login-screen').style.display='none'; }, 420);
-      // Load system data after login
-      setTimeout(() => { showLoading(false); }, 10000); // safety timeout
+      // Carregar dados do sistema após o login
+      setTimeout(() => { showLoading(false); }, 10000); // tempo limite de segurança
       init();
-    } else {
-      err.textContent='Usuário ou senha incorretos. Tente novamente.';
+    } outro {
+      err.textContent='Usuário ou senha incorreta. Tente novamente.';
       err.classList.add('show');
       document.getElementById('login-pass').value='';
-      btn.disabled=false; btn.textContent='Entrar';
+      btn.disabled=falso; btn.textContent='Entrar';
     }
   },600);
 }
 
-function togglePass(){
+função togglePass(){
   const inp = document.getElementById('login-pass');
   const eye = document.getElementById('login-eye');
   if(inp.type==='password'){ inp.type='text'; eye.textContent='🙈'; }
   else { inp.type='password'; eye.textContent='👁'; }
 }
 
-// Focus on load
+// Foco na carga
 window.addEventListener('DOMContentLoaded',()=>{
-  // Apply dark theme by default
-  document.documentElement.setAttribute('data-theme','light');
-  const lbl = document.getElementById('tlabel');
-  const tog = document.querySelector('.tb-tt');
-  if(lbl) lbl.textContent = 'Tema Claro';
-  if(tog){ tog.style.background='#E8705A'; }
-  const knob = document.querySelector('.tb-tt-k');
-  if(knob) knob.style.transform='translateX(0)';
   setTimeout(()=>document.getElementById('login-user').focus(),100);
 });
 
 
 
 // ── CONSULTA ──
-let consultaPage = 1;
+seja consultaPage = 1;
 let consultaData = [];
 const CONSULTA_PAGE_SIZE = 20;
 
-function initConsulta(){
-  // Populate colaborador select
+função initConsulta(){
+  // Preencher a seleção do colaborador
   const sel = document.getElementById('consulta-colab');
   if(!sel || sel.options.length > 1) return;
   COLABORADORES.forEach(c=>{
-    const opt = document.createElement('option');
+    const opt ​​= document.createElement('option');
     opt.value = c; opt.textContent = c;
     sel.appendChild(opt);
   });
 
-  // Populate month select from allData
+  // Preencher seleção de mês de todos os dados
   const monthSel = document.getElementById('consulta-mes');
-  const months = new Set();
+  const meses = novo Conjunto();
   allData.forEach(r=>{ if(r.data) months.add(r.data.substring(0,7)); });
-  [...months].sort().reverse().forEach(m=>{
+  [...meses].sort().reverse().forEach(m=>{
     const d = new Date(m+'-01T12:00:00');
     const lbl = d.toLocaleString('pt-BR',{month:'long',year:'numeric'});
-    const opt = document.createElement('option');
+    const opt ​​= document.createElement('option');
     opt.value = m; opt.textContent = lbl.charAt(0).toUpperCase()+lbl.slice(1);
     monthSel.appendChild(opt);
   });
 }
 
-function runConsulta(){
+função executarConsulta(){
   const colab = document.getElementById('consulta-colab').value;
-  const mes   = document.getElementById('consulta-mes').value;
-  const tipo  = document.getElementById('consulta-tipo').value;
+  const mes = document.getElementById('consulta-mes').value;
+  const tipo = document.getElementById('consulta-tipo').value;
 
-  // Filter
+  // Filtrar
   consultaData = allData.filter(r=>{
-    if(colab && r.colaborador !== colab) return false;
-    if(mes   && (!r.data || !r.data.startsWith(mes))) return false;
-    if(tipo  && r.tipo !== tipo) return false;
-    return true;
+    if(colab && r.colaborador !== colab) retorna falso;
+    if(mes && (!r.data || !r.data.startsWith(mes))) return false;
+    if(tipo && r.tipo !== tipo) return falso;
+    retornar verdadeiro;
   }).sort((a,b)=> a.data > b.data ? -1 : 1);
 
-  consultaPage = 1;
+  consultaPágina = 1;
   renderConsulta();
 }
 
-function renderConsulta(){
+função renderConsulta(){
   const resultado = document.getElementById('consulta-resultado');
-  const empty     = document.getElementById('consulta-empty');
+  const empty = document.getElementById('consulta-empty');
 
-  resultado.style.display = 'block';
-  empty.style.display     = 'none';
+  resultado.style.display = 'bloquear';
+  empty.style.display = 'nenhum';
 
-  // Summary cards
+  // Cartões de resumo
   const totalAtiv = consultaData.length;
   const totalProd = consultaData.reduce((s,r)=>s+(r.quantidade||0), 0);
-  const colabs    = [...new Set(consultaData.map(r=>r.colaborador))];
-  const skuC      = {};
+  const colabs = [...new Set(consultaData.map(r=>r.colaborador))];
+  const skuC = {};
   consultaData.forEach(r=>{ const k=r.nome_sku||r.sku; skuC[k]=(skuC[k]||0)+r.quantidade; });
   const topSku = Object.entries(skuC).sort((a,b)=>b[1]-a[1])[0];
 
   document.getElementById('consulta-cards').innerHTML = `
     <div class="mc"><div class="mc-label">Atividades</div><div class="mc-val">${totalAtiv}</div><div class="mc-sub">registros encontrados</div></div>
     <div class="mc"><div class="mc-label">Produção Total</div><div class="mc-val">${totalProd.toLocaleString('pt-BR')}</div><div class="mc-sub">unidades</div></div>
-    <div class="mc"><div class="mc-label">Colaboradores</div><div class="mc-val">${colabs.length}</div><div class="mc-sub">${colabs.length===1?colabs[0].split(' ')[0]:'no filtro'}</div></div>
-    <div class="mc"><div class="mc-label">SKU Destaque</div><div class="mc-val" style="font-size:12px;color:var(--or);line-height:1.3;">${topSku?topSku[0].substring(0,20)+(topSku[0].length>20?'...':''):'—'}</div><div class="mc-sub">${topSku?topSku[1]+' un.':''}</div></div>
+    <div class="mc"><div class="mc-label">Colaboradores</div><div class="mc-val">${colabs.length}</div><div class="mc-sub">${colabs.length===1?colabs[0].split(' ')[0]:'sem filtro'}</div></div>
+    <div class="mc"><div class="mc-label">Destaque do SKU</div><div class="mc-val" style="font-size:12px;color:var(--or);line-height:1.3;">${topSku?topSku[0].substring(0,20)+(topSku[0].length>20?'...':''):'—'}</div><div class="mc-sub">${topSku?topSku[1]+' un.':''}</div></div>
   `;
 
-  // Title
+  // Título
   const colab = document.getElementById('consulta-colab').value;
-  const mes   = document.getElementById('consulta-mes').value;
-  const tipo  = document.getElementById('consulta-tipo').value;
+  const mes = document.getElementById('consulta-mes').value;
+  const tipo = document.getElementById('consulta-tipo').value;
   let titleParts = [];
   if(colab) titleParts.push(colab.split(' ')[0]);
   if(mes){ const d=new Date(mes+'-01T12:00:00'); titleParts.push(d.toLocaleString('pt-BR',{month:'long',year:'numeric'})); }
@@ -1754,24 +1828,24 @@ function renderConsulta(){
   document.getElementById('consulta-title').textContent = titleParts.length ? titleParts.join(' · ') : 'Todas as Atividades';
   document.getElementById('consulta-sub').textContent = `${totalAtiv} registro${totalAtiv!==1?'s':''} encontrado${totalAtiv!==1?'s':''}`;
 
-  // Table
+  // Mesa
   const tbody = document.getElementById('consulta-tbody');
   if(!consultaData.length){
     tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Nenhuma atividade encontrada com esses filtros</td></tr>';
     document.getElementById('consulta-pag-info').textContent = '0 registros';
     document.getElementById('consulta-pag-btns').innerHTML = '';
-    return;
+    retornar;
   }
 
-  const total      = consultaData.length;
+  const total = consultaData.length;
   const totalPages = Math.ceil(total/CONSULTA_PAGE_SIZE);
-  if(consultaPage > totalPages) consultaPage = totalPages;
+  se (consultaPage > totalPages) consultaPage = totalPages;
   const start = (consultaPage-1)*CONSULTA_PAGE_SIZE;
   const slice = consultaData.slice(start, start+CONSULTA_PAGE_SIZE);
 
   tbody.innerHTML = slice.map(r=>{
     const skuLabel = getSkuLabel(r);
-    return `<tr>
+    retornar `<tr>
       <td style="white-space:nowrap;">${r.data||'—'}</td>
       <td style="font-weight:500;">${r.colaborador||'—'}</td>
       <td><span class="badge ${bc(r.tipo)}">${r.tipo||'—'}</span></td>
@@ -1779,9 +1853,9 @@ function renderConsulta(){
       <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${skuLabel}">${skuLabel}</td>
       <td style="text-align:right;font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--or);">${(r.quantidade||0).toLocaleString('pt-BR')}</td>
     </tr>`;
-  }).join('');
+  }).juntar('');
 
-  // Pagination
+  // Paginação
   const endIdx = Math.min(consultaPage*CONSULTA_PAGE_SIZE, total);
   document.getElementById('consulta-pag-info').textContent = `${start+1}–${endIdx} de ${total} registros`;
   let html = `<button class="page-btn" onclick="goConsultaPage(${consultaPage-1})" ${consultaPage<=1?'disabled':''}>‹</button>`;
@@ -1797,10 +1871,10 @@ function renderConsulta(){
   document.getElementById('consulta-pag-btns').innerHTML = html;
 }
 
-function goConsultaPage(p){
+função goConsultaPage(p){
   const total = consultaData.length;
   const totalPages = Math.ceil(total/CONSULTA_PAGE_SIZE);
-  if(p<1||p>totalPages) return;
+  se(p<1||p>totalPages) retorne;
   consultaPage = p;
   renderConsulta();
 }
@@ -1808,18 +1882,18 @@ function goConsultaPage(p){
 // ── COLABORADORES ──
 const COLABORADORES = [
   'Felipe Lemes Galvão',
-  'Luis Carlos Passos Conceição',
+  'Luís Carlos Passos Conceição',
   'Gustavo Sena dos Santos Pita',
 ];
 
-let isDupla = false;
+seja isDupla = falso;
 
-function initColabDrop(){
+função initColabDrop(){
   renderColabDrop('', 1);
 }
 
-function toggleDupla(){
-  isDupla = !isDupla;
+função toggleDupla(){
+  éDupla = !éDupla;
   const sw = document.getElementById('dupla-switch');
   const badge = document.getElementById('dupla-badge');
   const wrap2 = document.getElementById('colab2-wrap');
@@ -1831,115 +1905,115 @@ function toggleDupla(){
   if(isDupla){ updateDuplaPreview(); document.getElementById('f-colab2').focus(); }
 }
 
-function updateDuplaPreview(){
+função atualizarDuplaPreview(){
   const qtd = parseInt(document.getElementById('f-qtd').value) || 0;
   const metade = Math.floor(qtd / 2);
   document.getElementById('dupla-qtd-preview').textContent = metade;
 }
 
-function renderColabDrop(q, slot){
-  const filtered = q
+função renderColabDrop(q, slot){
+  const filtrado = q
     ? COLABORADORES.filter(n=>n.toLowerCase().includes(q.toLowerCase()))
     : COLABORADORES;
   const el = document.getElementById('colab-dropdown-'+slot);
-  if(!el) return;
-  if(!filtered.length){
+  se(!el) retornar;
+  se(!filtrado.comprimento){
     el.innerHTML='<div class="colab-opt" style="color:var(--text3);cursor:default;">Nenhum encontrado</div>';
-    return;
+    retornar;
   }
   el.innerHTML = filtered.map(n=>{
     const ini = n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
-    return `<div class="colab-opt" onclick="selectColab('${n}', ${slot})">
+    retornar `<div class="colab-opt" onclick="selectColab('${n}', ${slot})">
       <div class="colab-opt-avatar">${ini}</div>
-      <span class="colab-opt-name">${n}</span>
+      <span class="colab-opt-name">${n>
     </div>`;
-  }).join('');
+  }).juntar('');
 }
 
-function filterColabs(slot){
+função filterColabs(slot){
   const id = slot===1 ? 'f-colab' : 'f-colab2';
   const q = document.getElementById(id).value;
   renderColabDrop(q, slot);
-  showColabDrop(slot);
+  mostrarColabDrop(slot);
 }
 
-function showColabDrop(slot){
+função showColabDrop(slot){
   const id = slot===1 ? 'f-colab' : 'f-colab2';
   renderColabDrop(document.getElementById(id).value, slot);
   document.getElementById('colab-dropdown-'+slot).classList.add('show');
 }
 
-function hideColabDrop(slot){
+função ocultarColabDrop(slot){
   const el = document.getElementById('colab-dropdown-'+slot);
   if(el) el.classList.remove('show');
 }
 
-function selectColab(nome, slot){
+função selecionarColab(nome, slot){
   const id = slot===1 ? 'f-colab' : 'f-colab2';
   document.getElementById(id).value = nome;
-  hideColabDrop(slot);
+  ocultarColabDrop(slot);
 }
 
 
-async function deleteAtividade(id){
+função assíncrona deleteAtividade(id){
   if(!confirm('Excluir este registro?')) return;
   const {error} = await db.from('atividades').delete().eq('id', id);
-  if(error){ showToast('Erro ao excluir: '+error.message,'error'); return; }
-  showToast('Registro excluído!','success');
-  await loadAtividades();
+  if(error){ showToast('Erro ao excluir: '+error.message,'error'); retornar; }
+  showToast('Registro excluído!','sucesso');
+  aguarde loadAtividades();
 }
 
 
-// ── SKU LABEL HELPER ──
-function getSkuLabel(r){
-  // Priority 1: use codigo_sku + nome_sku from atividades record (new field)
+// ── AUXILIAR DE ETIQUETA SKU ──
+função obterSkuLabel(r){
+  // Prioridade 1: usar codigo_sku + nome_sku do registro atividades (novo campo)
   if(r.codigo_sku && r.nome_sku) return r.codigo_sku+' - '+r.nome_sku;
-  // Priority 2: look up in allSkus by nome_sku
+  // Prioridade 2: pesquisar em todos os Skus por nome_sku
   const skuObj = allSkus.find(s=>
     (r.nome_sku && s.nome===r.nome_sku) ||
     (r.nome_sku && s.nomenclatura===r.nome_sku)
   );
   if(skuObj) return (skuObj.nomenclatura||'')+' - '+skuObj.nome;
-  // Priority 3: fallback
-  if(r.nome_sku) return r.nome_sku;
-  return '—';
+  // Prioridade 3: plano B
+  se(r.nome_sku) retorne r.nome_sku;
+  retornar '-';
 }
 
 
 // ── FILTRO DE PERÍODO ──
 let filteredData = [];
 let currentPeriod = 'tudo';
-let currentPage = 1;
-const PAGE_SIZE = 15;
+seja currentPage = 1;
+const TAMANHO_DA_PÁGINA = 15;
 let editingId = null;
 
-function setPeriod(period, btn){
-  currentPeriod = period;
+função definirPeríodo(período, botão){
+  períodoAtual = período;
   currentPage = 1;
   document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
   const clearBtn = document.getElementById('btn-clear-period');
   if(clearBtn) clearBtn.style.display = 'inline-block';
-  applyFilter();
+  aplicarFiltro();
 }
 
-function clearPeriod(){
+função clearPeriod(){
   currentPeriod = null;
   currentPage = 1;
   document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('btn-clear-period').style.display = 'none';
   document.getElementById('period-start').value = '';
-  document.getElementById('period-end').value   = '';
-  filteredData = [];
-  renderEmptyDashboard();
+  document.getElementById('period-end').value = '';
+  dadosfiltrados = [];
+  renderizarPainelVazio();
 }
 
-function renderEmptyDashboard(){
-  // Metrics
-  document.getElementById('m-total').textContent  = '—';
-  document.getElementById('m-prod').textContent   = '—';
-  document.getElementById('m-colab').textContent  = '—';
-  document.getElementById('m-sku').textContent    = '—';
+função renderizarPainelVazio(){
+  // Métricas
+  document.getElementById('m-total').textContent = '—';
+  document.getElementById('m-prod').textContent = '—';
+  document.getElementById('m-colab').textContent = '—';
+  document.getElementById('m-sku').textContent = '—';
   if(document.getElementById('badge-total')) document.getElementById('badge-total').textContent = allData.length;
 
   // Top 5
@@ -1948,112 +2022,93 @@ function renderEmptyDashboard(){
   // Meta
   document.getElementById('meta-list').innerHTML = '<div class="empty-state">Selecione um período para ver os dados</div>';
 
-  // Destroy all charts and show empty
+  // Destruir todos os gráficos e exibir vazio
   ['sku','pizza','line'].forEach(k=>{if(charts[k]){charts[k].destroy();charts[k]=null;}});
 
-  // SKU chart empty
+  // Tabela de SKUs vazia
   const b = getBase();
   charts.sku = new Chart(document.getElementById('skuChart'),{
-    type:'bar',
-    data:{labels:[],datasets:[]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{x:{grid:{color:b.grid},ticks:{color:b.tick}},y:{grid:{color:b.grid},ticks:{color:b.tick},beginAtZero:true}}}
+    tipo:'bar',
+    dados:{rótulos:[],conjuntos de dados:[]},
+    opções:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      escalas:{x:{grade:{cor:b.grade},marcadores:{cor:b.marcador}},y:{grade:{cor:b.grade},marcadores:{cor:b.marcador},iniciarEmZero:verdadeiro}}}
   });
 
-  // Pizza empty
+  // Pizza vazia
   charts.pizza = new Chart(document.getElementById('pizzaChart'),{
-    type:'doughnut',
-    data:{labels:['Sem dados'],datasets:[{data:[1],backgroundColor:[isDark?'#1E293B':'#E2DED7'],borderWidth:0}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{enabled:false}}}
+    tipo:'rosquinha',
+    dados:{rótulos:['Sem dados'],conjuntos de dados:[{dados:[1],cor de fundo:[é escuro?'#1E293B':'#E2DED7'],largura da borda:0}]},
+    opções:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{enabled:false}}}
   });
 
-  // Line empty
+  // Linha vazia
   charts.line = new Chart(document.getElementById('lineChart'),{
-    type:'line',
-    data:{labels:[],datasets:[]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{x:{grid:{color:b.grid},ticks:{color:b.tick}},y:{grid:{color:b.grid},ticks:{color:b.tick},beginAtZero:true}}}
+    tipo:'linha',
+    dados:{rótulos:[],conjuntos de dados:[]},
+    opções:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      escalas:{x:{grade:{cor:b.grade},marcadores:{cor:b.marcador}},y:{grade:{cor:b.grade},marcadores:{cor:b.marcador},iniciarEmZero:verdadeiro}}}
   });
 
-  // Heatmap empty
+  // Mapa de calor vazio
   const container = document.getElementById('heatmap-container');
-  if(container) container.innerHTML = '<div class="empty-state" style="padding:40px;">Selecione um período para ver o heatmap</div>';
+  if(container) container.innerHTML = '<div class="empty-state" style="padding:40px;">Selecione um período para ver o mapa de calor</div>';
   const labelEl = document.getElementById('heatmap-period-label');
-  if(labelEl) labelEl.textContent = 'selecione um período acima';
+  if(labelEl) labelEl.textContent = 'seleção de um período acima';
 }
 
-function applyFilter(){
+função aplicarFiltro(){
   const now = new Date();
-  let start, end;
+  que comece, que termine;
 
-  if(currentPeriod === 'hoje'){
-    start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    end   = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+  se(períodoAtual === 'hoje'){
+    início = novo Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
+    fim = novo Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
   } else if(currentPeriod === 'semana'){
-    const day = now.getDay();
-    start = new Date(now); start.setDate(now.getDate() - day);
-    start.setHours(0,0,0,0);
-    end = new Date(start); end.setDate(start.getDate()+6); end.setHours(23,59,59);
-  } else if(currentPeriod === 'mes'){
-    start = new Date(now.getFullYear(), now.getMonth(), 1);
-    end   = new Date(now.getFullYear(), now.getMonth()+1, 0, 23, 59, 59);
+    const dia = agora.getDay();
+    início = new Date(agora); início.setDate(agora.getDate() - dia);
+    iniciar.setHours(0,0,0,0);
+    fim = novo Date(início); fim.setDate(início.getDate()+6); fim.setHours(23,59,59);
+  } senão se(períodoAtual === 'mes'){
+    início = novo Date(now.getFullYear(), now.getMonth(), 1);
+    fim = novo Date(now.getFullYear(), now.getMonth()+1, 0, 23, 59, 59);
   } else if(currentPeriod === 'custom'){
     const s = document.getElementById('period-start').value;
     const e = document.getElementById('period-end').value;
-    if(!s||!e){ showToast('Selecione as datas!','error'); return; }
-    start = new Date(s+'T00:00:00');
-    end   = new Date(e+'T23:59:59');
-  } else {
+    if(!s||!e){ showToast('Selecione como dados!','erro'); retornar; }
+    início = novo Date(s+'T00:00:00');
+    fim = novo Date(e+'T23:59:59');
+  } outro {
     // tudo
-    filteredData = [...allData];
+    dadosfiltrados = [...todososDados];
     renderDashboard();
-    return;
+    retornar;
   }
 
-  filteredData = allData.filter(r=>{
-    if(!r.data) return false;
+  dadosFiltrados = todosOsDados.filter(r=>{
+    Se (!r.data) retornar falso;
     const d = new Date(r.data+'T12:00:00');
-    return d >= start && d <= end;
+    retornar d >= início && d <= fim;
   });
   renderDashboard();
 }
 
-function renderDashboard(){
-  updateMetricsFiltered();
+função renderizarPainel(){
+  // Use filteredData para todas as renderizações do painel
+  atualizarMétricasFiltradas();
   renderTop5Filtered();
-  renderTopColabsCards();
   renderHeatmap();
   renderMetaChart();
-  rebuildCharts();
+  reconstruirGráficos();
 }
 
-function renderTopColabsCards(){
-  const el = document.getElementById('dash-top-colabs');
-  if(!el) return;
-  const data = (filteredData && filteredData.length>0) ? filteredData : [];
-  if(!data.length){ el.innerHTML='<div style="font-size:11px;opacity:.7;">Selecione um período</div>'; return; }
-  const scores={};
-  data.forEach(r=>{ scores[r.colaborador]=(scores[r.colaborador]||0)+r.quantidade; });
-  const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]).slice(0,3);
-  const medals=['🥇','🥈','🥉'];
-  el.innerHTML=sorted.map(([name,pts],i)=>`
-    <div style="background:rgba(255,255,255,0.2);border-radius:8px;padding:8px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;" onclick="openColabModal('${name.replace(/'/g,"\\'")}')">
-      <span style="font-size:16px;">${medals[i]}</span>
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${name.split(' ')[0]}</div>
-        <div style="font-size:10px;opacity:.8;">${pts.toLocaleString('pt-BR')} un.</div>
-      </div>
-    </div>`).join('');
-}
-
-function updateMetricsFiltered(){
-  const data = filteredData;
+função atualizarMétricasFiltradas(){
+  const data = dadosfiltrados;
   const prod = data.reduce((s,r)=>s+(r.quantidade||0),0);
   const colabs = [...new Set(data.map(r=>r.colaborador))].length;
   const skuC={}, skuLabels={};
-  data.forEach(r=>{
+  dados.paraCada(r=>{
     const codigo=r.codigo_sku||''; const nome=r.nome_sku||'';
-    let cod=codigo, nom=nome;
+    seja cod=código, nom=nome;
     if(!cod&&nom){const obj=allSkus.find(s=>s.nome===nom);if(obj)cod=obj.nomenclatura||'';}
     const k=cod||nom||'—';
     skuC[k]=(skuC[k]||0)+r.quantidade;
@@ -2069,9 +2124,9 @@ function updateMetricsFiltered(){
   document.getElementById('m-sku-desc').textContent='';
 }
 
-function renderTop5Filtered(){
+função renderizarTop5Filtrado(){
   const scores={};
-  filteredData.forEach(r=>{scores[r.colaborador]=(scores[r.colaborador]||0)+r.quantidade;});
+  filteredData.forEach(r=>{pontuações[r.colaborador]=(pontuações[r.colaborador]||0)+r.quantidade;});
   const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]).slice(0,5);
   const el=document.getElementById('top5-list');
   if(!sorted.length){el.innerHTML='<div class="empty-state">Nenhum dado no período</div>';return;}
@@ -2082,7 +2137,7 @@ function renderTop5Filtered(){
       <div class="t5n" onclick="openColabModal('${name.replace(/'/g,"\\'")}')}"
         style="cursor:pointer;text-decoration:underline;text-decoration-color:var(--or);text-underline-offset:2px;"
         title="Ver atividades de ${name.replace(/'/g,"\\'")}">
-        ${name}
+        ${nome}
       </div>
       <div class="t5bw"><div class="t5b" style="width:${Math.round(pts/max*100)}%"></div></div>
       <div class="t5v">${pts}</div>
@@ -2090,22 +2145,22 @@ function renderTop5Filtered(){
 }
 
 // ── PAGINAÇÃO ──
-function renderAtividadesPaged(){
+função renderizarAtividadesPáginas(){
   const tbody = document.getElementById('recent-tbody');
-  if(!allData.length){
+  se(!allData.length){
     tbody.innerHTML='<tr><td colspan="8" class="empty-state">Nenhum registro ainda</td></tr>';
-    renderPagination(0);
-    return;
+    renderPaginação(0);
+    retornar;
   }
   const total = allData.length;
   const totalPages = Math.ceil(total/PAGE_SIZE);
-  if(currentPage > totalPages) currentPage = totalPages;
+  Se (páginaAtual > totalPáginas) páginaAtual = totalPáginas;
   const start = (currentPage-1)*PAGE_SIZE;
   const slice = allData.slice(start, start+PAGE_SIZE);
 
   tbody.innerHTML = slice.map(r=>{
     const skuLabel=getSkuLabel(r);
-    return `<tr>
+    retornar `<tr>
       <td>${r.colaborador}</td>
       <td><span class="badge ${bc(r.tipo)}">${r.tipo}</span></td>
       <td><span class="badge ${bc(r.sku)}">${r.sku||'—'}</span></td>
@@ -2113,22 +2168,22 @@ function renderAtividadesPaged(){
       <td>${r.quantidade}</td>
       <td>${r.data}</td>
       <td style="display:flex;gap:4px;align-items:center;">
-        <button onclick="openEditModal('${r.id}','${r.colaborador.replace(/'/g,"\\'")}','${r.quantidade}','${r.data}','${r.tipo}')" title="Editar" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:13px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(232,112,90,.10)';this.style.borderColor='rgba(232,112,90,.25)';this.style.color='var(--or)'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">✏️</button>
+        <button onclick="openEditModal('${r.id}','${r.colaborador.replace(/'/g,"\\'")}','${r.quantidade}','${r.data}','${r.tipo}')" title="Editar" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:13px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(0,188,212,.1)';this.style.borderColor='rgba(0,188,212,.3)';this.style.color='var(--or)'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">✏️</button>
         <button onclick="deleteAtividade('${r.id}')" title="Excluir" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:14px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(220,38,38,.1)';this.style.borderColor='rgba(220,38,38,.3)';this.style.color='#DC2626'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">🗑</button>
       </td>
     </tr>`;
-  }).join('');
-  renderPagination(total);
+  }).juntar('');
+  renderPaginação(total);
 }
 
-function renderPagination(total){
+função renderPaginação(total){
   const totalPages = Math.ceil(total/PAGE_SIZE);
   const info = document.getElementById('pag-info');
   const btns = document.getElementById('pag-btns');
   if(!info||!btns) return;
   const start = (currentPage-1)*PAGE_SIZE+1;
   const end = Math.min(currentPage*PAGE_SIZE, total);
-  info.textContent = total ? `${start}–${end} de ${total} registros` : '0 registros';
+  info.textContent = total? `${start}–${end} de ${total} registros` : '0 registros';
 
   let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage<=1?'disabled':''}>‹</button>`;
   const range = 2;
@@ -2143,14 +2198,14 @@ function renderPagination(total){
   btns.innerHTML = html;
 }
 
-function goPage(p){
+função goPage(p){
   const totalPages = Math.ceil(allData.length/PAGE_SIZE);
-  if(p<1||p>totalPages) return;
-  currentPage=p;
+  se(p<1||p>totalPages) retorne;
+  PáginaAtual=p;
   renderAtividadesPaged();
 }
 
-// ── EDITAR MODAL ──
+// ── MODAL DE EDIÇÃO ──
 function openEditModal(id,colab,qtd,data,tipo){
   editingId=id;
   document.getElementById('edit-colab').value=colab;
@@ -2160,12 +2215,12 @@ function openEditModal(id,colab,qtd,data,tipo){
   document.getElementById('edit-modal').classList.add('show');
 }
 
-function closeEditModal(){
+função closeEditModal(){
   editingId=null;
   document.getElementById('edit-modal').classList.remove('show');
 }
 
-async function saveEdit(){
+função assíncrona salvarEditar(){
   if(!editingId) return;
   const colaborador=document.getElementById('edit-colab').value.trim();
   const quantidade=parseInt(document.getElementById('edit-qtd').value);
@@ -2174,162 +2229,162 @@ async function saveEdit(){
   if(!colaborador||!quantidade||!data){showToast('Preencha todos os campos!','error');return;}
   const btn=document.querySelector('.modal-btn-save');
   btn.textContent='Salvando...';btn.disabled=true;
-  const {error}=await db.from('atividades').update({colaborador,quantidade,data,tipo}).eq('id',editingId);
+  const {erro}=await db.from('atividades').update({colaborador,quantidade,data,tipo}).eq('id',editingId);
   btn.textContent='Salvar';btn.disabled=false;
   if(error){showToast('Erro: '+error.message,'error');return;}
-  showToast('✓ Registro atualizado!','success');
-  closeEditModal();
-  await loadAtividades();
+  showToast('✓ Registro atualizado!','sucesso');
+  fecharEditModal();
+  aguarde loadAtividades();
 }
 
-// Close modal clicking outside
+// Fechar modal clicando fora
 document.addEventListener('click', e=>{
   if(e.target.id==='edit-modal') closeEditModal();
 });
 
 
 
-// ── MODAL COLABORADOR ──
+// ── COLABORADOR MODAL ──
 function openColabModal(nome){
   const data = (filteredData && filteredData.length > 0) ? filteredData : allData;
   const ativs = data.filter(r=>r.colaborador===nome).sort((a,b)=>b.data>a.data?1:-1);
 
-  // Avatar initials
+  // Iniciais do avatar
   const ini = nome.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
   document.getElementById('cm-avatar').textContent = ini;
-  document.getElementById('cm-name').textContent   = nome;
+  document.getElementById('cm-name').textContent = nome;
 
-  // Period label
+  // Rótulo de ponto
   if(filteredData && filteredData.length > 0){
     const dates = filteredData.map(r=>r.data).filter(Boolean).sort();
     const first = new Date(dates[0]+'T12:00:00').toLocaleDateString('pt-BR');
-    const last  = new Date(dates[dates.length-1]+'T12:00:00').toLocaleDateString('pt-BR');
+    const last = new Date(dates[dates.length-1]+'T12:00:00').toLocaleDateString('pt-BR');
     document.getElementById('cm-period').textContent = first === last ? first : first+' até '+last;
-  } else {
+  } outro {
     document.getElementById('cm-period').textContent = 'todos os registros';
   }
 
-  // Stats
+  // Estatísticas
   const totalAtiv = ativs.length;
   const totalProd = ativs.reduce((s,r)=>s+(r.quantidade||0),0);
-  const skuCount  = {};
+  const skuCount = {};
   ativs.forEach(r=>{ const k=r.nome_sku||r.sku; skuCount[k]=(skuCount[k]||0)+r.quantidade; });
   const topSku = Object.entries(skuCount).sort((a,b)=>b[1]-a[1])[0];
 
   document.getElementById('cm-total-ativ').textContent = totalAtiv;
   document.getElementById('cm-total-prod').textContent = totalProd.toLocaleString('pt-BR');
-  document.getElementById('cm-top-sku').textContent    = topSku ? topSku[0].substring(0,12)+(topSku[0].length>12?'...':'') : '—';
+  document.getElementById('cm-top-sku').textContent = topSku ? topSku[0].substring(0,12)+(topSku[0].length>12?'...':'') : '—';
 
-  // Table
+  // Mesa
   const tbody = document.getElementById('cm-tbody');
-  if(!ativs.length){
+  se(!ativs.length){
     tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Nenhuma atividade no período</td></tr>';
-  } else {
+  } outro {
     tbody.innerHTML = ativs.map(r=>{
       const skuLabel = getSkuLabel(r);
-      return `<tr>
+      retornar `<tr>
         <td>${r.data||'—'}</td>
         <td><span class="badge ${bc(r.tipo)}">${r.tipo||'—'}</span></td>
         <td><span class="badge ${bc(r.sku)}">${r.sku||'—'}</span></td>
         <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;" title="${skuLabel}">${skuLabel}</td>
         <td style="text-align:right;font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--or)">${(r.quantidade||0).toLocaleString('pt-BR')}</td>
       </tr>`;
-    }).join('');
+    }).juntar('');
   }
 
   document.getElementById('colab-modal').classList.add('show');
 }
 
-function closeColabModal(){
+função fecharColabModal(){
   document.getElementById('colab-modal').classList.remove('show');
 }
 
 
 // ── FORMULÁRIO RÁPIDO ──
-function qfSkuSearch(){
+função qfSkuSearch(){
   const q = document.getElementById('qf-sku').value.trim();
   const preview = document.getElementById('qf-sku-preview');
-  const nomeEl  = document.getElementById('qf-sku-nome');
+  const nomeEl = document.getElementById('qf-sku-nome');
   if(!q){ preview.classList.remove('show'); return; }
   const found = allSkus.find(s=>s.nomenclatura===q || s.nomenclatura.startsWith(q));
-  if(found){
+  se(encontrado){
     nomeEl.textContent = found.nomenclatura + ' - ' + found.nome;
-    preview.classList.add('show');
-  } else {
+    pré-visualização.classList.adicionar('mostrar');
+  } outro {
     nomeEl.textContent = 'SKU não encontrado';
-    preview.classList.add('show');
+    pré-visualização.classList.adicionar('mostrar');
   }
 }
 
-function quickFill(){
+função quickFill(){
   const colab = document.getElementById('qf-colab').value;
-  const data  = document.getElementById('qf-data').value;
-  const qtd   = document.getElementById('qf-qtd').value;
-  const tipo  = document.getElementById('qf-tipo').value;
-  const cat   = document.getElementById('qf-cat').value;
-  const skuCod= document.getElementById('qf-sku').value.trim();
+  const data = document.getElementById('qf-data').value;
+  const qtd = document.getElementById('qf-qtd').value;
+  const tipo = document.getElementById('qf-tipo').value;
+  const cat = document.getElementById('qf-cat').value;
+  const skuCod = document.getElementById('qf-sku').value.trim();
 
-  if(!colab && !data && !qtd){ showToast('Preencha ao menos colaborador, data e quantidade!','error'); return; }
+  if(!colab && !data && !qtd){ showToast('Preencha ao menos colaborador, dados e quantidade!','error'); retornar; }
 
-  // Fill colaborador
-  if(colab){
+  // Preencher colaborador
+  se(colab){
     document.getElementById('f-colab').value = colab;
   }
 
-  // Fill data
-  if(data){
+  // Preencher dados
+  se(dados){
     document.getElementById('f-data').value = data;
   }
 
-  // Fill quantidade
-  if(qtd){
+  // Preencher
+  se(qtd){
     document.getElementById('f-qtd').value = qtd;
-    updateDuplaPreview();
+    atualizarDuplaPreview();
   }
 
-  // Fill tipo
-  if(tipo){
+  // Preencher tipo
+  se(tipo){
     document.querySelectorAll('#rg-tipo .rb').forEach(b=>{
       b.classList.toggle('sel', b.textContent.trim()===tipo);
     });
   }
 
-  // Fill categoria
-  if(cat){
+  // Preencher categoria
+  se(gato){
     document.querySelectorAll('#rg-cat .rb').forEach(b=>{
       b.classList.toggle('sel', b.textContent.trim()===cat);
     });
   }
 
-  // Fill SKU
-  if(skuCod){
-    const found = allSkus.find(s=>s.nomenclatura===skuCod);
-    if(found){
-      selectSku(found.id, found.nome, found.categoria, found.nomenclatura);
-    } else {
+  // Preencher SKU
+  se(skuCod){
+    const encontrado = todosSkus.find(s=>s.nomenclatura===skuCod);
+    se(encontrado){
+      selecionarSku(id.encontrado, nome.encontrado, categoria.encontrada, nomenclatura.encontrada);
+    } outro {
       document.getElementById('f-sku-search').value = skuCod;
     }
   }
 
-  // Scroll down to the form
+  // Desça até o formulário
   document.querySelector('#page-registro .fc:last-of-type').scrollIntoView({behavior:'smooth', block:'start'});
-  showToast('✓ Formulário preenchido! Revise e clique em Registrar.','success');
+  showToast('✓ Formulário preenchido! Revise e clique em Registrador.','success');
 }
 
-function quickClear(){
+função quickClear(){
   document.getElementById('qf-colab').value = '';
-  document.getElementById('qf-data').value  = '';
-  document.getElementById('qf-qtd').value   = '';
-  document.getElementById('qf-tipo').value  = '';
-  document.getElementById('qf-cat').value   = '';
-  document.getElementById('qf-sku').value   = '';
+  document.getElementById('qf-data').value = '';
+  document.getElementById('qf-qtd').value = '';
+  document.getElementById('qf-tipo').value = '';
+  document.getElementById('qf-cat').value = '';
+  document.getElementById('qf-sku').value = '';
   document.getElementById('qf-sku-preview').classList.remove('show');
 }
 
-// ── START ──
+// ── INÍCIO ──
 document.getElementById('f-data').valueAsDate=new Date();
 initColabDrop();
-// init() is called after successful login
+// A função init() é chamada após o login bem-sucedido
 </script>
 </body>
 </html>
