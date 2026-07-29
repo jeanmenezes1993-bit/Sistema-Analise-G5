@@ -10,27 +10,27 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  /* TEMA CLARO — Kodalogic Style (padrão) */
-  --or:#4318FF;--or-bg:rgba(67,24,255,0.08);--or-bdr:rgba(67,24,255,0.20);
-  --bg:#F4F7FE;--card:#FFFFFF;--sb:#1B2559;
-  --bdr:#E9EDF7;--text:#2B3674;--text2:#2B3674;--text3:#A3AED0;
-  --metric:#F4F7FE;--teal:#05CD99;--blue:#4318FF;--purple:#6F42C1;
-  --sb-text:#FFFFFF;--sb-text3:#A3AED0;--sb-bdr:rgba(255,255,255,0.08);
+  /* TEMA CLARO — Flat Colorful (padrão) */
+  --or:#E8705A;--or-bg:rgba(232,112,90,0.10);--or-bdr:rgba(232,112,90,0.25);
+  --bg:#F0F0EB;--card:#FFFFFF;--sb:#2C3E50;
+  --bdr:#E0E0D8;--text:#2C3E50;--text2:#34495E;--text3:#95A5A6;
+  --metric:#FAFAF7;--teal:#1ABC9C;--blue:#3498DB;--purple:#9B59B6;
+  --sb-text:#FFFFFF;--sb-text3:#BDC3C7;--sb-bdr:rgba(255,255,255,0.08);
 }
 [data-theme="light"]{
-  --or:#4318FF;--or-bg:rgba(67,24,255,0.08);--or-bdr:rgba(67,24,255,0.20);
-  --bg:#F4F7FE;--card:#FFFFFF;--sb:#1B2559;
-  --bdr:#E9EDF7;--text:#2B3674;--text2:#2B3674;--text3:#A3AED0;
-  --metric:#F4F7FE;--teal:#05CD99;--blue:#4318FF;--purple:#6F42C1;
-  --sb-text:#FFFFFF;--sb-text3:#A3AED0;--sb-bdr:rgba(255,255,255,0.08);
+  --or:#E8705A;--or-bg:rgba(232,112,90,0.10);--or-bdr:rgba(232,112,90,0.25);
+  --bg:#F0F0EB;--card:#FFFFFF;--sb:#2C3E50;
+  --bdr:#E0E0D8;--text:#2C3E50;--text2:#34495E;--text3:#95A5A6;
+  --metric:#FAFAF7;--teal:#1ABC9C;--blue:#3498DB;--purple:#9B59B6;
+  --sb-text:#FFFFFF;--sb-text3:#BDC3C7;--sb-bdr:rgba(255,255,255,0.08);
 }
 [data-theme="dark"]{
   /* TEMA ESCURO */
-  --or:#6B5EFF;--or-bg:rgba(107,94,255,0.12);--or-bdr:rgba(107,94,255,0.25);
-  --bg:#0B1437;--card:#111C44;--sb:#0B0E2D;
-  --bdr:rgba(255,255,255,0.06);--text:#F1F5F9;--text2:#CBD5E1;--text3:#A3AED0;
-  --metric:#1B2559;--teal:#05CD99;--blue:#6B5EFF;--purple:#845EFF;
-  --sb-text:#FFFFFF;--sb-text3:#A3AED0;--sb-bdr:rgba(255,255,255,0.06);
+  --or:#E8705A;--or-bg:rgba(232,112,90,0.12);--or-bdr:rgba(232,112,90,0.25);
+  --bg:#1A2332;--card:#243040;--sb:#1A2332;
+  --bdr:rgba(255,255,255,0.08);--text:#F1F5F9;--text2:#CBD5E1;--text3:#8899AA;
+  --metric:#2C3E50;--teal:#1ABC9C;--blue:#3498DB;--purple:#9B59B6;
+  --sb-text:#FFFFFF;--sb-text3:#BDC3C7;--sb-bdr:rgba(255,255,255,0.08);
 }
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;transition:background .3s,color .3s;}
 .layout{display:flex;min-height:100vh;}
@@ -45,7 +45,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .sb-section{padding:16px 12px 4px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sb-text3,#71717A);}
 .sb-nav-item{display:flex;align-items:center;margin:3px 8px;border-radius:9px;cursor:pointer;overflow:hidden;border:1.5px solid transparent;transition:border-color .18s,background .18s;background:none;width:calc(100% - 16px);text-align:left;font-family:'Inter',sans-serif;box-shadow:none;outline:none;}
 .sb-nav-item:hover{background:rgba(255,255,255,0.06);}
-.sb-nav-item.active{border-color:rgba(67,24,255,0.35);background:rgba(67,24,255,0.08);}
+.sb-nav-item.active{border-color:rgba(232,112,90,0.35);background:rgba(232,112,90,0.10);}
 .sb-nav-icon{width:36px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;color:#A1A1AA;transition:color .18s;}
 .sb-nav-item.active .sb-nav-icon,.sb-nav-item:hover .sb-nav-icon{color:var(--or);}
 .sb-nav-inner{flex:1;padding:0 8px 0 0;height:40px;display:flex;align-items:center;justify-content:space-between;}
@@ -72,7 +72,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .tb-tt{width:28px;height:16px;border-radius:8px;background:var(--bdr);position:relative;transition:background .3s;flex-shrink:0;}
 .tb-tt-k{position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:var(--or);transition:transform .25s;}
 [data-theme="dark"] .tb-tt-k{transform:translateX(12px);}
-[data-theme="dark"] .tb-tt{background:rgba(67,24,255,0.20);}
+[data-theme="dark"] .tb-tt{background:rgba(232,112,90,0.25);}
 .content{padding:18px;flex:1;}
 .page{display:none;}.page.active{display:block;}
 
@@ -215,14 +215,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .rt td{padding:9px 10px;border-bottom:1px solid var(--bdr);color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
 .b-rep{background:rgba(13,148,136,.1);color:#0D9488;}
-.b-arm{background:rgba(37,99,235,.1);color:#4318FF;}
-.b-mov{background:rgba(124,58,237,.1);color:#4318FF;}
-.b-leg{background:rgba(67,24,255,.08);color:#4318FF;}
+.b-arm{background:rgba(37,99,235,.1);color:#E8705A;}
+.b-mov{background:rgba(124,58,237,.1);color:#E8705A;}
+.b-leg{background:rgba(232,112,90,.10);color:#E8705A;}
 .b-cap{background:rgba(217,119,6,.1);color:#D97706;}
 .b-pel{background:rgba(219,39,119,.1);color:#DB2777;}
 .b-ace{background:rgba(22,163,74,.1);color:#16A34A;}
 [data-theme="dark"] .b-rep{background:rgba(20,184,166,.15);color:#14B8A6;}
-[data-theme="dark"] .b-arm{background:rgba(59,130,246,.15);color:#4318FF;}
+[data-theme="dark"] .b-arm{background:rgba(59,130,246,.15);color:#E8705A;}
 [data-theme="dark"] .b-mov{background:rgba(168,85,247,.15);color:#C084FC;}
 [data-theme="dark"] .b-leg{background:rgba(249,115,22,.15);color:#F97316;}
 [data-theme="dark"] .b-cap{background:rgba(245,158,11,.15);color:#F59E0B;}
@@ -279,7 +279,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 /* DUPLA */
 .dupla-toggle{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
 .dupla-switch{width:36px;height:20px;border-radius:10px;background:var(--bdr);border:1.5px solid var(--bdr2);cursor:pointer;position:relative;transition:background .25s;flex-shrink:0;}
-.dupla-switch.on{background:#4318FF;border-color:#4318FF;}
+.dupla-switch.on{background:#E8705A;border-color:#E8705A;}
 .dupla-switch-k{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:white;transition:transform .25s;box-shadow:0 1px 3px rgba(0,0,0,0.2);}
 .dupla-switch.on .dupla-switch-k{transform:translateX(16px);}
 .dupla-label{font-size:12px;font-weight:500;color:var(--text2);}
@@ -291,12 +291,12 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .period-filter{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
 .period-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--bdr);background:none;color:var(--text2);font-size:11px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .18s;}
 .period-btn:hover{border-color:var(--or);color:var(--or);}
-.period-btn.active{background:rgba(67,24,255,0.08);border-color:#4318FF;color:#4318FF;font-weight:600;}
+.period-btn.active{background:rgba(232,112,90,0.10);border-color:#E8705A;color:#E8705A;font-weight:600;}
 .period-custom{display:flex;align-items:center;gap:6px;}
 .period-input{background:var(--metric);border:1.5px solid var(--bdr);border-radius:8px;padding:5px 10px;font-size:11px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;}
 .period-input:focus{border-color:var(--or);}
 .period-sep{font-size:11px;color:var(--text3);}
-.period-apply{background:#4318FF;border:none;border-radius:8px;padding:5px 12px;color:white;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.5px;}
+.period-apply{background:#E8705A;border:none;border-radius:8px;padding:5px 12px;color:white;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.5px;}
 
 /* EDITAR MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:999;display:none;align-items:center;justify-content:center;}
@@ -353,7 +353,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 }
 .quick-form-wrap::before{
   content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,#4318FF,#4318FF,#C7BFFF);
+  background:linear-gradient(90deg,#E8705A,#E8705A,#F5C4BC);
 }
 .quick-form-title{
   font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;
@@ -425,33 +425,33 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
   border-radius:16px;
   padding:40px 36px;
   width:100%;max-width:380px;
-  box-shadow:0 20px 60px rgba(43,54,116,0.15),0 8px 20px rgba(67,24,255,0.10);
+  box-shadow:0 20px 60px rgba(44,62,80,0.15),0 8px 20px rgba(232,112,90,0.15);
   position:relative;overflow:hidden;
 }
 .login-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,#4318FF,#4318FF,#C7BFFF);
+  background:linear-gradient(90deg,#E8705A,#E8705A,#F5C4BC);
 }
 .login-brand{text-align:center;margin-bottom:32px;}
 .login-brand-sub{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text3,#999);margin-bottom:4px;}
 .login-brand-name{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--text,#111);text-transform:uppercase;letter-spacing:1px;}
-.login-brand-name span{color:#4318FF;}
+.login-brand-name span{color:#E8705A;}
 .login-brand-desc{font-size:11px;color:var(--text3,#A3AED0);margin-top:4px;}
 
 .login-field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
 .login-label{font-size:10px;color:var(--text3,#8B949E);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
 .login-input{
-  background:var(--metric,#F4F7FE);
+  background:var(--metric,#FAFAF7);
   border:1.5px solid var(--bdr,#E2DED7);
   border-radius:8px;padding:11px 13px;
   font-size:13px;color:var(--text,#111);
   font-family:'Inter',sans-serif;
   outline:none;width:100%;transition:border-color .2s;
 }
-.login-input:focus{border-color:#4318FF;}
+.login-input:focus{border-color:#E8705A;}
 
 .login-btn{
-  width:100%;background:linear-gradient(135deg,#4318FF,#4318FF);border:none;border-radius:9px;
+  width:100%;background:linear-gradient(135deg,#E8705A,#E8705A);border:none;border-radius:9px;
   padding:13px;color:white;
   font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;
   letter-spacing:1px;text-transform:uppercase;cursor:pointer;
@@ -477,9 +477,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .login-avatar-wrap{display:flex;justify-content:center;margin-bottom:24px;}
 .login-avatar{
   width:64px;height:64px;border-radius:50%;
-  background:rgba(0,188,212,0.1);border:2px solid rgba(67,24,255,0.20);
+  background:rgba(0,188,212,0.1);border:2px solid rgba(232,112,90,0.25);
   display:flex;align-items:center;justify-content:center;
-  font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:#4318FF;
+  font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:#E8705A;
 }
 
 /* show/hide password */
@@ -605,222 +605,114 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
           </div>
         </div>
 
-        <!-- MÉTRICAS -->
-        <div class="metrics-row">
-          <div class="mc"><div class="mc-label">Total Atividades</div><div class="mc-val" id="m-total">—</div><div class="mc-sub">registros no banco</div></div>
-          <div class="mc"><div class="mc-label">Produção Total</div><div class="mc-val" id="m-prod">—</div><div class="mc-sub">unidades registradas</div></div>
-          <div class="mc"><div class="mc-label">Colaboradores</div><div class="mc-val" id="m-colab">—</div><div class="mc-sub">ativos este mês</div></div>
-          <div class="mc"><div class="mc-label">SKU Destaque</div>
-<div id="m-sku" style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--or);line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;word-break:break-word;">—</div>
-<div id="m-sku-desc" style="display:none;"></div></div>
-        </div>
+        <!-- ROW 1: GRID COLORIDO 3 COLUNAS -->
+        <div style="display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:14px;margin-bottom:14px;">
 
-        <!-- SKU + PIZZA + TOP5 -->
-        <div class="grid-3">
-          <div class="cc">
-            <div class="ct">SKU por Mês</div><div class="cs">volume mensal por categoria</div>
-            <div style="position:relative;height:190px;"><canvas id="skuChart"></canvas></div>
-            <div class="leg">
-              <div class="li"><div class="ld" style="background:#4318FF"></div>Capas</div>
-              <div class="li"><div class="ld" style="background:#DB2777"></div>Películas</div>
-              <div class="li"><div class="ld" style="background:#4F46E5"></div>Acessórios</div>
+          <!-- COL 1: TOP COLABORADORES (coral) -->
+          <div style="background:#E8705A;border-radius:14px;padding:16px;color:white;min-height:220px;">
+            <div style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;opacity:.85;">🏆 Top Colaboradores</div>
+            <div id="dash-top-colabs" style="display:flex;flex-direction:column;gap:10px;"></div>
+          </div>
+
+          <!-- COL 2: GRÁFICO SKU POR MÊS -->
+          <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;">📊 SKU por Mês</div>
+              <div style="font-size:10px;color:#E8705A;font-weight:600;">— Volume</div>
+            </div>
+            <div style="position:relative;height:160px;"><canvas id="skuChart"></canvas></div>
+            <div style="display:flex;gap:10px;margin-top:8px;">
+              <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:var(--text3);"><div style="width:8px;height:8px;border-radius:2px;background:#E8705A;"></div>Capas</div>
+              <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:var(--text3);"><div style="width:8px;height:8px;border-radius:2px;background:#DB2777;"></div>Películas</div>
+              <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:var(--text3);"><div style="width:8px;height:8px;border-radius:2px;background:#1ABC9C;"></div>Acessórios</div>
             </div>
           </div>
-          <div class="cc">
-            <div class="ct">Categorias</div><div class="cs">distribuição por tipo</div>
-            <div style="position:relative;height:155px;"><canvas id="pizzaChart"></canvas></div>
-            <div class="leg" style="margin-top:10px;">
-              <div class="li"><div class="ld" style="background:#4F46E5"></div>Reposição</div>
-              <div class="li"><div class="ld" style="background:#4318FF"></div>Armazenamento</div>
-              <div class="li"><div class="ld" style="background:#4318FF"></div>Movimentação</div>
-              <div class="li"><div class="ld" style="background:#4318FF"></div>Legendas</div>
-            </div>
-          </div>
-          <div class="cc">
-            <div class="ct">Top 5</div><div class="cs">colaboradores por volume</div>
-            <div class="t5" id="top5-list"><div class="empty-state">Carregando...</div></div>
+
+          <!-- COL 3: CATEGORIAS (teal) -->
+          <div style="background:#1ABC9C;border-radius:14px;padding:16px;color:white;min-height:220px;">
+            <div style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;opacity:.85;">📦 Categorias</div>
+            <div style="position:relative;height:120px;"><canvas id="pizzaChart"></canvas></div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;" id="pizza-legend"></div>
           </div>
         </div>
 
-        <!-- HEATMAP + LINHA -->
-        <div class="grid-2">
+        <!-- ROW 2: 4 MÉTRICAS COLORIDAS -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px;">
+          <div style="background:#E8705A;border-radius:12px;padding:14px 16px;color:white;">
+            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;opacity:.8;margin-bottom:4px;">Total Atividades</div>
+            <div style="font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;line-height:1;" id="m-total">—</div>
+            <div style="font-size:10px;opacity:.75;margin-top:2px;">registros no banco</div>
+          </div>
+          <div style="background:#1ABC9C;border-radius:12px;padding:14px 16px;color:white;">
+            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;opacity:.8;margin-bottom:4px;">Produção Total</div>
+            <div style="font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;line-height:1;" id="m-prod">—</div>
+            <div style="font-size:10px;opacity:.75;margin-top:2px;">unidades registradas</div>
+          </div>
+          <div style="background:#F5A623;border-radius:12px;padding:14px 16px;color:white;">
+            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;opacity:.8;margin-bottom:4px;">Colaboradores</div>
+            <div style="font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;line-height:1;" id="m-colab">—</div>
+            <div style="font-size:10px;opacity:.75;margin-top:2px;">ativos no período</div>
+          </div>
+          <div style="background:var(--card);border:2px solid #E8705A;border-radius:12px;padding:14px 16px;">
+            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">SKU Destaque</div>
+            <div style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:#E8705A;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;" id="m-sku">—</div>
+            <div style="display:none;" id="m-sku-desc"></div>
+          </div>
+        </div>
+
+        <!-- ROW 3: HEATMAP + EVOLUÇÃO DIÁRIA + META -->
+        <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:14px;margin-bottom:14px;">
+
           <!-- HEATMAP -->
-          <div class="cc">
+          <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px;">
             <div class="ct">Heatmap de Produção</div>
-            <div class="cs" id="heatmap-period-label">padrões de pico e queda por dia</div>
-            <div id="heatmap-container" style="overflow-x:auto;margin-top:8px;"></div>
-            <div class="heatmap-legend" style="margin-top:10px;">
+            <div class="cs" id="heatmap-period-label" style="margin-bottom:8px;">selecione um período</div>
+            <div id="heatmap-container" style="overflow-x:auto;"></div>
+            <div class="heatmap-legend" style="margin-top:8px;">
               <span class="heatmap-legend-label">Menos</span>
               <div class="heatmap-legend-cells" id="heatmap-legend"></div>
               <span class="heatmap-legend-label">Mais</span>
             </div>
           </div>
 
-          <!-- LINHA DIÁRIA -->
-          <div class="cc">
+          <!-- EVOLUÇÃO DIÁRIA -->
+          <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px;">
             <div class="ct">Evolução Diária</div>
-            <div class="cs" id="line-chart-sub">produção total por dia do mês atual</div>
-            <div style="position:relative;height:200px;"><canvas id="lineChart"></canvas></div>
+            <div class="cs" id="line-chart-sub" style="margin-bottom:8px;">produção por dia do mês</div>
+            <div style="position:relative;height:180px;"><canvas id="lineChart"></canvas></div>
           </div>
         </div>
 
-        <!-- META vs REALIZADO -->
-        <div class="cc" style="margin-bottom:12px;">
-          <div class="ct">Meta vs Realizado</div>
-          <div class="cs">comparativo de produção mensal por colaborador</div>
-          <div class="meta-config">
-            <span class="meta-config-label">Meta mensal por colaborador:</span>
-            <input class="meta-input" type="number" id="meta-valor" value="500" min="1">
-            <span class="meta-config-label">unidades</span>
-            <button class="meta-btn" onclick="renderMetaChart()">Atualizar</button>
-          </div>
-          <div class="meta-list" id="meta-list"><div class="empty-state">Carregando...</div></div>
-        </div>
-      </div>
+        <!-- ROW 4: TOP 10 SKUs + META + RANKING PÓDIO -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
 
-      <!-- REGISTRO + ATIVIDADES -->
-      <div class="page" id="page-registro">
-
-        <!-- FORMULÁRIO RÁPIDO -->
-        <div class="quick-form-wrap">
-          <div class="quick-form-title">⚡ Preenchimento Rápido</div>
-          <div class="quick-form-grid">
-            <div class="quick-field">
-              <div class="quick-label">Colaborador</div>
-              <select class="quick-input" id="qf-colab">
-                <option value="">Selecione...</option>
-                <option value="Felipe Lemes Galvão">Felipe Lemes Galvão</option>
-                <option value="Luis Carlos Passos Conceição">Luis Carlos Passos Conceição</option>
-                <option value="Gustavo Sena dos Santos Pita">Gustavo Sena dos Santos Pita</option>
-              </select>
-            </div>
-            <div class="quick-field">
-              <div class="quick-label">Data</div>
-              <input class="quick-input" type="date" id="qf-data">
-            </div>
-            <div class="quick-field">
-              <div class="quick-label">Quantidade</div>
-              <input class="quick-input" type="number" id="qf-qtd" placeholder="Ex: 150" min="1">
-            </div>
-            <div class="quick-field">
-              <div class="quick-label">Tipo de Atividade</div>
-              <select class="quick-input" id="qf-tipo">
-                <option value="">Selecione...</option>
-                <option value="Reposição">Reposição</option>
-                <option value="Armazenamento">Armazenamento</option>
-                <option value="Movimentação">Movimentação</option>
-                <option value="Legendas">Legendas</option>
-              </select>
-            </div>
-            <div class="quick-field">
-              <div class="quick-label">Categoria do Produto</div>
-              <select class="quick-input" id="qf-cat">
-                <option value="">Selecione...</option>
-                <option value="Capas">Capas</option>
-                <option value="Películas">Películas</option>
-                <option value="Acessórios">Acessórios</option>
-              </select>
-            </div>
-            <div class="quick-field">
-              <div class="quick-label">SKU — Código do Produto</div>
-              <input class="quick-input" type="text" id="qf-sku" placeholder="Ex: 29030" oninput="qfSkuSearch()">
-            </div>
+          <!-- TOP 5 COLABORADORES lista -->
+          <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px;">
+            <div class="ct" style="margin-bottom:4px;">Top 5 Colaboradores</div>
+            <div class="cs" style="margin-bottom:12px;">por volume no período</div>
+            <div id="top5-list"></div>
           </div>
 
-          <!-- Preview do SKU encontrado -->
-          <div class="quick-preview" id="qf-sku-preview">
-            <span class="quick-preview-item"><span class="quick-preview-label">SKU:</span><span class="quick-preview-val" id="qf-sku-nome">—</span></span>
+          <!-- META VS REALIZADO -->
+          <div style="background:#F5A623;border-radius:14px;padding:16px;color:white;">
+            <div style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;opacity:.9;">🎯 Meta vs Realizado</div>
+            <div style="font-size:10px;opacity:.75;margin-bottom:12px;">meta mensal por colaborador</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:10px;opacity:.8;">Meta:</span>
+              <input type="number" id="meta-valor" value="500" style="width:70px;background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.4);border-radius:6px;padding:4px 8px;color:white;font-size:12px;font-weight:600;outline:none;">
+              <span style="font-size:10px;opacity:.8;">un.</span>
+              <button onclick="updateMeta()" style="background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.4);border-radius:6px;padding:4px 10px;color:white;font-size:11px;font-weight:600;cursor:pointer;">OK</button>
+            </div>
+            <div id="meta-list"></div>
           </div>
 
-          <div class="quick-actions">
-            <button class="btn-quick-fill" onclick="quickFill()">⚡ Preencher Formulário</button>
-            <button class="btn-quick-clear" onclick="quickClear()">Limpar</button>
-            <span class="quick-hint">Preencha os campos e clique para transferir para o formulário abaixo</span>
+          <!-- PÓDIO -->
+          <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px;">
+            <div class="ct" style="margin-bottom:12px;">🥇 Pódio</div>
+            <div class="podium-wrap" id="podium"></div>
           </div>
         </div>
 
-        <div class="fc">
-          <div class="ft">Registrar Atividade</div>
-          <div class="fg">
-            <div class="fgr full">
-              <!-- TOGGLE DUPLA -->
-              <div class="dupla-toggle">
-                <div class="dupla-switch" id="dupla-switch" onclick="toggleDupla()">
-                  <div class="dupla-switch-k"></div>
-                </div>
-                <span class="dupla-label">Atividade em dupla</span>
-                <span class="dupla-badge" id="dupla-badge" style="display:none;">÷ 2</span>
-              </div>
-
-              <!-- COLABORADORES -->
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                <div>
-                  <div class="fl" style="margin-bottom:5px;">Colaborador 1</div>
-                  <div class="colab-wrap">
-                    <input class="fi" type="text" id="f-colab" placeholder="Selecione ou digite o nome..."
-                      autocomplete="off" oninput="filterColabs(1)" onfocus="showColabDrop(1)"
-                      onblur="setTimeout(()=>hideColabDrop(1),200)"
-                      onkeydown="if(event.key===\'Escape\')hideColabDrop(1)">
-                    <div class="colab-dropdown" id="colab-dropdown-1"></div>
-                  </div>
-                </div>
-                <div id="colab2-wrap" style="display:none;">
-                  <div class="fl" style="margin-bottom:5px;">Colaborador 2</div>
-                  <div class="colab-wrap">
-                    <input class="fi" type="text" id="f-colab2" placeholder="Selecione o 2º colaborador..."
-                      autocomplete="off" oninput="filterColabs(2)" onfocus="showColabDrop(2)"
-                      onblur="setTimeout(()=>hideColabDrop(2),200)"
-                      onkeydown="if(event.key===\'Escape\')hideColabDrop(2)">
-                    <div class="colab-dropdown" id="colab-dropdown-2"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="dupla-info" id="dupla-info" style="display:none;">
-                A quantidade será dividida igualmente: <span id="dupla-qtd-preview">—</span> unidades para cada colaborador.
-              </div>
-            </div>
-            <div class="fgr"><div class="fl">Data</div><input class="fi" type="date" id="f-data"></div>
-            <div class="fgr full"><div class="fl">Tipo de Atividade</div>
-              <div class="rg" id="rg-tipo">
-                <div class="rb sel" onclick="toggleRadio('rg-tipo',this)">Reposição</div>
-                <div class="rb" onclick="toggleRadio('rg-tipo',this)">Armazenamento</div>
-                <div class="rb" onclick="toggleRadio('rg-tipo',this)">Movimentação</div>
-                <div class="rb" onclick="toggleRadio('rg-tipo',this)">Legendas</div>
-              </div>
-            </div>
-            <div class="fgr full"><div class="fl">Nomenclatura</div>
-              <div class="rg" id="rg-cat">
-                <div class="rb sel" onclick="toggleRadio('rg-cat',this)">Capas</div>
-                <div class="rb" onclick="toggleRadio('rg-cat',this)">Películas</div>
-                <div class="rb" onclick="toggleRadio('rg-cat',this)">Acessórios</div>
-              </div>
-            </div>
-            <div class="fgr full">
-              <div class="fl">Código de Produto</div>
-              <div class="sku-search-wrap">
-                <input class="fi" type="text" id="f-sku-search" placeholder="Digite o código do produto (ex: 29030)..." autocomplete="off" oninput="filterSkus()" onfocus="showSkuDropdown()" onblur="setTimeout(hideSkuDropdown,200)">
-                <div class="sku-dropdown" id="sku-dropdown"></div>
-              </div>
-              <div class="sku-selected" id="sku-selected" style="display:none;">
-                <span class="sku-selected-name" id="sku-selected-name"></span>
-                <span class="sku-selected-clear" onclick="clearSku()">×</span>
-              </div>
-            </div>
-            <div class="fgr"><div class="fl">Quantidade</div><input class="fi" type="number" id="f-qtd" placeholder="Ex: 150" min="1" oninput="updateDuplaPreview()"></div>
-            <div class="fgr" style="align-self:flex-end;"><button class="bts" id="btn-registrar" onclick="submitForm()">Registrar</button></div>
-          </div>
-        </div>
-        <div class="cc">
-          <div class="ct">Atividades Recentes</div><div class="cs">histórico de registros do banco</div>
-          <table class="rt">
-            <thead><tr><th>Colaborador</th><th>Tipo</th><th>Categoria</th><th colspan="2">SKU — Código e Produto</th><th>Qtd</th><th>Data</th><th style="width:70px;"></th></tr></thead>
-            <tbody id="recent-tbody"><tr><td colspan="8" class="empty-state">Carregando...</td></tr></tbody>
-          </table>
-          <div class="pagination">
-            <div class="pagination-info" id="pag-info">— registros</div>
-            <div class="pagination-btns" id="pag-btns"></div>
-          </div>
-        </div>
       </div>
 
       <!-- RANKING -->
@@ -1048,7 +940,7 @@ function renderAtividades() {
       <td>${r.quantidade}</td>
       <td>${r.data}</td>
       <td style="display:flex;gap:4px;align-items:center;">
-        <button onclick="openEditModal('${r.id}','${r.colaborador}','${r.quantidade}','${r.data}','${r.tipo}')" title="Editar registro" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:13px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(67,24,255,.08)';this.style.borderColor='rgba(67,24,255,.25)';this.style.color='var(--or)'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">✏️</button>
+        <button onclick="openEditModal('${r.id}','${r.colaborador}','${r.quantidade}','${r.data}','${r.tipo}')" title="Editar registro" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:13px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(232,112,90,.10)';this.style.borderColor='rgba(232,112,90,.25)';this.style.color='var(--or)'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">✏️</button>
         <button onclick="deleteAtividade('${r.id}')" title="Excluir registro" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:14px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(220,38,38,.1)';this.style.borderColor='rgba(220,38,38,.3)';this.style.color='#DC2626'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">🗑</button>
       </td>
     </tr>`;
@@ -1151,23 +1043,23 @@ function renderHeatmap() {
     if(!val) return isDark ? '#1E293B' : '#F7F5F1';
     const pct = val/maxVal;
     if(isDark){
-      if(pct < 0.25) return 'rgba(67,24,255,0.20)';
+      if(pct < 0.25) return 'rgba(232,112,90,0.25)';
       if(pct < 0.50) return 'rgba(249,115,22,0.50)';
       if(pct < 0.75) return 'rgba(0,188,212,0.75)';
-      return '#4318FF';
+      return '#E8705A';
     } else {
-      if(pct < 0.25) return '#E0DBFF';
-      if(pct < 0.50) return '#4318FF';
-      if(pct < 0.75) return '#4318FF';
-      return '#3B0FE0';
+      if(pct < 0.25) return '#FAE8E4';
+      if(pct < 0.50) return '#E8705A';
+      if(pct < 0.75) return '#E8705A';
+      return '#D4604A';
     }
   }
 
   function getTextColor(val){
     if(!val) return 'var(--text2)';
     const pct = val/maxVal;
-    if(isDark) return pct < 0.25 ? '#E0DBFF' : '#fff';
-    return pct < 0.25 ? '#2D0AC8' : '#fff';
+    if(isDark) return pct < 0.25 ? '#FAE8E4' : '#fff';
+    return pct < 0.25 ? '#C05040' : '#fff';
   }
 
   function fmtVal(v){
@@ -1258,8 +1150,8 @@ function renderHeatmap() {
 
   if(legendEl){
     const steps = isDark
-      ? ['#1E293B','rgba(67,24,255,0.20)','rgba(0,188,212,0.5)','#4318FF','#4318FF']
-      : ['#F7F5F1','#E0DBFF','#4318FF','#4318FF','#3B0FE0'];
+      ? ['#1E293B','rgba(232,112,90,0.25)','rgba(0,188,212,0.5)','#E8705A','#E8705A']
+      : ['#F7F5F1','#FAE8E4','#E8705A','#E8705A','#D4604A'];
     legendEl.innerHTML = steps.map(c=>`<div class="heatmap-legend-cell" style="background:${c}"></div>`).join('');
   }
 }
@@ -1278,7 +1170,7 @@ function showHeatTip(el, e){
     border-radius:8px;padding:8px 12px;font-size:11px;font-family:'Inter',sans-serif;
     pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.25);min-width:140px;`;
   tip.innerHTML = `
-    <div style="font-weight:600;margin-bottom:4px;color:#4318FF;">Dia ${day}</div>
+    <div style="font-weight:600;margin-bottom:4px;color:#E8705A;">Dia ${day}</div>
     <div style="display:flex;justify-content:space-between;gap:12px;">
       <span style="color:rgba(255,255,255,.7);">Produção:</span>
       <span style="font-weight:600;">${val.toLocaleString('pt-BR')} un.</span>
@@ -1286,7 +1178,7 @@ function showHeatTip(el, e){
     <div style="border-top:1px solid rgba(255,255,255,.1);margin:5px 0;"></div>
     <div style="display:flex;justify-content:space-between;gap:12px;">
       <span style="color:rgba(255,255,255,.7);">Semana ${week}:</span>
-      <span style="font-weight:600;color:#4318FF;">${weekTot.toLocaleString('pt-BR')} un.</span>
+      <span style="font-weight:600;color:#E8705A;">${weekTot.toLocaleString('pt-BR')} un.</span>
     </div>`;
   document.body.appendChild(tip);
   heatTip = tip;
@@ -1306,7 +1198,7 @@ function hideHeatTip(){
 // ── LINHA DIÁRIA ──
 function buildLineChart() {
   const b       = getBase();
-  const orColor = isDark ? '#4318FF' : '#4318FF';
+  const orColor = isDark ? '#E8705A' : '#E8705A';
 
   // Always use filteredData (even if empty = shows zeros for the period)
   const data = filteredData || [];
@@ -1354,7 +1246,7 @@ function buildLineChart() {
         label:'Produção',
         data: prodByDay,
         borderColor: orColor,
-        backgroundColor: isDark?'rgba(67,24,255,0.08)':'rgba(67,24,255,0.08)',
+        backgroundColor: isDark?'rgba(232,112,90,0.10)':'rgba(232,112,90,0.10)',
         fill: true,
         tension: .4,
         pointRadius: hasData ? prodByDay.map(v=>v>0?4:0) : 0,
@@ -1396,7 +1288,7 @@ function renderMetaChart() {
   el.innerHTML=sorted.map(([name,real])=>{
     const pct=Math.min(Math.round(real/meta*100),100);
     const over=real>=meta;
-    const barColor=over?(isDark?'#FBBF24':'#0D9488'):(real/meta>0.7?(isDark?'#4318FF':'#4318FF'):(isDark?'#4318FF':'#4318FF'));
+    const barColor=over?(isDark?'#FBBF24':'#0D9488'):(real/meta>0.7?(isDark?'#E8705A':'#E8705A'):(isDark?'#E8705A':'#E8705A'));
     return `<div class="meta-item">
       <div class="meta-header">
         <span class="meta-name">${name}</span>
@@ -1475,7 +1367,7 @@ function buildTop10Chart() {
   const sorted = Object.entries(skuT).sort((a,b)=>b[1]-a[1]).slice(0,10);
   if(charts.top10){charts.top10.destroy();charts.top10=null;}
   const b = getBase();
-  const cmap = {'Capas':isDark?'#4318FF':'#4318FF','Películas':isDark?'#F472B6':'#DB2777','Acessórios':isDark?'#FBBF24':'#0D9488'};
+  const cmap = {'Capas':isDark?'#E8705A':'#E8705A','Películas':isDark?'#F472B6':'#DB2777','Acessórios':isDark?'#FBBF24':'#0D9488'};
 
   const chartLabels = sorted.map(([k])=>{
     const lbl = skuLabel[k]||k;
@@ -1545,7 +1437,7 @@ function rebuildCharts() {
   }
 
   const skuTypes  = ['Capas','Películas','Acessórios'];
-  const skuColors = isDark?['#4318FF','#EC4899','#FBBF24']:['#4318FF','#DB2777','#0D9488'];
+  const skuColors = isDark?['#E8705A','#EC4899','#FBBF24']:['#E8705A','#DB2777','#0D9488'];
 
   charts.sku = new Chart(document.getElementById('skuChart'),{
     type:'bar',
@@ -1572,15 +1464,23 @@ function rebuildCharts() {
   // --- PIZZA ---
   const tipoC = {Reposição:0,Armazenamento:0,Movimentação:0,Legendas:0};
   data.forEach(r=>{if(tipoC[r.tipo]!==undefined) tipoC[r.tipo]+=r.quantidade;});
-  const pieColors = isDark?['#FBBF24','#4318FF','#4318FF','#4318FF']:['#0D9488','#4318FF','#4318FF','#4318FF'];
+  const pieColors = isDark?['#FBBF24','#E8705A','#E8705A','#E8705A']:['#0D9488','#E8705A','#E8705A','#E8705A'];
   charts.pizza = new Chart(document.getElementById('pizzaChart'),{
     type:'doughnut',
     data:{
       labels: Object.keys(tipoC),
-      datasets:[{data:Object.values(tipoC),backgroundColor:pieColors,borderWidth:2,borderColor:b.border,hoverOffset:4}]
+      datasets:[{data:Object.values(tipoC),backgroundColor:pieColors,borderWidth:2,borderColor:'transparent',hoverOffset:4}]
     },
     options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false}}}
   });
+  // Pizza legend on teal card
+  const pizzaLegEl = document.getElementById('pizza-legend');
+  if(pizzaLegEl){
+    const lnames = Object.keys(tipoC);
+    pizzaLegEl.innerHTML = lnames.map((k,i)=>`<div style="display:flex;align-items:center;gap:3px;font-size:9px;color:rgba(255,255,255,.9);">
+      <div style="width:7px;height:7px;border-radius:50%;background:${pieColors[i]};"></div>${k}
+    </div>`).join('');
+  }
 
   // --- LINE + HEATMAP ---
   buildLineChart();
@@ -1704,7 +1604,7 @@ function toggleTheme(){
   // Update toggle style
   const tog = document.querySelector('.tb-tt');
   if(tog){
-    tog.style.background = isDark ? '#4318FF' : '#D1D5DB';
+    tog.style.background = isDark ? '#E8705A' : '#D1D5DB';
     if(knob) knob.style.transform = isDark ? 'translateX(18px)' : 'translateX(0)';
   }
   setTimeout(rebuildCharts,50);
@@ -1768,7 +1668,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   const lbl = document.getElementById('tlabel');
   const tog = document.querySelector('.tb-tt');
   if(lbl) lbl.textContent = 'Tema Claro';
-  if(tog){ tog.style.background='#4318FF'; }
+  if(tog){ tog.style.background='#E8705A'; }
   const knob = document.querySelector('.tb-tt-k');
   if(knob) knob.style.transform='translateX(0)';
   setTimeout(()=>document.getElementById('login-user').focus(),100);
@@ -2119,12 +2019,31 @@ function applyFilter(){
 }
 
 function renderDashboard(){
-  // Use filteredData for all dashboard renders
   updateMetricsFiltered();
   renderTop5Filtered();
+  renderTopColabsCards();
   renderHeatmap();
   renderMetaChart();
   rebuildCharts();
+}
+
+function renderTopColabsCards(){
+  const el = document.getElementById('dash-top-colabs');
+  if(!el) return;
+  const data = (filteredData && filteredData.length>0) ? filteredData : [];
+  if(!data.length){ el.innerHTML='<div style="font-size:11px;opacity:.7;">Selecione um período</div>'; return; }
+  const scores={};
+  data.forEach(r=>{ scores[r.colaborador]=(scores[r.colaborador]||0)+r.quantidade; });
+  const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  const medals=['🥇','🥈','🥉'];
+  el.innerHTML=sorted.map(([name,pts],i)=>`
+    <div style="background:rgba(255,255,255,0.2);border-radius:8px;padding:8px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;" onclick="openColabModal('${name.replace(/'/g,"\\'")}')">
+      <span style="font-size:16px;">${medals[i]}</span>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${name.split(' ')[0]}</div>
+        <div style="font-size:10px;opacity:.8;">${pts.toLocaleString('pt-BR')} un.</div>
+      </div>
+    </div>`).join('');
 }
 
 function updateMetricsFiltered(){
@@ -2194,7 +2113,7 @@ function renderAtividadesPaged(){
       <td>${r.quantidade}</td>
       <td>${r.data}</td>
       <td style="display:flex;gap:4px;align-items:center;">
-        <button onclick="openEditModal('${r.id}','${r.colaborador.replace(/'/g,"\\'")}','${r.quantidade}','${r.data}','${r.tipo}')" title="Editar" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:13px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(67,24,255,.08)';this.style.borderColor='rgba(67,24,255,.25)';this.style.color='var(--or)'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">✏️</button>
+        <button onclick="openEditModal('${r.id}','${r.colaborador.replace(/'/g,"\\'")}','${r.quantidade}','${r.data}','${r.tipo}')" title="Editar" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:13px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(232,112,90,.10)';this.style.borderColor='rgba(232,112,90,.25)';this.style.color='var(--or)'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">✏️</button>
         <button onclick="deleteAtividade('${r.id}')" title="Excluir" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:14px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(220,38,38,.1)';this.style.borderColor='rgba(220,38,38,.3)';this.style.color='#DC2626'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">🗑</button>
       </td>
     </tr>`;
