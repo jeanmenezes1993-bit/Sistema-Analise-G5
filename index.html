@@ -4,20 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sistema Análise G5</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23F97316'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Arial, Helvetica, sans-serif' font-size='22' font-weight='700' fill='%2309090B'%3EG5%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233B82F6'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Arial, Helvetica, sans-serif' font-size='22' font-weight='700' fill='%2309090B'%3EG5%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --or:#EA580C;--or-bg:rgba(234,88,12,0.08);--or-bdr:rgba(234,88,12,0.2);
+  --or:#2563EB;--or-bg:rgba(37,99,235,0.08);--or-bdr:rgba(37,99,235,0.2);
   --bg:#F9FAFB;--card:#FFFFFF;--sb:#18181B;
   --bdr:#E5E7EB;--text:#0D0D0D;--text2:#0D0D0D;--text3:#999490;
-  --metric:#F3F4F6;--teal:#0D9488;--blue:#EA580C;--purple:#7C3AED;
+  --metric:#F3F4F6;--teal:#0D9488;--blue:#2563EB;--purple:#7C3AED;
 }
 [data-theme="dark"]{
-  --or:#F97316;--or-bg:rgba(249,115,22,0.1);--or-bdr:rgba(249,115,22,0.2);
+  --or:#3B82F6;--or-bg:rgba(59,130,246,0.1);--or-bdr:rgba(59,130,246,0.2);
   --bg:#0A0A0A;--card:#111827;--sb:#09090B;
   --bdr:rgba(255,255,255,0.08);--text:#F1F5F9;--text2:#CBD5E1;--text3:#64748B;
   --metric:#1E293B;--teal:#14B8A6;--blue:#3B82F6;--purple:#A855F7;
@@ -35,7 +35,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .sb-section{padding:16px 12px 4px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#71717A;}
 .sb-nav-item{display:flex;align-items:center;margin:3px 8px;border-radius:9px;cursor:pointer;overflow:hidden;border:1.5px solid transparent;transition:border-color .18s,background .18s;background:none;width:calc(100% - 16px);text-align:left;font-family:'Inter',sans-serif;box-shadow:none;outline:none;}
 .sb-nav-item:hover{background:rgba(255,255,255,0.06);}
-.sb-nav-item.active{border-color:rgba(234,88,12,0.4);background:rgba(234,88,12,0.12);}
+.sb-nav-item.active{border-color:rgba(37,99,235,0.4);background:rgba(37,99,235,0.12);}
 .sb-nav-icon{width:36px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;color:#A1A1AA;transition:color .18s;}
 .sb-nav-item.active .sb-nav-icon,.sb-nav-item:hover .sb-nav-icon{color:var(--or);}
 .sb-nav-inner{flex:1;padding:0 8px 0 0;height:40px;display:flex;align-items:center;justify-content:space-between;}
@@ -62,7 +62,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .tb-tt{width:28px;height:16px;border-radius:8px;background:var(--bdr);position:relative;transition:background .3s;flex-shrink:0;}
 .tb-tt-k{position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:var(--or);transition:transform .25s;}
 [data-theme="dark"] .tb-tt-k{transform:translateX(12px);}
-[data-theme="dark"] .tb-tt{background:rgba(249,115,22,0.25);}
+[data-theme="dark"] .tb-tt{background:rgba(59,130,246,0.25);}
 .content{padding:18px;flex:1;}
 .page{display:none;}.page.active{display:block;}
 
@@ -205,16 +205,16 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .rt td{padding:9px 10px;border-bottom:1px solid var(--bdr);color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
 .b-rep{background:rgba(13,148,136,.1);color:#0D9488;}
-.b-arm{background:rgba(37,99,235,.1);color:#EA580C;}
+.b-arm{background:rgba(37,99,235,.1);color:#2563EB;}
 .b-mov{background:rgba(124,58,237,.1);color:#7C3AED;}
-.b-leg{background:rgba(234,88,12,.1);color:#EA580C;}
+.b-leg{background:rgba(37,99,235,.1);color:#2563EB;}
 .b-cap{background:rgba(217,119,6,.1);color:#D97706;}
 .b-pel{background:rgba(219,39,119,.1);color:#DB2777;}
 .b-ace{background:rgba(22,163,74,.1);color:#16A34A;}
 [data-theme="dark"] .b-rep{background:rgba(20,184,166,.15);color:#14B8A6;}
-[data-theme="dark"] .b-arm{background:rgba(59,130,246,.15);color:#FB923C;}
+[data-theme="dark"] .b-arm{background:rgba(59,130,246,.15);color:#60A5FA;}
 [data-theme="dark"] .b-mov{background:rgba(168,85,247,.15);color:#C084FC;}
-[data-theme="dark"] .b-leg{background:rgba(249,115,22,.15);color:#F97316;}
+[data-theme="dark"] .b-leg{background:rgba(59,130,246,.15);color:#3B82F6;}
 [data-theme="dark"] .b-cap{background:rgba(245,158,11,.15);color:#F59E0B;}
 [data-theme="dark"] .b-pel{background:rgba(236,72,153,.15);color:#F472B6;}
 [data-theme="dark"] .b-ace{background:rgba(34,197,94,.15);color:#4ADE80;}
@@ -360,12 +360,12 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 }
 .login-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,#EA580C,#F97316,#FBBF24);
+  background:linear-gradient(90deg,#1D4ED8,#3B82F6,#93C5FD);
 }
 .login-brand{text-align:center;margin-bottom:32px;}
 .login-brand-sub{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text3,#999);margin-bottom:4px;}
 .login-brand-name{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--text,#111);text-transform:uppercase;letter-spacing:1px;}
-.login-brand-name span{color:#EA580C;}
+.login-brand-name span{color:#2563EB;}
 .login-brand-desc{font-size:11px;color:var(--text3,#6B7280);margin-top:4px;}
 
 .login-field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
@@ -378,10 +378,10 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
   font-family:'Inter',sans-serif;
   outline:none;width:100%;transition:border-color .2s;
 }
-.login-input:focus{border-color:#EA580C;}
+.login-input:focus{border-color:#2563EB;}
 
 .login-btn{
-  width:100%;background:linear-gradient(135deg,#EA580C,#F97316);border:none;border-radius:9px;
+  width:100%;background:linear-gradient(135deg,#2563EB,#3B82F6);border:none;border-radius:9px;
   padding:13px;color:white;
   font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;
   letter-spacing:1px;text-transform:uppercase;cursor:pointer;
@@ -407,9 +407,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .login-avatar-wrap{display:flex;justify-content:center;margin-bottom:24px;}
 .login-avatar{
   width:64px;height:64px;border-radius:50%;
-  background:rgba(234,88,12,0.1);border:2px solid rgba(234,88,12,0.25);
+  background:rgba(37,99,235,0.1);border:2px solid rgba(37,99,235,0.25);
   display:flex;align-items:center;justify-content:center;
-  font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:#EA580C;
+  font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:#2563EB;
 }
 
 /* show/hide password */
@@ -551,7 +551,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
             <div class="ct">SKU por Mês</div><div class="cs">volume mensal por categoria</div>
             <div style="position:relative;height:190px;"><canvas id="skuChart"></canvas></div>
             <div class="leg">
-              <div class="li"><div class="ld" style="background:#EA580C"></div>Capas</div>
+              <div class="li"><div class="ld" style="background:#2563EB"></div>Capas</div>
               <div class="li"><div class="ld" style="background:#DB2777"></div>Películas</div>
               <div class="li"><div class="ld" style="background:#4F46E5"></div>Acessórios</div>
             </div>
@@ -561,9 +561,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
             <div style="position:relative;height:155px;"><canvas id="pizzaChart"></canvas></div>
             <div class="leg" style="margin-top:10px;">
               <div class="li"><div class="ld" style="background:#4F46E5"></div>Reposição</div>
-              <div class="li"><div class="ld" style="background:#EA580C"></div>Armazenamento</div>
+              <div class="li"><div class="ld" style="background:#2563EB"></div>Armazenamento</div>
               <div class="li"><div class="ld" style="background:#7C3AED"></div>Movimentação</div>
-              <div class="li"><div class="ld" style="background:#EA580C"></div>Legendas</div>
+              <div class="li"><div class="ld" style="background:#2563EB"></div>Legendas</div>
             </div>
           </div>
           <div class="cc">
@@ -919,7 +919,7 @@ function renderAtividades() {
       <td>${r.quantidade}</td>
       <td>${r.data}</td>
       <td style="display:flex;gap:4px;align-items:center;">
-        <button onclick="openEditModal('${r.id}','${r.colaborador}','${r.quantidade}','${r.data}','${r.tipo}')" title="Editar registro" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:13px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(234,88,12,.1)';this.style.borderColor='rgba(234,88,12,.3)';this.style.color='var(--or)'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">✏️</button>
+        <button onclick="openEditModal('${r.id}','${r.colaborador}','${r.quantidade}','${r.data}','${r.tipo}')" title="Editar registro" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:13px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(37,99,235,.1)';this.style.borderColor='rgba(37,99,235,.3)';this.style.color='var(--or)'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">✏️</button>
         <button onclick="deleteAtividade('${r.id}')" title="Excluir registro" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:14px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(220,38,38,.1)';this.style.borderColor='rgba(220,38,38,.3)';this.style.color='#DC2626'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">🗑</button>
       </td>
     </tr>`;
@@ -1022,23 +1022,23 @@ function renderHeatmap() {
     if(!val) return isDark ? '#1E293B' : '#F7F5F1';
     const pct = val/maxVal;
     if(isDark){
-      if(pct < 0.25) return 'rgba(249,115,22,0.25)';
-      if(pct < 0.50) return 'rgba(249,115,22,0.50)';
-      if(pct < 0.75) return 'rgba(249,115,22,0.75)';
-      return '#F97316';
+      if(pct < 0.25) return 'rgba(59,130,246,0.25)';
+      if(pct < 0.50) return 'rgba(59,130,246,0.50)';
+      if(pct < 0.75) return 'rgba(59,130,246,0.75)';
+      return '#3B82F6';
     } else {
-      if(pct < 0.25) return '#FED7AA';
-      if(pct < 0.50) return '#FB923C';
-      if(pct < 0.75) return '#EA580C';
-      return '#C2410C';
+      if(pct < 0.25) return '#BFDBFE';
+      if(pct < 0.50) return '#60A5FA';
+      if(pct < 0.75) return '#2563EB';
+      return '#1D4ED8';
     }
   }
 
   function getTextColor(val){
     if(!val) return 'var(--text2)';
     const pct = val/maxVal;
-    if(isDark) return pct < 0.25 ? '#FED7AA' : '#fff';
-    return pct < 0.25 ? '#9A3412' : '#fff';
+    if(isDark) return pct < 0.25 ? '#BFDBFE' : '#fff';
+    return pct < 0.25 ? '#1E40AF' : '#fff';
   }
 
   function fmtVal(v){
@@ -1111,7 +1111,7 @@ function renderHeatmap() {
                 background:${bg};border:1px solid ${isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.05)'};
                 cursor:default;transition:transform .15s,box-shadow .15s;"
               data-day="${day}" data-val="${val}" data-week="${wi+1}" data-weektotal="${weekTotal}"
-              onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 2px 8px rgba(234,88,12,.35)';showHeatTip(this,event)"
+              onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 2px 8px rgba(37,99,235,.35)';showHeatTip(this,event)"
               onmouseout="this.style.transform='';this.style.boxShadow='';hideHeatTip()">
               <span style="font-size:11px;font-weight:600;color:${tc};line-height:1;">${day}</span>
               ${val>0?`<span style="font-size:9px;color:${tc};opacity:.85;margin-top:2px;">${fmtVal(val)}</span>`:''}
@@ -1129,8 +1129,8 @@ function renderHeatmap() {
 
   if(legendEl){
     const steps = isDark
-      ? ['#1E293B','rgba(249,115,22,0.25)','rgba(249,115,22,0.5)','#F97316','#EA580C']
-      : ['#F7F5F1','#FED7AA','#FB923C','#EA580C','#C2410C'];
+      ? ['#1E293B','rgba(59,130,246,0.25)','rgba(59,130,246,0.5)','#3B82F6','#2563EB']
+      : ['#F7F5F1','#BFDBFE','#60A5FA','#2563EB','#1D4ED8'];
     legendEl.innerHTML = steps.map(c=>`<div class="heatmap-legend-cell" style="background:${c}"></div>`).join('');
   }
 }
@@ -1149,7 +1149,7 @@ function showHeatTip(el, e){
     border-radius:8px;padding:8px 12px;font-size:11px;font-family:'Inter',sans-serif;
     pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.25);min-width:140px;`;
   tip.innerHTML = `
-    <div style="font-weight:600;margin-bottom:4px;color:#FB923C;">Dia ${day}</div>
+    <div style="font-weight:600;margin-bottom:4px;color:#60A5FA;">Dia ${day}</div>
     <div style="display:flex;justify-content:space-between;gap:12px;">
       <span style="color:rgba(255,255,255,.7);">Produção:</span>
       <span style="font-weight:600;">${val.toLocaleString('pt-BR')} un.</span>
@@ -1157,7 +1157,7 @@ function showHeatTip(el, e){
     <div style="border-top:1px solid rgba(255,255,255,.1);margin:5px 0;"></div>
     <div style="display:flex;justify-content:space-between;gap:12px;">
       <span style="color:rgba(255,255,255,.7);">Semana ${week}:</span>
-      <span style="font-weight:600;color:#FB923C;">${weekTot.toLocaleString('pt-BR')} un.</span>
+      <span style="font-weight:600;color:#60A5FA;">${weekTot.toLocaleString('pt-BR')} un.</span>
     </div>`;
   document.body.appendChild(tip);
   heatTip = tip;
@@ -1177,7 +1177,7 @@ function hideHeatTip(){
 // ── LINHA DIÁRIA ──
 function buildLineChart() {
   const b       = getBase();
-  const orColor = isDark ? '#F97316' : '#EA580C';
+  const orColor = isDark ? '#3B82F6' : '#2563EB';
 
   // Always use filteredData (even if empty = shows zeros for the period)
   const data = filteredData || [];
@@ -1225,7 +1225,7 @@ function buildLineChart() {
         label:'Produção',
         data: prodByDay,
         borderColor: orColor,
-        backgroundColor: isDark?'rgba(249,115,22,0.10)':'rgba(234,88,12,0.08)',
+        backgroundColor: isDark?'rgba(59,130,246,0.10)':'rgba(37,99,235,0.08)',
         fill: true,
         tension: .4,
         pointRadius: hasData ? prodByDay.map(v=>v>0?4:0) : 0,
@@ -1267,7 +1267,7 @@ function renderMetaChart() {
   el.innerHTML=sorted.map(([name,real])=>{
     const pct=Math.min(Math.round(real/meta*100),100);
     const over=real>=meta;
-    const barColor=over?(isDark?'#FBBF24':'#0D9488'):(real/meta>0.7?(isDark?'#F97316':'#EA580C'):(isDark?'#F97316':'#EA580C'));
+    const barColor=over?(isDark?'#FBBF24':'#0D9488'):(real/meta>0.7?(isDark?'#3B82F6':'#2563EB'):(isDark?'#3B82F6':'#2563EB'));
     return `<div class="meta-item">
       <div class="meta-header">
         <span class="meta-name">${name}</span>
@@ -1346,7 +1346,7 @@ function buildTop10Chart() {
   const sorted = Object.entries(skuT).sort((a,b)=>b[1]-a[1]).slice(0,10);
   if(charts.top10){charts.top10.destroy();charts.top10=null;}
   const b = getBase();
-  const cmap = {'Capas':isDark?'#F97316':'#EA580C','Películas':isDark?'#F472B6':'#DB2777','Acessórios':isDark?'#FBBF24':'#0D9488'};
+  const cmap = {'Capas':isDark?'#3B82F6':'#2563EB','Películas':isDark?'#F472B6':'#DB2777','Acessórios':isDark?'#FBBF24':'#0D9488'};
 
   const chartLabels = sorted.map(([k])=>{
     const lbl = skuLabel[k]||k;
@@ -1416,7 +1416,7 @@ function rebuildCharts() {
   }
 
   const skuTypes  = ['Capas','Películas','Acessórios'];
-  const skuColors = isDark?['#F97316','#EC4899','#FBBF24']:['#EA580C','#DB2777','#0D9488'];
+  const skuColors = isDark?['#3B82F6','#EC4899','#FBBF24']:['#2563EB','#DB2777','#0D9488'];
 
   charts.sku = new Chart(document.getElementById('skuChart'),{
     type:'bar',
@@ -1443,7 +1443,7 @@ function rebuildCharts() {
   // --- PIZZA ---
   const tipoC = {Reposição:0,Armazenamento:0,Movimentação:0,Legendas:0};
   data.forEach(r=>{if(tipoC[r.tipo]!==undefined) tipoC[r.tipo]+=r.quantidade;});
-  const pieColors = isDark?['#FBBF24','#F97316','#A855F7','#F97316']:['#0D9488','#EA580C','#7C3AED','#EA580C'];
+  const pieColors = isDark?['#FBBF24','#3B82F6','#A855F7','#3B82F6']:['#0D9488','#2563EB','#7C3AED','#2563EB'];
   charts.pizza = new Chart(document.getElementById('pizzaChart'),{
     type:'doughnut',
     data:{
@@ -2049,7 +2049,7 @@ function renderAtividadesPaged(){
       <td>${r.quantidade}</td>
       <td>${r.data}</td>
       <td style="display:flex;gap:4px;align-items:center;">
-        <button onclick="openEditModal('${r.id}','${r.colaborador.replace(/'/g,"\\'")}','${r.quantidade}','${r.data}','${r.tipo}')" title="Editar" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:13px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(234,88,12,.1)';this.style.borderColor='rgba(234,88,12,.3)';this.style.color='var(--or)'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">✏️</button>
+        <button onclick="openEditModal('${r.id}','${r.colaborador.replace(/'/g,"\\'")}','${r.quantidade}','${r.data}','${r.tipo}')" title="Editar" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:13px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(37,99,235,.1)';this.style.borderColor='rgba(37,99,235,.3)';this.style.color='var(--or)'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">✏️</button>
         <button onclick="deleteAtividade('${r.id}')" title="Excluir" style="background:none;border:1px solid var(--bdr);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--text3);font-size:14px;transition:all .18s;display:flex;align-items:center;justify-content:center;padding:0;" onmouseover="this.style.background='rgba(220,38,38,.1)';this.style.borderColor='rgba(220,38,38,.3)';this.style.color='#DC2626'" onmouseout="this.style.background='none';this.style.borderColor='var(--bdr)';this.style.color='var(--text3)'">🗑</button>
       </td>
     </tr>`;
