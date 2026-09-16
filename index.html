@@ -6,6 +6,7 @@
 <title>Sistema Análise G5</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233B82F6'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Arial, Helvetica, sans-serif' font-size='20' font-weight='700' fill='%2309090B'%3EVX%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
@@ -36,7 +37,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
 .sb-nav-item{display:flex;align-items:center;margin:3px 8px;border-radius:9px;cursor:pointer;overflow:hidden;border:1.5px solid transparent;transition:border-color .18s,background .18s;background:none;width:calc(100% - 16px);text-align:left;font-family:'Inter',sans-serif;box-shadow:none;outline:none;}
 .sb-nav-item:hover{background:rgba(255,255,255,0.06);}
 .sb-nav-item.active{border-color:rgba(37,99,235,0.4);background:rgba(37,99,235,0.12);}
-.sb-nav-icon{width:36px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;color:#A1A1AA;transition:color .18s;}
+.sb-nav-icon{width:36px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:17px;color:#A1A1AA;transition:color .18s;}
 .sb-nav-item.active .sb-nav-icon,.sb-nav-item:hover .sb-nav-icon{color:var(--or);}
 .sb-nav-inner{flex:1;padding:0 8px 0 0;height:40px;display:flex;align-items:center;justify-content:space-between;}
 .sb-nav-label{font-size:13px;font-weight:600;color:#F4F4F5;}
@@ -465,29 +466,29 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
     </div>
     <div class="sb-section">Principal</div>
     <button class="sb-nav-item active" onclick="showPage('dashboard',this)">
-      <div class="sb-nav-icon">📊</div>
+      <div class="sb-nav-icon"><i class="ti ti-layout-dashboard"></i></div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Dashboard</span></div>
     </button>
     <button class="sb-nav-item" onclick="showPage('registro',this)">
-      <div class="sb-nav-icon">📂</div>
+      <div class="sb-nav-icon"><i class="ti ti-folder"></i></div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Registro</span></div>
     </button>
     <div class="sb-section">Análise</div>
     <button class="sb-nav-item" onclick="showPage('ranking',this)">
-      <div class="sb-nav-icon">🏆</div>
+      <div class="sb-nav-icon"><i class="ti ti-trophy"></i></div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Ranking</span></div>
     </button>
     <button class="sb-nav-item" onclick="showPage('top10',this)">
-      <div class="sb-nav-icon">⬆</div>
+      <div class="sb-nav-icon"><i class="ti ti-trending-up"></i></div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Top 10 SKUs</span></div>
     </button>
     <button class="sb-nav-item" onclick="showPage('consulta',this)">
-      <div class="sb-nav-icon">👁</div>
+      <div class="sb-nav-icon"><i class="ti ti-eye"></i></div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Consulta</span></div>
     </button>
     <div class="sb-section">Configuração</div>
     <button class="sb-nav-item" onclick="showPage('cadastro-sku',this)">
-      <div class="sb-nav-icon">⚙</div>
+      <div class="sb-nav-icon"><i class="ti ti-settings"></i></div>
       <div class="sb-nav-inner"><span class="sb-nav-label">Cadastro de SKU</span></div>
     </button>
     <div class="sb-footer">
