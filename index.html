@@ -525,8 +525,8 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;trans
         <div class="period-filter">
           <button class="period-btn" onclick="setPeriod('hoje',this)">Hoje</button>
           <button class="period-btn" onclick="setPeriod('semana',this)">Esta Semana</button>
-          <button class="period-btn" onclick="setPeriod('mes',this)">Este Mês</button>
-          <button class="period-btn active" onclick="setPeriod('tudo',this)">Tudo</button>
+          <button class="period-btn active" onclick="setPeriod('mes',this)">Este Mês</button>
+          <button class="period-btn" onclick="setPeriod('tudo',this)">Tudo</button>
           <button class="period-btn" id="btn-clear-period" onclick="clearPeriod()" style="color:#DC2626;border-color:rgba(220,38,38,.25);display:none;">✕ Limpar</button>
           <div class="period-custom">
             <input class="period-input" type="date" id="period-start">
@@ -899,8 +899,7 @@ async function loadAtividades() {
 }
 
 function renderAll() {
-  filteredData=[];
-  renderEmptyDashboard();
+  applyFilter();
   renderPodium();
   renderAtividadesPaged();
   renderMetaChart();
@@ -1864,7 +1863,7 @@ function getSkuLabel(r){
 
 // ── FILTRO DE PERÍODO ──
 let filteredData = [];
-let currentPeriod = 'tudo';
+let currentPeriod = 'mes';
 let currentPage = 1;
 const PAGE_SIZE = 15;
 let editingId = null;
