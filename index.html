@@ -1000,7 +1000,7 @@ function renderHeatmap() {
   const labelEl   = document.getElementById('heatmap-period-label');
   if(!container) return;
 
-  const data = (filteredData && filteredData.length > 0) ? filteredData : allData;
+  const data = filteredData || [];
 
   const dates = data.map(r=>r.data).filter(Boolean).sort();
   if(!dates.length){
@@ -1386,7 +1386,7 @@ function buildTop10Chart() {
 // ── CHARTS BASE ──
 function rebuildCharts() {
   const b    = getBase();
-  const data = (filteredData && filteredData.length > 0) ? filteredData : allData;
+  const data = filteredData || [];
 
   ['sku','pizza','line'].forEach(k=>{if(charts[k]){charts[k].destroy();charts[k]=null;}});
 
